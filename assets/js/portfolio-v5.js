@@ -28,7 +28,7 @@
     }
   };
 
-  const runTypewriter = (el, durationMs = 340, delayMs = 0) => {
+  const runTypewriter = (el, durationMs = 580, delayMs = 0) => {
     if (!el || isMotionOff()) return;
     if (typeof el.__origHTML !== 'string') {
       el.__origHTML = el.innerHTML;
@@ -110,9 +110,9 @@
       document.querySelector('.case-hero__lead')
     ].filter(Boolean);
 
-    heroTargets.forEach((el, idx) => {
+    heroTargets.forEach(el => {
       const isHeading = /^H[1-6]$/.test(el.tagName);
-      runTypewriter(el, isHeading ? 330 : 410, idx * 90);
+      runTypewriter(el, isHeading ? 520 : 640, isHeading ? 80 : 220);
     });
 
     if (!('IntersectionObserver' in window)) return;
@@ -140,7 +140,7 @@
           seen.add(entry.target);
           io.unobserve(entry.target);
           const isHeading = /^H[1-6]$/.test(entry.target.tagName);
-          runTypewriter(entry.target, isHeading ? 310 : 390, isHeading ? 0 : 70);
+          runTypewriter(entry.target, isHeading ? 500 : 620, isHeading ? 20 : 140);
         });
       },
       { rootMargin: '0px 0px -10% 0px', threshold: 0.18 }
@@ -212,8 +212,8 @@
       if (animateCopy && !isMotionOff()) {
         const titleEl = steps[index]?.querySelector('h2');
         const copyEl = steps[index]?.querySelector('p[data-typewriter="copy"]');
-        if (titleEl) runTypewriter(titleEl, 290, 0);
-        if (copyEl) runTypewriter(copyEl, 360, 60);
+        if (titleEl) runTypewriter(titleEl, 540, 0);
+        if (copyEl) runTypewriter(copyEl, 680, 180);
       }
     };
 
@@ -347,8 +347,8 @@
       const activePanel = panels[index];
       const titleEl = activePanel?.querySelector('h3');
       const leadEl = activePanel?.querySelector('.method-v6__lead');
-      if (titleEl) runTypewriter(titleEl, 260, 0);
-      if (leadEl) runTypewriter(leadEl, 340, 50);
+      if (titleEl) runTypewriter(titleEl, 500, 0);
+      if (leadEl) runTypewriter(leadEl, 660, 160);
       diagrams[index]?.animate?.(
         [
           { transform: 'scale(0.84)' },
