@@ -1,171 +1,151 @@
 (() => {
   'use strict';
   const root = document.documentElement;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
-  const stages = [...document.querySelectorAll('.portfolio-v5__stage')];
-  const cards = [...document.querySelectorAll('[data-stack-card]')];
-  const flywheel = document.querySelector('[data-flywheel]');
-  const flywheelProgress = flywheel?.querySelector('.flywheel__progress');
-  const mounts = [...document.querySelectorAll('[data-flywheel-mount]')];
-  const paused = () => document.body.classList.contains('motion-paused') || root.classList.contains('motion-paused');
-  let activeStage = -1;
-  let raf = 0;
+  const section = document.querySelector('.method-v6');
+  if (!section) return;
+  const track = section.querySelector('[data-method-track]');
+  const sticky = section.querySelector('[data-method-sticky]');
+  const ring = section.querySelector('.method-ring');
+  const arc = section.querySelector('.method-ring__arc');
+  const orbit = section.querySelector('.method-ring__focus-orbit');
+  const number = section.querySelector('[data-ring-number]');
+  const name = section.querySelector('[data-ring-name]');
+  const panels = [...section.querySelectorAll('[data-method-panel]')];
+  const nodes = [...section.querySelectorAll('[data-method-node]')];
+  const projectStack = document.querySelector('[data-project-stack]');
+  const cards = projectStack ? [...projectStack.querySelectorAll('[data-project-card]')] : [];
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const stackReady = () => window.innerWidth >= 1024 && window.innerHeight >= 700;
+  let enhanced = false;
+  let stacked = false;
+  let active = -1;
+  let frame = 0;
 
-  const arrangeStack = () => {
-    const stack = cards[0]?.closest('[data-project-stack]');
-    if (!stack || !cards.length) return;
-    const slots = [...stack.querySelectorAll('.portfolio-v5__slot')];
-    const baseStep = window.innerHeight * .85;
-    const minimumDwell = window.innerHeight * .15;
-    let cursor = 0;
+  const panelState = index => {
+    panels.forEach((panel, i) => {
+      const current = i === index;
+      panel.classList.toggle('is-active', current);
+      if (enhanced && current) {
+        panel.removeAttribute('aria-hidden');
+        panel.inert = false;
+      } else if (enhanced) {
+        panel.setAttribute('aria-hidden', 'true');
+        panel.inert = true;
+      } else {
+        panel.removeAttribute('aria-hidden');
+        panel.inert = false;
+      }
+    });
+    nodes.forEach((node, i) => {
+      if (enhanced && i === index) node.setAttribute('aria-current', 'step');
+      else node.removeAttribute('aria-current');
+      if (i < index && enhanced) node.dataset.passed = 'true';
+      else delete node.dataset.passed;
+    });
+    if (!enhanced) nodes[0]?.setAttribute('aria-current', 'step');
+  };
+
+  const stageState = index => {
+    if (index === active) return;
+    active = index;
+    panelState(index);
+    if (number) number.textContent = String(index + 1).padStart(2, '0');
+    if (name) name.textContent = nodes[index]?.querySelector('.method-ring__node-name')?.textContent || panels[index]?.querySelector('h3')?.textContent.toLocaleUpperCase('es');
+    ring?.setAttribute('aria-label', 'Método en seis etapas: escuchar, analizar, priorizar, diseñar, comunicar, y medir y evaluar');
+  };
+
+  const renderMethod = () => {
+    frame = 0;
+    if (!track || !sticky || !enhanced) return;
+    const rect = track.getBoundingClientRect();
+    const travel = Math.max(1, track.offsetHeight - sticky.offsetHeight);
+    const trackTop = window.scrollY + rect.top;
+    const progress = clamp((window.scrollY - trackTop) / travel, 0, 1);
+    const index = Math.min(5, Math.floor(progress * 6));
+    stageState(index);
+    let fraction = index / 6;
+    if (progress >= .96) fraction = 1;
+    if (arc) arc.style.strokeDashoffset = String(100 - fraction * 100);
+    if (orbit) orbit.style.transform = `rotate(${(fraction * 360).toFixed(3)}deg)`;
+  };
+
+  const queueRender = () => {
+    if (!frame) frame = window.requestAnimationFrame(renderMethod);
+  };
+
+  const setEnhanced = next => {
+    if (enhanced === next) return;
+    enhanced = next;
+    section.classList.toggle('is-enhanced', enhanced);
+    if (!enhanced) {
+      active = -1;
+      panelState(0);
+      if (number) number.textContent = '01';
+      if (name) name.textContent = nodes[0]?.querySelector('.method-ring__node-name')?.textContent || 'ESCUCHAR';
+      if (arc) arc.style.strokeDashoffset = '100';
+      if (orbit) orbit.style.transform = 'rotate(0deg)';
+    }
+    queueRender();
+  };
+
+  const setStacked = next => {
+    if (!projectStack || stacked === next) return;
+    stacked = next;
+    const slots = [...projectStack.querySelectorAll('.projects-v6__slot')];
     cards.forEach((card, i) => {
       const slot = slots[i];
-      if (slot && card.parentElement !== stack) stack.insertBefore(card, slot);
-      const height = card.offsetHeight;
-      const spacer = slot || card.nextElementSibling;
-      const stickyTop = parseFloat(getComputedStyle(card).top) || 0;
-      const track = Math.max(baseStep, height * 2 + minimumDwell);
-      const gap = i === cards.length - 1 ? track - height + stickyTop : track - height;
-      if (spacer?.classList.contains('portfolio-v5__slot')) {
-        spacer.style.height = `${gap}px`;
-        spacer.style.minHeight = '0';
-        spacer.setAttribute('aria-hidden', 'true');
+      if (!slot) return;
+      if (stacked) {
+        projectStack.insertBefore(card, slot);
+        slot.setAttribute('aria-hidden', 'true');
+        slot.style.height = '0px';
+        slot.style.minHeight = '0px';
+        card.style.setProperty('--stack-scale', String(1 - (cards.length - 1 - i) * .03));
+        card.style.setProperty('--stack-top', `calc(var(--header-h) + 24px + ${i * 28}px)`);
+      } else {
+        slot.append(card);
+        slot.removeAttribute('aria-hidden');
+        slot.style.removeProperty('height');
+        slot.style.removeProperty('min-height');
+        card.style.removeProperty('--stack-scale');
+        card.style.removeProperty('--stack-top');
+        card.style.removeProperty('position');
       }
-      card.dataset.stackStart = String(cursor);
-      card.dataset.stackTrack = String(track);
-      cursor += track;
     });
-    stack.dataset.stackStep = String(baseStep);
+    projectStack.classList.toggle('is-stacked', stacked);
   };
 
-  const setActiveStage = index => {
-    if (index === activeStage || index < 0) return;
-    activeStage = index;
-    stages.forEach((stage, i) => stage.classList.toggle('is-active', i === index));
-    if (flywheel && mounts[index] && flywheel.parentElement !== mounts[index]) mounts[index].append(flywheel);
-  };
-
-  const setVisual = (stage, progress) => {
-    const p = reduced.matches ? 1 : progress;
-    const visual = stage.querySelector('[data-visual]');
-    if (!visual) return;
-    const type = visual.dataset.visual;
-    if (type === 'escuchar') {
-      visual.querySelectorAll('.listen-wave').forEach((wave, i) => {
-        const local = clamp((p - i * .12) / .72);
-        wave.style.transform = `scale(${(.2 + local * .8).toFixed(3)})`;
-        wave.style.opacity = (.18 + local * .62).toFixed(3);
-      });
-    }
-    if (type === 'analizar') {
-      visual.querySelectorAll('.analysis-dot').forEach(dot => {
-        const start = dot.dataset.start.split(',').map(Number);
-        const end = dot.dataset.end.split(',').map(Number);
-        const eased = 1 - Math.pow(1 - p, 2);
-        const x = start[0] + (end[0] - start[0]) * eased;
-        const y = start[1] + (end[1] - start[1]) * eased;
-        dot.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
-      });
-    }
-    if (type === 'priorizar') {
-      visual.querySelectorAll('.priority-card').forEach(card => {
-        const start = card.dataset.start.split(',').map(Number);
-        const end = card.dataset.end.split(',').map(Number);
-        const eased = 1 - Math.pow(1 - p, 2);
-        const x = start[0] + (end[0] - start[0]) * eased;
-        const y = start[1] + (end[1] - start[1]) * eased;
-        card.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
-      });
-      const arrow = visual.querySelector('.priority-arrow');
-      if (arrow) arrow.style.strokeDashoffset = String(260 * (1 - p));
-      const dot = visual.querySelector('.priority-dot');
-      if (dot) { dot.style.transform = `translateY(${(-38 * p).toFixed(1)}px)`; dot.style.transformBox = 'fill-box'; }
-    }
-    if (type === 'diseñar') {
-      visual.querySelectorAll('.wireframe-draw').forEach(path => {
-        path.style.strokeDashoffset = String(3000 * (1 - p));
-      });
-      visual.querySelectorAll('.wireframe-fill').forEach(fill => { fill.style.opacity = String(p); });
-    }
-    if (type === 'evaluar') {
-      const trend = visual.querySelector('.eval-trend');
-      if (trend) trend.style.strokeDashoffset = String(600 * (1 - p));
-      const check = visual.querySelector('.eval-check');
-      if (check) check.style.strokeDashoffset = String(200 * (1 - p));
-      const after = visual.querySelector('.eval-after');
-      if (after) { after.style.transform = `translateY(${(70 * (1 - p)).toFixed(1)}px)`; after.style.transformBox = 'fill-box'; }
-    }
-  };
-
-  const updateCaseLinks = () => {
-    cards.forEach((card, i) => {
-      const link = card.querySelector('.portfolio-v5__case-link');
-      if (!link) return;
-      const target = link.getBoundingClientRect();
-      const covered = cards.slice(i + 1).some(upperCard => {
-        const upper = upperCard.getBoundingClientRect();
-        return upper.left < target.right - 1
-          && upper.right > target.left + 1
-          && upper.top < target.bottom - 1
-          && upper.bottom > target.top + 1;
-      });
-      link.classList.toggle('is-occluded', covered);
-      link.toggleAttribute('inert', covered);
-      link.inert = covered;
+  nodes.forEach((node, i) => {
+    node.setAttribute('aria-controls', panels[i]?.id || '');
+    node.addEventListener('click', () => {
+      if (!enhanced || !track || !sticky) return;
+      const trackTop = window.scrollY + track.getBoundingClientRect().top;
+      const travel = Math.max(1, track.offsetHeight - sticky.offsetHeight);
+      const target = trackTop + travel * ((i + .5) / 6);
+      window.scrollTo({ top: target, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
     });
+  });
+
+  const updateLayout = () => {
+    setEnhanced(window.innerHeight >= 560);
+    setStacked(stackReady());
+    queueRender();
   };
 
-  const update = () => {
-    raf = 0;
-    const h = window.innerHeight;
-    let closestIndex = -1;
-    let closestDistance = Infinity;
-    stages.forEach((stage, i) => {
-      const rect = stage.getBoundingClientRect();
-      const center = rect.top + rect.height / 2;
-      const distance = Math.abs(center - h * .5);
-      if (rect.bottom > h * .12 && rect.top < h * .88 && distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = i;
-      }
-      const sheet = stage.querySelector('.portfolio-v5__sheet');
-      const stickyTop = sheet ? parseFloat(getComputedStyle(sheet).top) || 0 : 0;
-      const stickySpan = sheet ? Math.max(rect.height - sheet.getBoundingClientRect().height, 1) : rect.height;
-      const progress = clamp((stickyTop - rect.top) / stickySpan);
-      setVisual(stage, paused() ? 1 : progress);
+  window.addEventListener('scroll', queueRender, { passive: true });
+  window.addEventListener('resize', updateLayout, { passive: true });
+  reducedMotion.addEventListener?.('change', queueRender);
+  updateLayout();
+  if (document.fonts?.ready) document.fonts.ready.then(updateLayout);
+  if (projectStack) {
+    projectStack.addEventListener('focusin', event => {
+      const current = event.target.closest('.projects-v6__link');
+      if (!current || !stacked) return;
+      cards.forEach(card => card.querySelector('.projects-v6__link')?.classList.toggle('is-occluded', card !== current.closest('.projects-v6__card')));
     });
-    if (closestIndex >= 0) setActiveStage(closestIndex);
-    if (flywheelProgress) {
-      const list = document.querySelector('.portfolio-v5__stages');
-      const listTop = list ? list.getBoundingClientRect().top : h;
-      const progress = reduced.matches ? 1 : list ? clamp((h * .55 - listTop) / Math.max(list.getBoundingClientRect().height, 1)) : 0;
-      flywheelProgress.style.strokeDashoffset = String(100 * (1 - progress));
-    }
-
-    if (cards.length) {
-      const stack = cards[0].closest('[data-project-stack]');
-      const trackTop = stack.getBoundingClientRect().top + window.scrollY;
-      const lastStart = Number(cards[cards.length - 1].dataset.stackStart) || 0;
-      cards.forEach((card, i) => {
-        const start = Number(card.dataset.stackStart) || 0;
-        const remaining = lastStart - start;
-        const remainingCards = cards.length - 1 - i;
-        const progress = reduced.matches ? 0 : paused() ? 1 : remaining <= 0 ? 0 : clamp((window.scrollY - trackTop - start) / remaining);
-        const scale = 1 - remainingCards * .03 * progress;
-        card.style.setProperty('--stack-scale', scale.toFixed(3));
-      });
-      updateCaseLinks();
-    }
-  };
-  const schedule = () => { if (!raf) raf = requestAnimationFrame(update); };
-  window.addEventListener('scroll', schedule, { passive: true });
-  window.addEventListener('resize', () => { arrangeStack(); schedule(); }, { passive: true });
-  reduced.addEventListener?.('change', schedule);
-  document.querySelector('[data-motion-toggle]')?.addEventListener('click', () => requestAnimationFrame(schedule));
-  new MutationObserver(schedule).observe(root, { attributes: true, attributeFilter: ['class'] });
-  new MutationObserver(schedule).observe(document.body, { attributes: true, attributeFilter: ['class'] });
-  arrangeStack();
-  document.fonts?.ready.then(() => { arrangeStack(); schedule(); });
-  update();
+    projectStack.addEventListener('focusout', event => {
+      if (!projectStack.contains(event.relatedTarget)) cards.forEach(card => card.querySelector('.projects-v6__link')?.classList.remove('is-occluded'));
+    });
+  }
 })();
