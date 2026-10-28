@@ -1,0 +1,17 @@
+/* Legibilidad mínima de 12 px (hallazgos del control aos, 28-oct-2026).
+   Repite los selectores que tenían entre 9 y 11 px. Se carga al final para ganar la cascada. */
+.site-header nav,
+.hero__facts span,
+.flywheel span,
+.flywheel b,
+.evidence-grid small,
+.case-page .eyebrow,
+.case-page .case-hero__meta dt,
+.experience__choices button span,
+.case-page .nav,
+.academic-visual small,
+.scene-label,
+.hero__bottom,
+.flywheel__node {
+  font-size: 12px;
+}
