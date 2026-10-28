@@ -1,0 +1,13 @@
+/* Una familia compartida: jerarquía por tamaño y peso, no por mezcla de fuentes. */
+@font-face{font-family:PortfolioGrotesk;src:url('../fonts/space-grotesk-var-latin.woff2') format('woff2');font-style:normal;font-weight:300 700;font-display:swap}
+:root{--display:PortfolioGrotesk,Arial,sans-serif;--body:PortfolioGrotesk,Arial,sans-serif;--utility:PortfolioGrotesk,Arial,sans-serif;font-family:PortfolioGrotesk,Arial,sans-serif}
+body,button,input,textarea,select{font-family:PortfolioGrotesk,Arial,sans-serif}
+.case-page .masthead__name,.case-page h1,.case-page h2,.case-page h3,.case-page .decision b,.case-page .next-link strong,.case-page .experience__choices button{font-family:PortfolioGrotesk,Arial,sans-serif}
+.case-page .masthead__name,.case-page h1,.case-page h2,.case-page h3,.case-page .decision b,.case-page .next-link strong{font-weight:700;letter-spacing:-.04em}
+.wordmark{font-family:PortfolioGrotesk,Arial,sans-serif;font-stretch:normal;font-size:clamp(40px,6.8vw,104px);height:auto;min-height:clamp(66px,7.7vw,124px);line-height:1.15;letter-spacing:-.065em;padding:4px 16px 8px}
+.hero h1,.section-heading h2,.statement__copy h2,.profile h2,.method #method-title,.agentic h2,.contact h2{font-stretch:normal;line-height:1.12;letter-spacing:-.045em;font-weight:700}
+.project-card__top h3,.method-step h3,.method-graphic>strong,.skills__list strong,.tool-card h3,.funnel-stage h3,.evidence-item span{line-height:1.18;letter-spacing:-.04em;font-weight:700}
+.project-card__did{font-size:15px;line-height:1.55}
+.project-card__status{font-size:12px;line-height:1.5}
+.case-page .section__aside,.case-page .experience__caption{font-size:14px;line-height:1.6}
+@media(max-width:760px){.wordmark{font-size:clamp(30px,8vw,48px);min-height:66px;padding-top:12px}.hero h1{font-size:clamp(34px,9vw,42px);line-height:1.12}.project-card__did{font-size:15px;line-height:1.55}.case-page .case-hero h1{font-size:clamp(32px,8vw,40px);line-height:1.12}}
