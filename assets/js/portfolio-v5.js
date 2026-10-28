@@ -1,6 +1,278 @@
 (() => {
   'use strict';
   const root = document.documentElement;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const trackEvent = (eventName, params = {}) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, ...params });
+  };
+  const isMotionOff = () =>
+    reducedMotion.matches ||
+    root.classList.contains('motion-paused') ||
+    document.body.classList.contains('motion-paused');
+
+  // ---------------------------------------------------------------------------
+  // 1. Máquina de escribir rápida (Fast Typewriter) para títulos y copys clave
+  // ---------------------------------------------------------------------------
+  const activeTypewriters = new Map();
+
+  const restoreTypewriter = el => {
+    const state = activeTypewriters.get(el);
+    if (state) {
+      if (state.raf) cancelAnimationFrame(state.raf);
+      activeTypewriters.delete(el);
+    }
+    if (el && typeof el.__origHTML === 'string') {
+      el.innerHTML = el.__origHTML;
+    }
+  };
+
+  const runTypewriter = (el, durationMs = 340, delayMs = 0) => {
+    if (!el || isMotionOff()) return;
+    if (typeof el.__origHTML !== 'string') {
+      el.__origHTML = el.innerHTML;
+    }
+    restoreTypewriter(el);
+
+    if (/^H[1-6]$/.test(el.tagName) && !el.hasAttribute('aria-label')) {
+      el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
+    }
+
+    const chars = [];
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+    textNodes.forEach(node => {
+      const frag = document.createDocumentFragment();
+      const text = node.nodeValue || '';
+      for (const ch of Array.from(text)) {
+        if (/\s/.test(ch)) {
+          frag.append(document.createTextNode(ch));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'tw-char is-pending';
+          span.textContent = ch;
+          frag.append(span);
+          chars.push(span);
+        }
+      }
+      node.replaceWith(frag);
+    });
+
+    if (!chars.length) {
+      restoreTypewriter(el);
+      return;
+    }
+
+    const total = chars.length;
+    let lastCursor = null;
+    const state = { raf: 0, start: 0 };
+    activeTypewriters.set(el, state);
+
+    const step = now => {
+      if (isMotionOff()) {
+        restoreTypewriter(el);
+        return;
+      }
+      if (!state.start) state.start = now + delayMs;
+      if (now < state.start) {
+        state.raf = requestAnimationFrame(step);
+        return;
+      }
+      const elapsed = now - state.start;
+      const progress = clamp(elapsed / durationMs, 0, 1);
+      const count = Math.max(1, Math.ceil(progress * total));
+
+      for (let i = 0; i < count; i++) {
+        chars[i].classList.remove('is-pending');
+      }
+      if (lastCursor) lastCursor.classList.remove('is-cursor');
+      if (progress < 1) {
+        lastCursor = chars[count - 1];
+        if (lastCursor) lastCursor.classList.add('is-cursor');
+        state.raf = requestAnimationFrame(step);
+      } else {
+        restoreTypewriter(el);
+      }
+    };
+
+    state.raf = requestAnimationFrame(step);
+  };
+
+  // Observador de entrada para títulos y copys en las 5 pestañas
+  const initScrollTypewriter = () => {
+    const heroTargets = [
+      document.querySelector('.hero h1'),
+      document.querySelector('.hero__content > p:not(.eyebrow):not(.hero__cred)'),
+      document.querySelector('.case-hero h1'),
+      document.querySelector('.case-hero__lead')
+    ].filter(Boolean);
+
+    heroTargets.forEach((el, idx) => {
+      const isHeading = /^H[1-6]$/.test(el.tagName);
+      runTypewriter(el, isHeading ? 330 : 410, idx * 90);
+    });
+
+    if (!('IntersectionObserver' in window)) return;
+
+    const scrollTargets = [
+      ...document.querySelectorAll('.portfolio-v5__section-head h2'),
+      ...document.querySelectorAll('.portfolio-v5__section-head > p:last-child'),
+      ...document.querySelectorAll('.projects-v6__copy h3'),
+      ...document.querySelectorAll('.projects-v6__description'),
+      ...document.querySelectorAll('.portfolio-v5__profile h2'),
+      ...document.querySelectorAll('.portfolio-v5__tool-groups h3'),
+      ...document.querySelectorAll('.contact h2'),
+      ...document.querySelectorAll('.contact > p:not(.eyebrow)'),
+      ...document.querySelectorAll('.case-step h2'),
+      ...document.querySelectorAll('#aporte h2'),
+      ...document.querySelectorAll('#aporte p'),
+      ...document.querySelectorAll('.case-end h2')
+    ].filter(el => !heroTargets.includes(el));
+
+    const seen = new WeakSet();
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting || seen.has(entry.target)) return;
+          seen.add(entry.target);
+          io.unobserve(entry.target);
+          const isHeading = /^H[1-6]$/.test(entry.target.tagName);
+          runTypewriter(entry.target, isHeading ? 310 : 390, isHeading ? 0 : 70);
+        });
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.18 }
+    );
+
+    scrollTargets.forEach(el => io.observe(el));
+  };
+
+  initScrollTypewriter();
+
+  // ---------------------------------------------------------------------------
+  // 2. Páginas de Proyectos: Camino Guiado + Consola de Flujo HD ([data-case-journey])
+  // ---------------------------------------------------------------------------
+  const journey = document.querySelector('[data-case-journey]');
+  if (journey) {
+    const steps = [...journey.querySelectorAll('[data-case-step]')];
+    const tabs = [...journey.querySelectorAll('[data-case-tab]')];
+    const panes = [...journey.querySelectorAll('[data-case-panel], [data-case-pane]')];
+    const status = journey.querySelector('[data-case-status]');
+    let activeStep = -1;
+    let manualCaseLockUntil = 0;
+
+    const syncCaseVideos = (index, delayMs = 0) => {
+      const isDesktopStage = window.innerWidth > 960;
+      journey.querySelectorAll('video').forEach(v => v.pause());
+      if (isMotionOff()) return;
+      const playActive = () => {
+        if (isMotionOff()) return;
+        const container = isDesktopStage ? panes[index] : steps[index]?.querySelector('.case-step__inline-media');
+        const vid = container?.querySelector('video');
+        if (vid) vid.play().catch(() => {});
+      };
+      if (delayMs > 0) {
+        const startLater = () => window.setTimeout(playActive, delayMs);
+        if (document.readyState === 'complete') startLater();
+        else window.addEventListener('load', startLater, { once: true });
+      } else {
+        playActive();
+      }
+    };
+
+    const activateCaseStep = (index, animateCopy = false) => {
+      if (index === activeStep) return;
+      activeStep = index;
+      const totalStr = String(steps.length).padStart(2, '0');
+      const currStr = String(index + 1).padStart(2, '0');
+      if (status) status.textContent = `PASO ${currStr} / ${totalStr}`;
+
+      steps.forEach((step, i) => step.classList.toggle('is-active', i === index));
+      tabs.forEach((tab, i) => {
+        const active = i === index;
+        tab.classList.toggle('is-active', active);
+        tab.setAttribute('aria-selected', String(active));
+      });
+      panes.forEach((pane, i) => {
+        const active = i === index;
+        pane.classList.toggle('is-active', active);
+        pane.hidden = !active;
+        if (active) {
+          pane.removeAttribute('hidden');
+          pane.removeAttribute('aria-hidden');
+        } else {
+          pane.setAttribute('hidden', '');
+          pane.setAttribute('aria-hidden', 'true');
+        }
+      });
+      syncCaseVideos(index, animateCopy ? 0 : 800);
+
+      if (animateCopy && !isMotionOff()) {
+        const titleEl = steps[index]?.querySelector('h2');
+        const copyEl = steps[index]?.querySelector('p[data-typewriter="copy"]');
+        if (titleEl) runTypewriter(titleEl, 290, 0);
+        if (copyEl) runTypewriter(copyEl, 360, 60);
+      }
+    };
+
+    activateCaseStep(0, false);
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        manualCaseLockUntil = performance.now() + 700;
+        activateCaseStep(i, true);
+        trackEvent('case_step_select', { step: i + 1, page: location.pathname });
+        steps[i]?.scrollIntoView({ behavior: isMotionOff() ? 'auto' : 'smooth', block: 'center' });
+      });
+      tab.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        const next = (i + (event.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+        tabs[next]?.focus();
+        tabs[next]?.click();
+      });
+    });
+
+    steps.forEach((step, i) => {
+      step.addEventListener('click', event => {
+        if (event.target.closest('a, button, video')) return;
+        activateCaseStep(i, true);
+      });
+    });
+
+    if ('IntersectionObserver' in window) {
+      const stepObserver = new IntersectionObserver(
+        entries => {
+          if (performance.now() < manualCaseLockUntil) return;
+          const visible = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          if (visible[0]) {
+            const idx = Number(visible[0].target.dataset.caseStep);
+            if (!Number.isNaN(idx)) activateCaseStep(idx, true);
+          }
+        },
+        { rootMargin: '-20% 0px -32% 0px', threshold: [0.15, 0.4, 0.7] }
+      );
+      steps.forEach(step => stepObserver.observe(step));
+    }
+  }
+
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href]');
+    if (!link) return;
+    const href = link.getAttribute('href') || '';
+    if (href.includes('Carlos_Vargas_CV.pdf')) trackEvent('click_cv', { href });
+    else if (href.startsWith('mailto:')) trackEvent('click_contact', { href });
+    else if (href.includes('linkedin.com')) trackEvent('click_linkedin', { href });
+    else if (href.includes('proyectos/')) trackEvent('select_project', { href });
+  });
+
+  // ---------------------------------------------------------------------------
+  // 3. Portada: Consola Interactiva Conectada (#enfoque) + Vitrina de Proyectos
+  // ---------------------------------------------------------------------------
   const section = document.querySelector('.method-v6');
   if (!section) return;
   const track = section.querySelector('[data-method-track]');
@@ -17,10 +289,8 @@
   const nodes = [...section.querySelectorAll('[data-method-node]')];
   const projectStack = document.querySelector('[data-project-stack]');
   const cards = projectStack ? [...projectStack.querySelectorAll('[data-project-card]')] : [];
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
   const stackReady = () => window.innerWidth >= 1024 && window.innerHeight >= 700;
-  const scrollLockReady = () => window.innerHeight >= 500 && !reducedMotion.matches && !root.classList.contains('motion-paused') && !document.body.classList.contains('motion-paused');
+  const scrollLockReady = () => window.innerHeight >= 500 && !isMotionOff();
   let enhanced = false;
   let scrollLocked = false;
   let stacked = false;
@@ -73,14 +343,12 @@
     if (name) name.textContent = nodes[index]?.querySelector('.method-ring__node-name')?.textContent || panels[index]?.querySelector('h3')?.textContent.toLocaleUpperCase('es');
     if (bridgeLabel) bridgeLabel.textContent = `ETAPA ${stepStr}`;
     ring?.setAttribute('aria-label', 'Método en seis etapas: escuchar, analizar, priorizar, diseñar, comunicar, y medir y evaluar');
-    if (changed && animateTransition && !reducedMotion.matches && !root.classList.contains('motion-paused') && !document.body.classList.contains('motion-paused')) {
-      panels[index]?.animate?.(
-        [
-          { opacity: 0.76, transform: 'translate3d(10px, 0, 0)' },
-          { opacity: 1, transform: 'translate3d(0, 0, 0)' }
-        ],
-        { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-      );
+    if (changed && animateTransition && !isMotionOff()) {
+      const activePanel = panels[index];
+      const titleEl = activePanel?.querySelector('h3');
+      const leadEl = activePanel?.querySelector('.method-v6__lead');
+      if (titleEl) runTypewriter(titleEl, 260, 0);
+      if (leadEl) runTypewriter(leadEl, 340, 50);
       diagrams[index]?.animate?.(
         [
           { transform: 'scale(0.84)' },
@@ -151,12 +419,22 @@
     node.setAttribute('aria-controls', panels[i]?.id || '');
     node.addEventListener('click', () => {
       stageState(i, true);
+      trackEvent('method_step_select', { step: i + 1 });
       if (!scrollLocked || !track || !sticky) return;
       const trackTop = window.scrollY + track.getBoundingClientRect().top;
       const travel = Math.max(1, track.offsetHeight - sticky.offsetHeight);
       const target = trackTop + travel * ((i + 0.5) / 6);
       manualLockUntil = performance.now() + 650;
-      window.scrollTo({ top: target, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      window.scrollTo({ top: target, behavior: isMotionOff() ? 'auto' : 'smooth' });
+    });
+    node.addEventListener('keydown', event => {
+      if (!['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'].includes(event.key)) return;
+      event.preventDefault();
+      const delta = event.key === 'ArrowRight' || event.key === 'ArrowDown' ? 1 : nodes.length - 1;
+      const next = (i + delta) % nodes.length;
+      nodes[next]?.focus();
+      stageState(next, true);
+      trackEvent('method_step_select', { step: next + 1, source: 'keyboard' });
     });
   });
 
