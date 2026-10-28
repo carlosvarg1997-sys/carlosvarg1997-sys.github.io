@@ -375,7 +375,7 @@ html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .pro
   html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .projects__tab {
     min-height: 38px;
     padding: 7px 10px;
-    font-size: 11px;
+    font-size: 12px;
     gap: 6px;
   }
 
@@ -406,7 +406,7 @@ html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .pro
 
   html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .project-card.is-active-case .project-card__top span {
     color: #b93600;
-    font-size: 11px;
+    font-size: 12px;
   }
 
   html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .project-card.is-active-case .project-card__media {
@@ -426,7 +426,7 @@ html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .pro
   }
 
   html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .project-card.is-active-case .project-card__status {
-    font-size: 10.5px;
+    font-size: 12px;
     line-height: 1.3;
     margin: 0 0 4px;
     color: #4a4a4a;
@@ -439,7 +439,7 @@ html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .pro
   }
 
   html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .project-card.is-active-case .project-card__did {
-    font-size: 12.8px;
+    font-size: 13px;
     line-height: 1.38;
     margin: 0 0 6px;
     color: #222222;
@@ -461,7 +461,7 @@ html.casos-scroll-ready:not(.motion-paused) body:not(.motion-paused) #casos .pro
   align-items: center;
   gap: 12px;
   margin-top: 10px;
-  font: 700 11px/1.2 var(--utility);
+  font: 700 12px/1.2 var(--utility);
   letter-spacing: .05em;
   color: #555555;
 }
