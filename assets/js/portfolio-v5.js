@@ -15,12 +15,14 @@
   // ---------------------------------------------------------------------------
   // 1. Máquina de escribir rápida (Fast Typewriter) para títulos y copys clave
   // ---------------------------------------------------------------------------
+  // Aparición suave por palabras: cada palabra se funde con un leve ascenso,
+  // a un ritmo cercano al de lectura (sin cursor ni saltos por letra).
   const activeTypewriters = new Map();
 
   const restoreTypewriter = el => {
     const state = activeTypewriters.get(el);
     if (state) {
-      if (state.raf) cancelAnimationFrame(state.raf);
+      if (state.timer) clearTimeout(state.timer);
       activeTypewriters.delete(el);
     }
     if (el && typeof el.__origHTML === 'string') {
@@ -39,68 +41,53 @@
       el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
     }
 
-    const chars = [];
+    const words = [];
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     const textNodes = [];
     while (walker.nextNode()) textNodes.push(walker.currentNode);
 
     textNodes.forEach(node => {
       const frag = document.createDocumentFragment();
-      const text = node.nodeValue || '';
-      for (const ch of Array.from(text)) {
-        if (/\s/.test(ch)) {
-          frag.append(document.createTextNode(ch));
+      const parts = (node.nodeValue || '').split(/(\s+)/);
+      parts.forEach(part => {
+        if (!part) return;
+        if (/^\s+$/.test(part)) {
+          frag.append(document.createTextNode(part));
         } else {
           const span = document.createElement('span');
-          span.className = 'tw-char is-pending';
-          span.textContent = ch;
+          span.className = 'tw-word is-pending';
+          span.textContent = part;
           frag.append(span);
-          chars.push(span);
+          words.push(span);
         }
-      }
+      });
       node.replaceWith(frag);
     });
 
-    if (!chars.length) {
+    if (!words.length) {
       restoreTypewriter(el);
       return;
     }
 
-    const total = chars.length;
-    let lastCursor = null;
-    const state = { raf: 0, start: 0 };
+    // ~115 ms entre palabras (ritmo de lectura cómodo); tope de 2,3 s en textos largos.
+    const stagger = Math.min(115, 2300 / words.length);
+    const fade = 620;
+    words.forEach((w, i) => {
+      w.style.transitionDelay = Math.round(delayMs + i * stagger) + 'ms';
+    });
+
+    const state = { timer: 0 };
     activeTypewriters.set(el, state);
 
-    const step = now => {
-      if (isMotionOff()) {
-        restoreTypewriter(el);
-        return;
-      }
-      if (!state.start) state.start = now + delayMs;
-      if (now < state.start) {
-        state.raf = requestAnimationFrame(step);
-        return;
-      }
-      const elapsed = now - state.start;
-      const progress = clamp(elapsed / durationMs, 0, 1);
-      const count = Math.max(1, Math.ceil(progress * total));
+    // Dos frames para que el estado inicial se pinte y la transición sí ocurra.
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (activeTypewriters.get(el) !== state) return;
+      words.forEach(w => w.classList.remove('is-pending'));
+    }));
 
-      for (let i = 0; i < count; i++) {
-        chars[i].classList.remove('is-pending');
-      }
-      if (lastCursor) lastCursor.classList.remove('is-cursor');
-      if (progress < 1) {
-        lastCursor = chars[count - 1];
-        if (lastCursor) lastCursor.classList.add('is-cursor');
-        state.raf = requestAnimationFrame(step);
-      } else {
-        restoreTypewriter(el);
-      }
-    };
-
-    state.raf = requestAnimationFrame(step);
+    state.timer = setTimeout(() => restoreTypewriter(el),
+      Math.round(delayMs + words.length * stagger + fade + 120));
   };
-
   // Observador de entrada para títulos y copys en las 5 pestañas
   const initScrollTypewriter = () => {
     const heroTargets = [
