@@ -375,3 +375,212 @@ html{scroll-padding-top:calc(var(--header-h) + 18px)}
 html.motion-paused .method-ring__arc,html.motion-paused .method-ring__spoke,html.motion-paused .method-ring__focus-orbit,html.motion-paused .method-ring__node,html.motion-paused .method-v6__panel,html.motion-paused .projects-v6__link,
 body.motion-paused .method-ring__arc,body.motion-paused .method-ring__spoke,body.motion-paused .method-ring__focus-orbit,body.motion-paused .method-ring__node,body.motion-paused .method-v6__panel,body.motion-paused .projects-v6__link{transition:none!important}
 html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridge-pulse{animation-play-state:paused!important}
+
+/* aire 29-oct */
+.portfolio-v5__profile-copy p,
+.portfolio-v5__capabilities > div > p:not(.eyebrow),
+.portfolio-v5__model-note p,
+.portfolio-v5__tool-groups article > p:not(.eyebrow),
+.method-v6__head > p:not(.eyebrow),
+.method-v6__panel > p:not(.method-v6__step-index),
+.case-step > p:not(.case-v5__note),
+.case-v5 .case-v5__method p,
+.case-v5 .case-v5__decision p,
+.method-v6__principle {
+  line-height: 1.6;
+}
+
+.case-step > p:not(.case-v5__note),
+.case-v5 .case-v5__method p,
+.case-v5 .case-v5__decision p {
+  margin-bottom: 0;
+}
+
+/* Los párrafos del perfil son tarjetas: su separación la controla el gap. */
+.portfolio-v5__capabilities > div > p:not(.eyebrow) + p:not(.eyebrow),
+.method-v6__panel > p:not(.method-v6__step-index) + p,
+.case-v5 .case-step > p + p,
+.case-v5 .case-v5__method p + p,
+.case-v5 .case-v5__decision p + p {
+  margin-top: 18px;
+}
+
+/* La nota anterior ya fija tamaño e interlineado con !important. */
+.case-v5 .case-v5__note {
+  line-height: 1.6 !important;
+}
+
+.case-phone-shot,
+.case-media-duo__mobile img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+@media (min-width: 900px) {
+  main > section:not(#contacto):not(.contact) {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  .portfolio-v5__profile-copy p,
+  .portfolio-v5__capabilities > div > p:not(.eyebrow),
+  .portfolio-v5__model-note p,
+  .portfolio-v5__tool-groups article > p:not(.eyebrow),
+  .method-v6__head > p:not(.eyebrow),
+  .method-v6__panel > p:not(.method-v6__step-index),
+  .case-step > p:not(.case-v5__note),
+  .case-v5 .case-v5__method p,
+  .case-v5 .case-v5__decision p {
+    font-size: 17px;
+  }
+
+  .case-v5 .case-v5__note {
+    font-size: 17px !important;
+  }
+
+  .portfolio-v5__profile-copy p,
+  .portfolio-v5__capabilities > div:first-child,
+  .portfolio-v5__capabilities > div:last-child,
+  .portfolio-v5__ai-tools,
+  .portfolio-v5__model-note,
+  .portfolio-v5__tool-groups article,
+  .method-v6.is-enhanced .method-v6__sticky,
+  .method-v6.is-enhanced .method-v6__panel.is-active,
+  .case-step,
+  .case-v5 .case-v5__facts > div,
+  .case-v5 .case-v5__method,
+  .case-stage__console {
+    padding: 28px;
+  }
+
+  .portfolio-v5__profile-copy,
+  .portfolio-v5__capabilities,
+  .portfolio-v5__tool-groups,
+  .case-v5 .case-v5__facts {
+    gap: 20px;
+  }
+
+  .portfolio-v5__section-head,
+  .portfolio-v5__tools .portfolio-v5__section-head,
+  .portfolio-v5__profile h2,
+  .case-step h2,
+  .case-page .section h2,
+  .case-page .case-end h2 {
+    margin-bottom: 40px;
+  }
+
+  .case-journey__steps {
+    gap: 96px;
+  }
+
+  .case-phone-shot,
+  .case-media-duo__mobile img {
+    max-height: 420px;
+  }
+
+  /* La consola del método debe caber bajo la cabecera en ventanas bajas. */
+  @media (max-height: 660px) {
+    .method-v6.is-enhanced .method-v6__sticky,
+    .method-v6.is-enhanced .method-v6__panel.is-active {
+      padding: 24px;
+    }
+  }
+}
+
+@media (max-width: 899px) {
+  main > section:not(#contacto):not(.contact) {
+    padding-top: 88px;
+    padding-bottom: 88px;
+  }
+
+  /* El padding anterior del hero móvil también usa !important. */
+  main > .hero {
+    padding-block: 88px !important;
+  }
+
+  .portfolio-v5__profile-copy p,
+  .portfolio-v5__capabilities > div > p:not(.eyebrow),
+  .portfolio-v5__model-note p,
+  .portfolio-v5__tool-groups article > p:not(.eyebrow),
+  .method-v6__head > p:not(.eyebrow),
+  .method-v6__panel > p:not(.method-v6__step-index),
+  .case-step > p:not(.case-v5__note),
+  .case-v5 .case-v5__method p,
+  .case-v5 .case-v5__decision p {
+    font-size: 16px;
+  }
+
+  .case-v5 .case-v5__note {
+    font-size: 16px !important;
+  }
+
+  .portfolio-v5__profile-copy p,
+  .portfolio-v5__capabilities > div:first-child,
+  .portfolio-v5__capabilities > div:last-child,
+  .portfolio-v5__ai-tools,
+  .portfolio-v5__model-note,
+  .portfolio-v5__tool-groups article,
+  .method-v6.is-enhanced .method-v6__sticky,
+  .method-v6.is-enhanced .method-v6__panel.is-active,
+  .case-step,
+  .case-v5 .case-v5__facts > div,
+  .case-v5 .case-v5__method,
+  .case-stage__console {
+    padding: 22px;
+  }
+
+  .portfolio-v5__profile-copy,
+  .portfolio-v5__capabilities,
+  .portfolio-v5__tool-groups,
+  .case-v5 .case-v5__facts {
+    gap: 14px;
+  }
+
+  .portfolio-v5__section-head,
+  .portfolio-v5__tools .portfolio-v5__section-head,
+  .portfolio-v5__profile h2,
+  .case-step h2,
+  .case-page .section h2,
+  .case-page .case-end h2 {
+    margin-bottom: 28px;
+  }
+
+  .case-journey__steps {
+    gap: 64px;
+  }
+
+  .case-phone-shot,
+  .case-media-duo__mobile img {
+    max-height: 300px;
+  }
+
+  /* Evita que el padding añadido saque el método del área sticky. */
+  @media (max-width: 760px) {
+    .method-v6.is-enhanced .method-v6__sticky,
+    .method-v6.is-enhanced .method-v6__panel.is-active {
+      padding: 20px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .method-v6.is-enhanced .method-v6__sticky,
+    .method-v6.is-enhanced .method-v6__panel.is-active {
+      padding: 12px;
+    }
+  }
+}
+
+/* aire 29-oct · ajuste: el texto que sigue a una caja de método necesita respiro propio */
+.case-v5__method + p,
+.case-v5__decision + p {
+  margin-top: 24px;
+}
+
+.case-step__flow {
+  margin-top: 18px;
+}
