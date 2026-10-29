@@ -69,12 +69,12 @@
       return;
     }
 
-    // Títulos a ~115 ms; textos largos a ~78 ms (un chin más ágiles para no demorar la lectura).
+    // Títulos a ~115 ms; textos largos a ~52 ms (ritmo ágil y directo sin demorar la lectura).
     const isHeading = /^H[1-6]$/.test(el.tagName);
     const stagger = isHeading
       ? Math.min(115, 2200 / words.length)
-      : Math.min(78, 1600 / words.length);
-    const fade = isHeading ? 620 : 500;
+      : Math.min(52, 1200 / words.length);
+    const fade = isHeading ? 620 : 400;
     words.forEach((w, i) => {
       w.style.transitionDuration = fade + 'ms';
       w.style.transitionDelay = Math.round(delayMs + i * stagger) + 'ms';
@@ -103,7 +103,7 @@
 
     heroTargets.forEach(el => {
       const isHeading = /^H[1-6]$/.test(el.tagName);
-      runTypewriter(el, isHeading ? 520 : 520, isHeading ? 80 : 160);
+      runTypewriter(el, isHeading ? 520 : 420, isHeading ? 80 : 100);
     });
 
     if (!('IntersectionObserver' in window)) return;
@@ -131,7 +131,7 @@
           seen.add(entry.target);
           io.unobserve(entry.target);
           const isHeading = /^H[1-6]$/.test(entry.target.tagName);
-          runTypewriter(entry.target, isHeading ? 500 : 500, isHeading ? 20 : 100);
+          runTypewriter(entry.target, isHeading ? 500 : 420, isHeading ? 20 : 60);
         });
       },
       { rootMargin: '0px 0px -10% 0px', threshold: 0.18 }
@@ -204,7 +204,7 @@
         const titleEl = steps[index]?.querySelector('h2');
         const copyEl = steps[index]?.querySelector('p[data-typewriter="copy"]');
         if (titleEl) runTypewriter(titleEl, 540, 0);
-        if (copyEl) runTypewriter(copyEl, 520, 100);
+        if (copyEl) runTypewriter(copyEl, 420, 60);
       }
     };
 
@@ -339,7 +339,7 @@
       const titleEl = activePanel?.querySelector('h3');
       const leadEl = activePanel?.querySelector('.method-v6__lead');
       if (titleEl) runTypewriter(titleEl, 500, 0);
-      if (leadEl) runTypewriter(leadEl, 520, 100);
+      if (leadEl) runTypewriter(leadEl, 420, 60);
       diagrams[index]?.animate?.(
         [
           { transform: 'scale(0.84)' },
