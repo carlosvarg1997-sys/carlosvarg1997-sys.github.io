@@ -359,9 +359,13 @@
     }
     if (performance.now() < manualLockUntil) return;
     const rect = track.getBoundingClientRect();
+    const isMobile = window.innerWidth <= 760;
+    const entryOffset = isMobile ? 140 : 0;
     const travel = Math.max(1, track.offsetHeight - sticky.offsetHeight);
+    const effectiveTravel = Math.max(1, travel - entryOffset);
     const trackTop = window.scrollY + rect.top;
-    const progress = clamp((window.scrollY - trackTop) / travel, 0, 1);
+    const currentY = window.scrollY - trackTop;
+    const progress = clamp((currentY - entryOffset) / effectiveTravel, 0, 1);
     const index = Math.min(5, Math.floor(progress * 6));
     stageState(index, active >= 0);
   };
@@ -412,9 +416,12 @@
       stageState(i, true);
       trackEvent('method_step_select', { step: i + 1 });
       if (!scrollLocked || !track || !sticky) return;
+      const isMobile = window.innerWidth <= 760;
+      const entryOffset = isMobile ? 140 : 0;
       const trackTop = window.scrollY + track.getBoundingClientRect().top;
       const travel = Math.max(1, track.offsetHeight - sticky.offsetHeight);
-      const target = trackTop + travel * ((i + 0.5) / 6);
+      const effectiveTravel = Math.max(1, travel - entryOffset);
+      const target = trackTop + entryOffset + effectiveTravel * ((i + 0.5) / 6);
       manualLockUntil = performance.now() + 650;
       window.scrollTo({ top: target, behavior: isMotionOff() ? 'auto' : 'smooth' });
     });
