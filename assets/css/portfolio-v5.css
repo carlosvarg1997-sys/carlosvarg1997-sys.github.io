@@ -734,7 +734,11 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
   letter-spacing: 0.02em !important;
 }
 
-/* Paneles del método más limpios y con aire */
+/* Paneles del método más limpios, ágiles y con aire */
+.method-v6.is-enhanced.is-scroll-locked .method-v6__track {
+  height: calc(150svh + 100svh - var(--header-h) - 28px) !important;
+}
+
 .method-v6__panel > .method-v6__chips {
   margin-top: 18px;
   padding-top: 16px;
@@ -747,25 +751,89 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
   font-size: 13px !important;
 }
 
-/* Destaque de evidencia en tarjetas de proyectos */
-.projects-v6__result {
-  padding: 10px 14px;
-  border-left: 3px solid var(--orange);
-  border-radius: 0 10px 10px 0;
-  background: rgba(255, 76, 0, 0.14);
-  color: #ffffff !important;
-  font-size: 15px !important;
-  line-height: 1.45 !important;
+/* Credencial compacta en Hero */
+.hero__content > p.hero__cred {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  margin: 0 0 22px !important;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92) !important;
+  font: 700 13.5px/1.3 var(--utility) !important;
+  letter-spacing: 0.01em !important;
 }
 
-.projects-v6__result strong {
-  color: #ff9d76 !important;
+/* Tarjetas de proyectos con más aire y píldoras de evidencia escaneables */
+.projects-v6__card {
+  height: min(calc(100svh - var(--header-h) - 110px), 560px) !important;
+  margin-bottom: 52px !important;
 }
 
-/* Separación en sección unificada de Perfil + Herramientas */
-.portfolio-v5__profile .portfolio-v5__tool-groups {
-  margin-top: 24px;
-  margin-bottom: 8px;
+.projects-v6__copy {
+  gap: 16px !important;
+  padding: clamp(28px, 3.2vw, 44px) !important;
+}
+
+.projects-v6__description {
+  max-width: 46ch !important;
+  font-size: clamp(17px, 1.3vw, 20px) !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+
+.projects-v6__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.projects-v6__tags li {
+  display: inline-block;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 157, 118, 0.55);
+  border-radius: 999px;
+  background: rgba(255, 76, 0, 0.2);
+  color: #ffffff;
+  font: 700 13.5px/1.25 var(--utility);
+  letter-spacing: 0.01em;
+}
+
+.projects-v6__tags li strong {
+  color: #ffb396;
+}
+
+/* Tarjetas de Perfil y agentes de IA integradas (3 bloques en vez de 6) */
+.portfolio-v5__profile-grid {
+  gap: 24px !important;
+  margin-top: 8px;
+}
+
+.portfolio-v5__profile-card {
+  padding: 28px 26px !important;
+}
+
+.profile-pills {
+  display: block;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 76, 0, 0.22);
+  color: #170b0b;
+  font: 700 13.5px/1.35 var(--utility);
+  letter-spacing: 0.01em;
+}
+
+/* Más aire entre secciones principales */
+.portfolio-v5 > .method-v6,
+.portfolio-v5 > .projects-v6,
+.portfolio-v5 > .portfolio-v5__profile,
+.portfolio-v5 > .contact {
+  padding-top: clamp(76px, 9vw, 124px) !important;
+  padding-bottom: clamp(76px, 9vw, 124px) !important;
 }
 
 /* 3. Ajustes específicos para móvil (aire, recorrido más corto y lectura directa) */
@@ -776,11 +844,11 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
 
   main > .hero,
   .hero {
-    padding: 108px var(--hero-gutter) 28px !important;
+    padding: 104px var(--hero-gutter) 32px !important;
   }
 
   .hero__art {
-    height: 76px !important;
+    height: 68px !important;
   }
 
   .hero .scene-label {
@@ -796,24 +864,26 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
   .hero h1 {
     font-size: clamp(30px, 8vw, 38px) !important;
     line-height: 1.08 !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 14px !important;
   }
 
   .hero__content > p.hero__cred {
-    font-size: 14px !important;
-    line-height: 1.45 !important;
-    margin-bottom: 12px !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    padding: 7px 12px !important;
+    margin-bottom: 18px !important;
+    border-radius: 14px;
   }
 
   .hero__content > p:not(.eyebrow):not(.hero__cred) {
     font-size: 16px !important;
-    line-height: 1.55 !important;
-    margin-bottom: 18px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 14px !important;
   }
 
-  /* Recorrido de scroll más ágil en la rueda de método móvil (3.4 pantallas en vez de 6) */
+  /* Recorrido de scroll más ágil en la rueda de método móvil (2.2 pantallas en vez de 6) */
   .method-v6.is-enhanced.is-scroll-locked .method-v6__track {
-    height: calc(220svh + 100svh - var(--header-h) - 24px) !important;
+    height: calc(120svh + 100svh - var(--header-h) - 24px) !important;
   }
 
   .method-ring__node {
@@ -836,13 +906,13 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
 
   .method-v6__lead {
     font-size: 15px !important;
-    line-height: 1.48 !important;
-    margin-bottom: 8px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 6px !important;
   }
 
   .method-v6__panel > .method-v6__chips {
-    margin-top: 12px !important;
-    padding-top: 12px !important;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
     gap: 6px !important;
   }
 
@@ -852,38 +922,43 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
     font-size: 13px !important;
   }
 
-  .method-v6__principle {
-    margin-top: 22px;
-    padding: 20px 22px !important;
-    font-size: 17px !important;
-    line-height: 1.45 !important;
+  .projects-v6__deck {
+    gap: 32px !important;
+  }
+
+  .projects-v6__card {
+    height: auto !important;
+    margin-bottom: 0 !important;
   }
 
   .projects-v6__copy {
     gap: 14px !important;
-    padding: 22px 20px 24px !important;
+    padding: 24px 20px 26px !important;
   }
 
   .projects-v6__description {
     font-size: 16px !important;
-    line-height: 1.52 !important;
+    line-height: 1.48 !important;
+  }
+
+  .projects-v6__tags {
+    gap: 8px;
+  }
+
+  .projects-v6__tags li {
+    font-size: 13px;
+    padding: 5px 12px;
   }
 
   /* Desanidar pasos de casos en móvil para dar más aire */
   .case-journey__steps {
-    gap: 40px !important;
+    gap: 36px !important;
     padding-left: 12px !important;
   }
 
   .case-step {
-    padding: 18px 16px !important;
+    padding: 20px 18px !important;
     border-radius: 14px !important;
     box-shadow: none !important;
-  }
-
-  .case-v5 .case-v5__method p,
-  .case-v5 .case-v5__decision p {
-    font-size: 15px !important;
-    line-height: 1.52 !important;
   }
 }
