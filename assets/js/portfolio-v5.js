@@ -31,7 +31,7 @@
   };
 
   const runTypewriter = (el, durationMs = 580, delayMs = 0) => {
-    if (!el || isMotionOff()) return;
+    if (!el || isMotionOff() || window.innerWidth <= 760) return;
     if (typeof el.__origHTML !== 'string') {
       el.__origHTML = el.innerHTML;
     }

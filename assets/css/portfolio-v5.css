@@ -595,3 +595,295 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
 .case-step__flow {
   margin-top: 18px;
 }
+
+/* =========================================================================
+   SÍNTESIS, AIRE Y USABILIDAD MÓVIL (06-nov-2026)
+   - Objetivos táctiles >= 44x44px en móvil y escritorio
+   - Tipografía mínima 13px en etiquetas/chips y 16-17px en cuerpo
+   - Reducción de mayúsculas sostenidas y mayor aire entre bloques
+   ========================================================================= */
+
+/* 1. Objetivos táctiles (>= 44x44 px) */
+.site-header__brand,
+.site-nav a,
+.motion-toggle,
+.site-footer a,
+.footer a,
+.case-page .masthead__name,
+.case-page .nav a,
+.case-v5 .case-route a,
+.case-stage__tab,
+.text-link,
+.case-page .text-link,
+.case-end__links .pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.menu-toggle {
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0 14px;
+  font-size: 13px !important;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.site-header__brand {
+  padding: 0 10px;
+}
+
+.site-nav a {
+  padding: 0 12px;
+  font-size: 13px !important;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.motion-toggle {
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  font-size: 13px !important;
+  text-transform: none !important;
+  letter-spacing: 0.01em !important;
+}
+
+.site-footer a,
+.footer a {
+  padding: 0 10px;
+  font-size: 13px !important;
+  text-transform: none;
+}
+
+.case-page .nav a {
+  padding: 0 10px;
+  font-size: 13.5px !important;
+}
+
+.case-v5 .case-route a {
+  padding: 6px 14px;
+  font-size: 13.5px !important;
+}
+
+.case-stage__tab {
+  min-height: 44px;
+  padding: 8px 14px;
+  font-size: 13px !important;
+  letter-spacing: 0.02em;
+}
+
+.case-stage__status {
+  font-size: 12.5px !important;
+  padding: 6px 11px;
+}
+
+.method-ring__node {
+  min-height: 44px !important;
+  min-width: 44px !important;
+  padding: 0 14px;
+  font-size: 12.5px !important;
+}
+
+/* 2. Tipografía, jerarquía de evidencia y reducción de mayúsculas */
+.hero__content > p.hero__cred,
+.hero__cred {
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  opacity: 0.9 !important;
+  margin: 0 0 14px !important;
+}
+
+.hero__bottom {
+  font-size: 13px !important;
+  text-transform: none !important;
+  letter-spacing: 0.02em !important;
+}
+
+.eyebrow,
+.portfolio-v5__section-head .eyebrow,
+.portfolio-v5__profile > .eyebrow,
+.portfolio-v5__tool-groups .eyebrow,
+.case-page .eyebrow,
+.case-page .case-hero__meta dt,
+.method-v6__step-index,
+.method-v6__bridge-pill,
+.method-ring__name,
+.method-ring__core small,
+.projects-v6__meta > p,
+.case-step__badge,
+.case-step__kpis span,
+.case-step__flow span:not([aria-hidden]),
+.case-media-card__bar,
+.case-media-duo figcaption,
+.contact small,
+.site-footer span {
+  font-size: 13px !important;
+}
+
+.contact small,
+.site-footer span {
+  text-transform: none !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Paneles del método más limpios y con aire */
+.method-v6__panel > .method-v6__chips {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.method-v6__chips li {
+  min-height: 32px !important;
+  padding: 5px 12px !important;
+  font-size: 13px !important;
+}
+
+/* Destaque de evidencia en tarjetas de proyectos */
+.projects-v6__result {
+  padding: 10px 14px;
+  border-left: 3px solid var(--orange);
+  border-radius: 0 10px 10px 0;
+  background: rgba(255, 76, 0, 0.14);
+  color: #ffffff !important;
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+}
+
+.projects-v6__result strong {
+  color: #ff9d76 !important;
+}
+
+/* Separación en sección unificada de Perfil + Herramientas */
+.portfolio-v5__profile .portfolio-v5__tool-groups {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+/* 3. Ajustes específicos para móvil (aire, recorrido más corto y lectura directa) */
+@media (max-width: 760px) {
+  .wordmark {
+    display: none !important;
+  }
+
+  main > .hero,
+  .hero {
+    padding: 108px var(--hero-gutter) 28px !important;
+  }
+
+  .hero__art {
+    height: 76px !important;
+  }
+
+  .hero .scene-label {
+    display: none !important;
+  }
+
+  .hero__scene-title {
+    font-size: clamp(24px, 6.8vw, 32px) !important;
+    top: 16px !important;
+    opacity: 0.14 !important;
+  }
+
+  .hero h1 {
+    font-size: clamp(30px, 8vw, 38px) !important;
+    line-height: 1.08 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .hero__content > p.hero__cred {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 12px !important;
+  }
+
+  .hero__content > p:not(.eyebrow):not(.hero__cred) {
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 18px !important;
+  }
+
+  /* Recorrido de scroll más ágil en la rueda de método móvil (3.4 pantallas en vez de 6) */
+  .method-v6.is-enhanced.is-scroll-locked .method-v6__track {
+    height: calc(220svh + 100svh - var(--header-h) - 24px) !important;
+  }
+
+  .method-ring__node {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 0 !important;
+  }
+
+  .method-ring__node-number {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 13px !important;
+  }
+
+  .method-v6.is-enhanced .method-v6__panel.is-active {
+    padding: 16px 16px 18px !important;
+  }
+
+  .method-v6__lead {
+    font-size: 15px !important;
+    line-height: 1.48 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .method-v6__panel > .method-v6__chips {
+    margin-top: 12px !important;
+    padding-top: 12px !important;
+    gap: 6px !important;
+  }
+
+  .method-v6__chips li {
+    min-height: 28px !important;
+    padding: 4px 10px !important;
+    font-size: 13px !important;
+  }
+
+  .method-v6__principle {
+    margin-top: 22px;
+    padding: 20px 22px !important;
+    font-size: 17px !important;
+    line-height: 1.45 !important;
+  }
+
+  .projects-v6__copy {
+    gap: 14px !important;
+    padding: 22px 20px 24px !important;
+  }
+
+  .projects-v6__description {
+    font-size: 16px !important;
+    line-height: 1.52 !important;
+  }
+
+  /* Desanidar pasos de casos en móvil para dar más aire */
+  .case-journey__steps {
+    gap: 40px !important;
+    padding-left: 12px !important;
+  }
+
+  .case-step {
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+  }
+
+  .case-v5 .case-v5__method p,
+  .case-v5 .case-v5__decision p {
+    font-size: 15px !important;
+    line-height: 1.52 !important;
+  }
+}
