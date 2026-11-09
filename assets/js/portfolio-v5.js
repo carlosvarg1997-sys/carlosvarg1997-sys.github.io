@@ -330,7 +330,7 @@
   const nodes = [...section.querySelectorAll('[data-method-node]')];
   const projectStack = document.querySelector('[data-project-stack]');
   const cards = projectStack ? [...projectStack.querySelectorAll('[data-project-card]')] : [];
-  const stackReady = () => window.innerWidth >= 1024 && window.innerHeight >= 700;
+  const stackReady = () => false;
   const scrollLockReady = () => window.innerHeight >= 500 && !isMotionOff();
   let enhanced = false;
   let scrollLocked = false;
