@@ -3,10 +3,47 @@
   const root = document.documentElement;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-  const trackEvent = (eventName, params = {}) => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({ event: eventName, ...params });
+  const captureAttribution = () => {
+    try {
+      const sp = new URLSearchParams(window.location.search);
+      const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+      const current = {};
+      let found = false;
+      keys.forEach(k => {
+        const val = sp.get(k);
+        if (val) {
+          current[k] = val;
+          found = true;
+        }
+      });
+      if (found) {
+        sessionStorage.setItem('cv_portfolio_utm', JSON.stringify(current));
+        return current;
+      }
+      const saved = sessionStorage.getItem('cv_portfolio_utm');
+      return saved ? JSON.parse(saved) : {};
+    } catch (_) {
+      return {};
+    }
   };
+  const utmContext = captureAttribution();
+  const trackEvent = (eventName, params = {}) => {
+    const payload = {
+      event: eventName,
+      page_path: window.location.pathname,
+      ...utmContext,
+      ...params
+    };
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(payload);
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, payload);
+    }
+  };
+  trackEvent('page_view_portfolio', {
+    page_title: document.title,
+    referrer: document.referrer || 'direct'
+  });
   const isMotionOff = () =>
     reducedMotion.matches ||
     root.classList.contains('motion-paused') ||
@@ -114,6 +151,8 @@
       ...document.querySelectorAll('.projects-v6__copy h3'),
       ...document.querySelectorAll('.projects-v6__description'),
       ...document.querySelectorAll('.portfolio-v5__profile h2'),
+      ...document.querySelectorAll('.ai-method-card__head h3'),
+      ...document.querySelectorAll('.editorial-card h3'),
       ...document.querySelectorAll('.portfolio-v5__tool-groups h3'),
       ...document.querySelectorAll('.contact h2'),
       ...document.querySelectorAll('.contact > p:not(.eyebrow)'),
@@ -255,10 +294,21 @@
     const link = event.target.closest('a[href]');
     if (!link) return;
     const href = link.getAttribute('href') || '';
-    if (href.includes('Carlos_Vargas_CV.pdf')) trackEvent('click_cv', { href });
-    else if (href.startsWith('mailto:')) trackEvent('click_contact', { href });
-    else if (href.includes('linkedin.com')) trackEvent('click_linkedin', { href });
-    else if (href.includes('proyectos/')) trackEvent('select_project', { href });
+    const editorialCard = link.closest('[data-editorial-card]');
+    if (editorialCard) {
+      trackEvent('select_editorial_idea', {
+        idea_id: editorialCard.getAttribute('data-editorial-card') || '',
+        href
+      });
+    } else if (href.includes('Carlos_Vargas_CV.pdf')) {
+      trackEvent('click_cv', { href });
+    } else if (href.startsWith('mailto:')) {
+      trackEvent('click_contact', { href });
+    } else if (href.includes('linkedin.com')) {
+      trackEvent('click_linkedin', { href });
+    } else if (href.includes('proyectos/')) {
+      trackEvent('select_project', { href });
+    }
   });
 
   // ---------------------------------------------------------------------------
