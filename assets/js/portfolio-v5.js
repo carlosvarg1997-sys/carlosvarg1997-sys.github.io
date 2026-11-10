@@ -106,12 +106,12 @@
       return;
     }
 
-    // Títulos a ~115 ms; textos largos a ~52 ms (ritmo ágil y directo sin demorar la lectura).
+    // Títulos a ~58 ms; textos largos a ~28 ms (ritmo ágil, vivo y directo).
     const isHeading = /^H[1-6]$/.test(el.tagName);
     const stagger = isHeading
-      ? Math.min(115, 2200 / words.length)
-      : Math.min(52, 1200 / words.length);
-    const fade = isHeading ? 620 : 400;
+      ? Math.min(58, 920 / words.length)
+      : Math.min(28, 680 / words.length);
+    const fade = isHeading ? 460 : 340;
     words.forEach((w, i) => {
       w.style.transitionDuration = fade + 'ms';
       w.style.transitionDelay = Math.round(delayMs + i * stagger) + 'ms';
@@ -148,8 +148,19 @@
     const scrollTargets = [
       ...document.querySelectorAll('.portfolio-v5__section-head h2'),
       ...document.querySelectorAll('.portfolio-v5__section-head > p:last-child'),
+      ...document.querySelectorAll('.projects-v6__copy h3'),
+      ...document.querySelectorAll('.projects-v6__description'),
       ...document.querySelectorAll('.portfolio-v5__profile h2'),
+      ...document.querySelectorAll('.ai-method-card__head h3'),
+      ...document.querySelectorAll('.ai-method-card__head > p:last-child'),
+      ...document.querySelectorAll('.editorial-card h3'),
+      ...document.querySelectorAll('.editorial-card p'),
+      ...document.querySelectorAll('.portfolio-v5__tool-groups h3'),
+      ...document.querySelectorAll('.contact h2'),
+      ...document.querySelectorAll('.contact > p:not(.eyebrow)'),
+      ...document.querySelectorAll('.case-step h2'),
       ...document.querySelectorAll('#aporte h2'),
+      ...document.querySelectorAll('#aporte p'),
       ...document.querySelectorAll('.case-end h2')
     ].filter(el => !heroTargets.includes(el));
 
@@ -161,10 +172,10 @@
           seen.add(entry.target);
           io.unobserve(entry.target);
           const isHeading = /^H[1-6]$/.test(entry.target.tagName);
-          runTypewriter(entry.target, isHeading ? 500 : 420, isHeading ? 20 : 60);
+          runTypewriter(entry.target, isHeading ? 480 : 380, isHeading ? 20 : 50);
         });
       },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.18 }
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.15 }
     );
 
     scrollTargets.forEach(el => io.observe(el));
@@ -173,11 +184,15 @@
   initScrollTypewriter();
 
   // ---------------------------------------------------------------------------
-  // 1B. Coreografía lateral de tarjetas (Lateral Card Reveal al hacer scroll)
+  // 1B. Coreografía lateral de tarjetas + cascada de elementos internos + tilt
   // ---------------------------------------------------------------------------
   const initLateralCardReveal = () => {
     if (isMotionOff() || !('IntersectionObserver' in window)) return;
-    const cardsToReveal = [...document.querySelectorAll('[data-card-reveal]')];
+    const cardsToReveal = [
+      ...document.querySelectorAll('[data-card-reveal]'),
+      ...document.querySelectorAll('.portfolio-v5__profile-copy > p'),
+      ...document.querySelectorAll('.ai-method-step')
+    ];
     if (!cardsToReveal.length) return;
 
     const revealed = new WeakSet();
@@ -186,28 +201,42 @@
 
     const animateCardIn = (card, delayMs = 0) => {
       if (!card || isMotionOff() || typeof card.animate !== 'function') return;
-      const dir = card.getAttribute('data-card-reveal') === 'right' ? 1 : -1;
+      const dirAttr = card.getAttribute('data-card-reveal');
+      const dir = dirAttr === 'right' ? 1 : dirAttr === 'left' ? -1 : 1;
       const isMobile = window.innerWidth <= 760;
-      const offsetX = (isMobile ? 26 : 48) * dir;
+      const offsetX = (isMobile ? 28 : 54) * dir;
       card.animate(
         [
-          { opacity: 0.18, transform: `translate3d(${offsetX}px, 12px, 0) scale(0.985)` },
+          { opacity: 0.14, transform: `translate3d(${offsetX}px, 16px, 0) scale(0.98)` },
           { opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' }
         ],
         {
-          duration: 660,
+          duration: 680,
           delay: delayMs,
           easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
         }
       );
-    };
 
-    // Animar suavemente las minicards del Hero al cargar
-    const heroBentoCards = [...document.querySelectorAll('.hero__bento-card[data-card-reveal]')];
-    heroBentoCards.forEach((card, idx) => {
-      revealed.add(card);
-      animateCardIn(card, 120 + idx * 75);
-    });
+      // Cascada interna para píldoras, botones y portadas dentro de la card
+      const innerItems = card.querySelectorAll(
+        '.projects-v6__meta, .projects-v6__tags li, .projects-v6__actions a, .projects-v6__cover, .editorial-card__meta, .editorial-card__links a, .profile-pills'
+      );
+      innerItems.forEach((item, idx) => {
+        if (typeof item.animate !== 'function') return;
+        item.animate(
+          [
+            { opacity: 0, transform: 'translate3d(0, 14px, 0) scale(0.97)' },
+            { opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' }
+          ],
+          {
+            duration: 520,
+            delay: delayMs + 90 + idx * 65,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            fill: 'backwards'
+          }
+        );
+      });
+    };
 
     const cardObserver = new IntersectionObserver(
       entries => {
@@ -215,20 +244,144 @@
           if (!entry.isIntersecting || revealed.has(entry.target)) return;
           revealed.add(entry.target);
           cardObserver.unobserve(entry.target);
-          if (userHasScrolled || entry.boundingClientRect.top > 120) {
+          if (userHasScrolled || entry.boundingClientRect.top > 100) {
             animateCardIn(entry.target, 0);
           }
         });
       },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.14 }
+      { rootMargin: '0px 0px -6% 0px', threshold: 0.12 }
     );
 
-    cardsToReveal.forEach(card => {
+    cardsToReveal.forEach((card, i) => {
+      if (!card.hasAttribute('data-card-reveal')) {
+        card.setAttribute('data-card-reveal', i % 2 === 0 ? 'left' : 'right');
+      }
       if (!revealed.has(card)) cardObserver.observe(card);
     });
   };
 
   initLateralCardReveal();
+
+  // ---------------------------------------------------------------------------
+  // 1C. Escena Cinética Interactiva en el Fondo Derecho del Hero (Canvas + SVG)
+  // ---------------------------------------------------------------------------
+  const initHeroKineticCanvas = () => {
+    const canvas = document.querySelector('[data-hero-canvas]');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let w = 0;
+    let h = 0;
+    let dpr = 1;
+    let rafId = 0;
+    let pointerX = 0.65;
+    let pointerY = 0.5;
+    let targetX = 0.65;
+    let targetY = 0.5;
+
+    const particles = Array.from({ length: 28 }, (_, i) => ({
+      angle: (i / 28) * Math.PI * 2,
+      radius: 58 + (i % 5) * 38,
+      speed: (i % 2 === 0 ? 1 : -1) * (0.0035 + (i % 4) * 0.0014),
+      size: i % 4 === 0 ? 2.8 : 1.8,
+      isMolten: i % 3 === 0
+    }));
+
+    const resize = () => {
+      const rect = canvas.getBoundingClientRect();
+      w = Math.max(1, rect.width);
+      h = Math.max(1, rect.height);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    const heroEl = canvas.closest('.hero');
+    if (heroEl) {
+      heroEl.addEventListener('pointermove', e => {
+        const r = heroEl.getBoundingClientRect();
+        targetX = clamp((e.clientX - r.left) / Math.max(1, r.width), 0.2, 0.95);
+        targetY = clamp((e.clientY - r.top) / Math.max(1, r.height), 0.1, 0.9);
+      }, { passive: true });
+    }
+
+    const drawFrame = t => {
+      ctx.clearRect(0, 0, w, h);
+      pointerX += (targetX - pointerX) * 0.06;
+      pointerY += (targetY - pointerY) * 0.06;
+
+      const cx = w * 0.58 + (pointerX - 0.65) * 42;
+      const cy = h * 0.5 + (pointerY - 0.5) * 28;
+      const time = t * 0.001;
+
+      // 1. Halo metálico reactivo en el fondo derecho
+      const halo = ctx.createRadialGradient(cx, cy, 8, cx, cy, Math.min(w, h) * 0.52);
+      halo.addColorStop(0, 'rgba(255, 90, 31, 0.18)');
+      halo.addColorStop(0.42, 'rgba(215, 220, 232, 0.08)');
+      halo.addColorStop(1, 'rgba(11, 12, 15, 0)');
+      ctx.fillStyle = halo;
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Ondas armónicas metálicas (Fog Silver + Molten Orange)
+      for (let waveIdx = 0; waveIdx < 3; waveIdx++) {
+        ctx.beginPath();
+        const isOrange = waveIdx === 0;
+        ctx.strokeStyle = isOrange
+          ? 'rgba(255, 90, 31, 0.36)'
+          : waveIdx === 1
+            ? 'rgba(228, 229, 232, 0.22)'
+            : 'rgba(255, 255, 255, 0.12)';
+        ctx.lineWidth = isOrange ? 2 : 1.2;
+
+        for (let x = 0; x <= w; x += 10) {
+          const norm = x / Math.max(1, w);
+          const yOffset =
+            Math.sin(norm * 5.2 + time * (1.4 + waveIdx * 0.35) + waveIdx) * (24 + waveIdx * 11) +
+            Math.cos(norm * 2.8 - time * 0.9) * 12;
+          const y = cy + yOffset;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      }
+
+      // 3. Partículas orbitales de telemetría
+      particles.forEach(p => {
+        if (!isMotionOff()) p.angle += p.speed;
+        const px = cx + Math.cos(p.angle) * p.radius * 1.18;
+        const py = cy + Math.sin(p.angle) * p.radius * 0.84;
+
+        ctx.beginPath();
+        ctx.arc(px, py, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.isMolten ? '#FF5A1F' : '#E4E5E8';
+        ctx.fill();
+
+        if (p.isMolten) {
+          ctx.beginPath();
+          ctx.arc(px, py, p.size * 3.2, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 90, 31, 0.18)';
+          ctx.fill();
+        }
+      });
+
+      if (!isMotionOff()) {
+        rafId = requestAnimationFrame(drawFrame);
+      }
+    };
+
+    drawFrame(0);
+    document.addEventListener('aos:motion-change', () => {
+      cancelAnimationFrame(rafId);
+      if (!isMotionOff()) rafId = requestAnimationFrame(drawFrame);
+    });
+  };
+
+  initHeroKineticCanvas();
 
   // ---------------------------------------------------------------------------
   // 2. Páginas de Proyectos: Camino Guiado + Consola de Flujo HD ([data-case-journey])

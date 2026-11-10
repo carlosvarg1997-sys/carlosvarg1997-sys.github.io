@@ -26,11 +26,11 @@
   <link rel="stylesheet" href="assets/css/coherencia-20261027.css?v=20261027-revision-4">
   <link rel="stylesheet" href="assets/css/tipografia-unificada.css?v=20261027-1">
   <link rel="stylesheet" href="assets/css/legibilidad-20261028.css?v=1">
-  <link rel="stylesheet" href="assets/css/portfolio-v5.css?v=20261110-v9">
+  <link rel="stylesheet" href="assets/css/portfolio-v5.css?v=20261110-v10">
   <script src="assets/js/v2-home.js?v=20261025-sintesis-1" defer></script>
   <script src="assets/js/v4-motion.js?v=20261025-relato-1" defer></script>
   <script src="assets/js/coherencia-20261027.js?v=20261027-1" defer></script>
-  <script src="assets/js/portfolio-v5.js?v=20261110-v9" defer></script>
+  <script src="assets/js/portfolio-v5.js?v=20261110-v10" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -51,41 +51,70 @@
   <main id="contenido">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__scene" aria-hidden="true"></div>
+      <div class="hero__kinetic-bg" aria-hidden="true">
+        <canvas class="hero__canvas" data-hero-canvas></canvas>
+        <svg class="hero__kinetic-svg" viewBox="0 0 680 560" focusable="false" aria-hidden="true">
+          <defs>
+            <linearGradient id="heroMetalRing" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+              <stop offset="45%" stop-color="#C8CDD8" stop-opacity="0.22"/>
+              <stop offset="100%" stop-color="#FF5A1F" stop-opacity="0.48"/>
+            </linearGradient>
+            <linearGradient id="heroMoltenArc" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#FF5A1F" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#FF5A1F" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#FFB088" stop-opacity="1"/>
+            </linearGradient>
+            <radialGradient id="heroCoreGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#FF5A1F" stop-opacity="0.26"/>
+              <stop offset="55%" stop-color="#9CA3B2" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="#0B0C0E" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <circle cx="390" cy="276" r="245" fill="url(#heroCoreGlow)"/>
+          <g class="hero__orbit hero__orbit--outer">
+            <circle cx="390" cy="276" r="224" fill="none" stroke="url(#heroMetalRing)" stroke-width="1.4" stroke-dasharray="6 10"/>
+            <circle cx="390" cy="52" r="5" fill="#E4E5E8"/>
+            <circle cx="614" cy="276" r="4" fill="#FF5A1F"/>
+            <circle cx="390" cy="500" r="4" fill="#9FA6B5"/>
+          </g>
+          <g class="hero__orbit hero__orbit--mid">
+            <circle cx="390" cy="276" r="168" fill="none" stroke="url(#heroMetalRing)" stroke-width="1.8"/>
+            <circle cx="390" cy="276" r="168" fill="none" stroke="url(#heroMoltenArc)" stroke-width="3.2" stroke-dasharray="95 280" stroke-linecap="round"/>
+            <circle cx="558" cy="276" r="6.5" fill="#FF5A1F" stroke="#FFFFFF" stroke-width="2"/>
+          </g>
+          <g class="hero__orbit hero__orbit--inner">
+            <circle cx="390" cy="276" r="112" fill="none" stroke="rgba(228,229,232,0.24)" stroke-width="1.2" stroke-dasharray="3 6"/>
+            <circle cx="278" cy="276" r="4.5" fill="#FFFFFF"/>
+          </g>
+          <path class="hero__wave-bg" d="M 120 330 C 205 330, 235 196, 305 196 C 375 196, 405 344, 475 344 C 535 344, 565 182, 635 182" fill="none" stroke="rgba(228,229,232,0.22)" stroke-width="2.5" stroke-linecap="round"/>
+          <path class="hero__wave-active" d="M 120 330 C 205 330, 235 196, 305 196 C 375 196, 405 344, 475 344 C 535 344, 565 182, 635 182" fill="none" stroke="url(#heroMoltenArc)" stroke-width="4" stroke-linecap="round"/>
+          <g class="hero__node-group">
+            <circle cx="305" cy="196" r="16" fill="rgba(255,90,31,0.18)" class="hero__node-halo"/>
+            <circle cx="305" cy="196" r="7.5" fill="#FF5A1F" stroke="#FFFFFF" stroke-width="2.2"/>
+            <circle cx="475" cy="344" r="6" fill="#E4E5E8" stroke="#141519" stroke-width="2"/>
+            <circle cx="635" cy="182" r="7" fill="#FFFFFF" stroke="#FF5A1F" stroke-width="2.5"/>
+          </g>
+          <g class="hero__cursor-Readout" transform="translate(390 276)">
+            <circle r="44" fill="rgba(16,18,23,0.72)" stroke="rgba(228,229,232,0.32)" stroke-width="1.4"/>
+            <circle r="6" fill="#FF5A1F" class="hero__core-dot"/>
+          </g>
+        </svg>
+      </div>
       <div class="hero__grid">
         <div class="hero__content">
           <p class="eyebrow eyebrow--light">MARKETING DIGITAL · GROWTH · UX/CX · IA APLICADA</p>
           <h1 id="hero-title">Detrás de cada clic hay una persona. Y detrás de cada decisión, <span class="text-molten">una oportunidad de mejorar.</span></h1>
           <p>Investigo qué motiva o frena a los clientes y lo transformo en estrategias comerciales, experiencias digitales y soluciones con IA que podemos medir y optimizar.</p>
+          <p class="hero__cred"><strong>Formación:</strong> Ingeniería en Marketing Digital · Duoc UC (dic. 2026) · Técnico en Marketing Digital (2024)</p>
           <div class="hero__actions">
             <a class="button button--molten" href="#casos">Explorar proyectos ↓</a>
             <a class="button button--ghost-light" href="https://www.linkedin.com/in/carlosvargasmkt/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
             <a class="button button--ghost-light" href="assets/cv/Carlos_Vargas_CV.pdf">CV (PDF)</a>
           </div>
         </div>
-
-        <div class="hero__wing" aria-label="Principio de trabajo y formación profesional">
-          <div class="hero__wing-top">
-            <span class="hero__wing-kicker">HILO CONDUCTOR</span>
-            <span class="hero__wing-badge">DETRÁS DEL CLIC</span>
-          </div>
-          <p class="hero__wing-quote">«Una experiencia no termina en el clic»</p>
-          <svg class="hero__wing-diagram" viewBox="0 0 420 128" aria-hidden="true" focusable="false">
-            <line x1="36" y1="64" x2="384" y2="64" stroke="#C4C8D0" stroke-width="2" stroke-dasharray="5 5"/>
-            <path d="M 36 88 C 110 88, 125 32, 168 32 C 215 32, 235 88, 282 88 C 325 88, 345 28, 384 28" fill="none" stroke="#1C1D21" stroke-width="3.5" stroke-linecap="round"/>
-            <path d="M 118 58 C 136 38, 150 32, 168 32 C 205 32, 225 76, 265 86" fill="none" stroke="#FF5A1F" stroke-width="4.5" stroke-linecap="round"/>
-            <circle cx="36" cy="88" r="7" fill="#1C1D21"/>
-            <circle cx="168" cy="32" r="9" fill="#FF5A1F" stroke="#FFFFFF" stroke-width="3"/>
-            <circle cx="282" cy="88" r="7" fill="#1C1D21"/>
-            <circle cx="384" cy="28" r="8" fill="#0B0C0E"/>
-            <text x="36" y="114" font-family="Arial Narrow, Bahnschrift, sans-serif" font-weight="700" font-size="11" fill="#1C1D21" text-anchor="middle" letter-spacing="1">PERSONA</text>
-            <text x="168" y="15" font-family="Arial Narrow, Bahnschrift, sans-serif" font-weight="700" font-size="11" fill="#FF5A1F" text-anchor="middle" letter-spacing="1">FRICCIÓN</text>
-            <text x="282" y="114" font-family="Arial Narrow, Bahnschrift, sans-serif" font-weight="700" font-size="11" fill="#1C1D21" text-anchor="middle" letter-spacing="1">DECISIÓN</text>
-            <text x="384" y="15" font-family="Arial Narrow, Bahnschrift, sans-serif" font-weight="700" font-size="11" fill="#0B0C0E" text-anchor="middle" letter-spacing="1">VALOR</text>
-          </svg>
-          <p class="hero__cred"><strong>Formación:</strong> Ingeniería en Marketing Digital · Duoc UC (dic. 2026) · Técnico en Marketing Digital (2024)</p>
-        </div>
       </div>
-      <div class="hero__bottom"><span>Santiago, Chile · Estrategia comercial, investigación, UX/CX e IA con criterio</span><button type="button" class="motion-toggle" aria-pressed="false" data-motion-toggle>Pausar animación</button></div>
+      <div class="hero__bottom"><span>Santiago, Chile · «Una experiencia no termina en el clic»</span><button type="button" class="motion-toggle" aria-pressed="false" data-motion-toggle>Pausar animación</button></div>
     </section>
 
     <section class="projects-v6 section-pad" id="casos" aria-labelledby="projects-title">

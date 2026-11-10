@@ -1438,20 +1438,64 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
   }
 }
 
+
 /* =========================================================================
-   SISTEMA ARQUITECTÓNICO V9 — 60-30-10 DENTRO DE CADA CARD (10-nov-2026)
-   - 60% Gunmetal Night (#16171B / #1C1D21)
-   - 30% Fog Silver (#E4E5E8 / #EFF1F5)
-   - 10% Molten Orange (#FF5A1F — sólido, 0% marrón translúcido)
-   - Negro Puro (#0B0C0E) y Blanco Puro (#FFFFFF) para contraste tipográfico AAA
-   - Cero efecto cebra/damero entre cards hermanas: CADA CARD tiene su propio
-     contraste interno 60-30-10 + Blanco/Negro.
-   - Cero bordes gruesos laterales/superiores repetitivos.
+   SISTEMA ARQUITECTÓNICO V10 — METÁLICO ANODIZADO 60-30-10 + MOTION VIVO
+   - 60% Gunmetal Night Metalizado (degradados titanio/acero oscuro con reflejos
+     especulares blancos leves y negros profundos #2B303C -> #181B22 -> #090A0D)
+   - 30% Fog Silver Cepillado (aluminio anodizado #FFFFFF -> #EAECEF -> #CFD4DF)
+   - 10% Molten Orange (#FF5A1F) con detalles sutiles de luz de borde y pulsos
+   - Hero: copies fijos a la izquierda + escultura cinética animada integrada al
+     fondo derecho (sin crear sección aparte ni competir con la lectura)
+   - Flywheel: amplio, desahogado y con círculos/números perfectamente centrados
    ========================================================================= */
 
+:root {
+  --metal-gunmetal:
+    radial-gradient(88% 72% at 14% 0%, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.025) 44%, transparent 74%),
+    radial-gradient(62% 58% at 92% 100%, rgba(255, 90, 31, 0.15) 0%, transparent 64%),
+    linear-gradient(145deg, #2D323E 0%, #1B1E26 36%, #111318 72%, #07080B 100%);
+  --metal-gunmetal-hover:
+    radial-gradient(92% 78% at 18% 0%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 46%, transparent 76%),
+    radial-gradient(68% 64% at 90% 98%, rgba(255, 90, 31, 0.22) 0%, transparent 66%),
+    linear-gradient(145deg, #353B4B 0%, #20242D 36%, #13151C 72%, #08090C 100%);
+  --metal-silver:
+    radial-gradient(92% 78% at 16% 0%, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 62%),
+    linear-gradient(145deg, #FFFFFF 0%, #EFF1F6 34%, #D2D7E2 74%, #E6E9F0 100%);
+  --metal-molten:
+    linear-gradient(135deg, #FF7B47 0%, #FF5A1F 48%, #DE3F07 100%);
+  --metal-bevel-dark:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 0 rgba(255, 90, 31, 0.26),
+    0 24px 54px rgba(7, 8, 11, 0.24);
+  --metal-bevel-silver:
+    inset 0 1.5px 0 #FFFFFF,
+    inset 0 -1px 0 rgba(14, 16, 22, 0.14),
+    0 10px 24px rgba(8, 9, 13, 0.16);
+}
+
 body {
-  background: #F4F5F7;
+  background: linear-gradient(180deg, #F6F7F9 0%, #ECEEF3 52%, #F4F5F8 100%);
   color: #0B0C0E;
+}
+
+/* Transición fluida para las palabras del typewriter en todas las secciones y cards */
+.tw-word {
+  display: inline-block;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  transition:
+    opacity 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 460ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.tw-word.is-pending {
+  opacity: 0.08;
+  transform: translateY(0.32em) scale(0.98);
+  filter: blur(2px);
 }
 
 .text-molten {
@@ -1459,7 +1503,11 @@ body {
 }
 
 .wordmark {
-  color: #DCE0E6 !important;
+  background: linear-gradient(180deg, #CFD4DF 0%, #E5E8EF 55%, #C6CCD8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #D5DAE4 !important;
   height: clamp(54px, 6.2vw, 88px) !important;
   min-height: 0 !important;
   font-size: clamp(48px, 6.8vw, 96px) !important;
@@ -1468,80 +1516,188 @@ body {
 }
 
 .site-header {
-  background: rgba(244, 245, 247, 0.94) !important;
-  border-bottom: 1px solid #D5D8E0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(236, 238, 243, 0.92) 100%) !important;
+  border-bottom: 1px solid rgba(28, 29, 33, 0.12);
+  box-shadow: 0 4px 18px rgba(11, 12, 14, 0.05);
 }
 
-/* Botones del sistema 60-30-10 */
+/* Botones metálicos del sistema 60-30-10 */
 .button--molten {
-  border: 1.5px solid var(--molten) !important;
+  border: 1px solid rgba(255, 166, 128, 0.65) !important;
   border-radius: 999px !important;
-  background: var(--molten) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 10px 24px rgba(255, 90, 31, 0.25);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 10px 26px rgba(255, 90, 31, 0.32) !important;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms, background 220ms !important;
 }
 
 .button--molten:hover {
   border-color: #FFFFFF !important;
-  background: #FFFFFF !important;
+  background: var(--metal-silver) !important;
+  color: #0B0C0E !important;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(255, 255, 255, 0.25) !important;
+}
+
+.button--ghost-light {
+  border: 1px solid rgba(228, 229, 232, 0.32) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(145deg, #2D313D 0%, #1B1E25 55%, #12141A 100%) !important;
+  color: #F3F4F6 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 6px 16px rgba(0, 0, 0, 0.22) !important;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms, background 220ms !important;
+}
+
+.button--ghost-light:hover {
+  border-color: rgba(255, 90, 31, 0.65) !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
   transform: translateY(-2px);
 }
 
-.button--ghost-light {
-  border: 1.5px solid rgba(228, 229, 232, 0.34) !important;
-  border-radius: 999px !important;
-  background: #23252C !important;
-  color: #F3F4F6 !important;
-}
-
-.button--ghost-light:hover {
-  border-color: #E4E5E8 !important;
-  background: #E4E5E8 !important;
-  color: #0B0C0E !important;
-}
-
-/* 1. HERO SPLIT-PLANE (60% GUNMETAL NIGHT + 30% FOG SILVER + 10% MOLTEN ORANGE, SIN ÍNDICE) */
+/* -------------------------------------------------------------------------
+   1. HERO: COPIES A LA IZQUIERDA + ESCENA CINÉTICA INTEGRADA AL FONDO DERECHO
+   ------------------------------------------------------------------------- */
 main > .hero,
 .hero {
-  display: block !important;
-  position: relative !important;
-  min-height: 0 !important;
-  margin: 0 14px !important;
+  position: relative;
+  min-height: min(calc(100svh - var(--header-h) - 32px), 660px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  margin: 0 clamp(14px, 2vw, 28px) !important;
   padding: 0 !important;
-  border: 1.5px solid #262932 !important;
-  border-radius: 24px !important;
-  background: #16171B !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 26px !important;
+  background:
+    radial-gradient(55% 75% at 82% 44%, rgba(255, 90, 31, 0.15) 0%, rgba(212, 217, 228, 0.08) 42%, transparent 74%),
+    radial-gradient(75% 65% at 12% 0%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 45%, transparent 72%),
+    linear-gradient(135deg, #2A2E39 0%, #181B22 38%, #0E1015 74%, #060709 100%) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 26px 60px rgba(11, 12, 14, 0.16) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 0 rgba(255, 90, 31, 0.28),
+    0 28px 64px rgba(8, 9, 12, 0.24) !important;
   overflow: hidden !important;
 }
 
+.hero__art,
+.hero__portrait {
+  display: none !important;
+}
+
+/* Retícula metálica sutil en el fondo del Hero */
 .hero__scene {
   position: absolute !important;
   inset: 0 !important;
+  pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(228, 229, 232, 0.035) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(228, 229, 232, 0.035) 1px, transparent 1px) !important;
-  background-size: 48px 48px !important;
-  opacity: 0.65 !important;
-  pointer-events: none !important;
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) 0 0 / 52px 52px,
+    linear-gradient(0deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) 0 0 / 52px 52px !important;
+  opacity: 0.9 !important;
 }
 
-.hero__scene::after {
-  display: none !important;
+/* Escultura cinética animada integrada al fondo derecho (sin caja aparte ni choque con copies) */
+.hero__kinetic-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 62%;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 18%, rgba(0, 0, 0, 0.85) 44%, #000000 68%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.08) 18%, rgba(0, 0, 0, 0.85) 44%, #000000 68%);
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0.92;
+}
+
+.hero__kinetic-svg {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 660px);
+  height: auto;
+  max-height: 94%;
+  margin-right: clamp(6px, 2vw, 28px);
+  overflow: visible;
+  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.45));
+}
+
+.hero__orbit--outer {
+  transform-origin: 390px 276px;
+  animation: heroOrbitCW 36s linear infinite;
+}
+
+.hero__orbit--mid {
+  transform-origin: 390px 276px;
+  animation: heroOrbitCCW 22s linear infinite;
+}
+
+.hero__orbit--inner {
+  transform-origin: 390px 276px;
+  animation: heroOrbitCW 15s linear infinite;
+}
+
+.hero__wave-active {
+  stroke-dasharray: 150 420;
+  animation: heroWavePulse 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.hero__node-halo {
+  transform-origin: 305px 196px;
+  animation: heroHaloPulse 2.4s ease-in-out infinite;
+}
+
+.hero__core-dot {
+  animation: moltenDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes heroOrbitCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes heroOrbitCCW {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+@keyframes heroWavePulse {
+  0% { stroke-dashoffset: 540; opacity: 0.55; }
+  50% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0.55; }
+}
+
+@keyframes heroHaloPulse {
+  0%, 100% { transform: scale(0.88); opacity: 0.45; }
+  50% { transform: scale(1.38); opacity: 0.95; }
+}
+
+@keyframes moltenDotPulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 90, 31, 0.5)); }
+  50% { filter: drop-shadow(0 0 14px rgba(255, 90, 31, 1)); }
 }
 
 .hero__grid {
   position: relative;
   z-index: 2;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1.48fr) minmax(320px, 0.92fr) !important;
-  align-items: stretch !important;
-  gap: 0 !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
+  display: block;
+  width: 100%;
+  max-width: 1450px;
+  margin: auto 0 !important;
 }
 
 .hero__content {
@@ -1551,9 +1707,9 @@ main > .hero,
   bottom: auto !important;
   top: auto !important;
   width: 100% !important;
-  max-width: none !important;
+  max-width: 720px !important;
   margin: 0 !important;
-  padding: clamp(32px, 3.8vw, 52px) clamp(28px, 4vw, 56px) clamp(24px, 3vw, 38px) !important;
+  padding: clamp(32px, 3.8vw, 50px) clamp(26px, 4vw, 54px) clamp(26px, 3vw, 40px) !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1565,13 +1721,14 @@ main > .hero,
   align-self: flex-start;
   gap: 8px;
   padding: 6px 14px;
-  margin: 0 0 16px !important;
-  border: 1px solid rgba(228, 229, 232, 0.22);
+  margin: 0 0 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
-  background: #23252C;
-  color: #E4E5E8 !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(28, 30, 38, 0.85) 100%);
+  color: #F3F4F6 !important;
   font: 700 12px/1.2 var(--utility) !important;
   letter-spacing: 0.06em !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 4px 14px rgba(0, 0, 0, 0.2);
 }
 
 .hero__content > .eyebrow::before {
@@ -1580,159 +1737,112 @@ main > .hero,
   height: 8px;
   border-radius: 50%;
   background: var(--molten);
+  box-shadow: 0 0 10px rgba(255, 90, 31, 0.85);
 }
 
 .hero h1 {
   max-width: 22ch !important;
-  margin: 0 0 16px !important;
+  margin: 0 0 14px !important;
   color: #FFFFFF !important;
-  font-size: clamp(34px, 3.8vw, 54px) !important;
+  font-size: clamp(34px, 3.7vw, 52px) !important;
   line-height: 1.03 !important;
   letter-spacing: -0.04em !important;
 }
 
 .hero h1 .text-molten,
 .hero h1 .text-molten span {
-  background: none !important;
-  -webkit-background-clip: initial !important;
-  background-clip: initial !important;
-  -webkit-text-fill-color: var(--molten) !important;
+  background: linear-gradient(135deg, #FF8A5B 0%, #FF5A1F 52%, #FF4500 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
   color: var(--molten) !important;
 }
 
 .hero__content > p:not(.eyebrow):not(.hero__cred) {
-  max-width: 52ch !important;
-  margin: 0 0 22px !important;
-  color: #D8DBE2 !important;
-  font-size: clamp(16px, 1.18vw, 18.5px) !important;
-  line-height: 1.5 !important;
+  max-width: 54ch !important;
+  margin: 0 0 14px !important;
+  color: #E2E5EC !important;
+  font-size: clamp(15.5px, 1.15vw, 18px) !important;
+  line-height: 1.48 !important;
 }
 
-/* Ala derecha 30% Fog Silver del Hero (contraste estructural 60-30-10 dentro del Hero) */
-.hero__wing {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 14px;
-  padding: clamp(28px, 3.4vw, 44px) clamp(24px, 3vw, 40px);
-  background: linear-gradient(155deg, #E4E5E8 0%, #F3F4F6 100%);
-  border-left: 3px solid var(--molten);
-  color: #0B0C0E;
-}
-
-.hero__wing-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.hero__wing-kicker {
-  font: 700 11.5px/1.1 var(--utility);
-  letter-spacing: 0.08em;
-  color: #1C1D21;
-}
-
-.hero__wing-badge {
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: var(--molten);
-  color: #FFFFFF;
-  font: 700 11px/1.1 var(--utility);
-  letter-spacing: 0.06em;
-}
-
-.hero__wing-quote {
-  margin: 0 !important;
-  font: 800 clamp(24px, 2.3vw, 32px)/1.02 var(--display) !important;
-  letter-spacing: -0.035em;
-  color: #0B0C0E !important;
-}
-
-.hero__wing-diagram {
-  width: 100%;
-  height: auto;
-  max-height: 120px;
-  display: block;
-  padding: 10px 12px;
-  border-radius: 16px;
-  background: #FFFFFF;
-  border: 1px solid #CFD3DC;
-  box-shadow: 0 10px 24px rgba(11, 12, 14, 0.06);
-}
-
-.hero__wing .hero__cred {
-  margin: 0 !important;
-  padding: 10px 14px !important;
-  border-radius: 12px !important;
-  border: 1px solid #C8CCD6 !important;
-  background: #1C1D21 !important;
+.hero__cred {
+  display: inline-flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  align-self: flex-start;
+  margin: 0 0 18px !important;
+  padding: 9px 15px !important;
+  border-radius: 12px;
+  border: 1px solid rgba(228, 229, 232, 0.22);
+  background: linear-gradient(135deg, rgba(228, 229, 232, 0.14) 0%, rgba(18, 20, 26, 0.82) 100%);
   color: #E4E5E8 !important;
-  font: 600 12.5px/1.38 var(--body) !important;
-  letter-spacing: 0.01em !important;
-  text-transform: none !important;
-  opacity: 1 !important;
+  font: 500 13px/1.35 var(--sans) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
-.hero__wing .hero__cred strong {
-  color: var(--molten);
+.hero__cred strong {
+  color: var(--molten) !important;
+  font-weight: 800;
 }
 
 .hero__bottom {
   position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  max-width: none !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 2;
   margin: 0 !important;
-  padding: 12px clamp(24px, 4vw, 56px) !important;
-  background: #0F1013 !important;
-  border-top: 1px solid rgba(228, 229, 232, 0.12);
-  color: #9FA5B2 !important;
+  padding: 12px clamp(24px, 3.5vw, 44px) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(9, 10, 13, 0.76) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #B4BAC6 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
-/* 2. SECCIONES Y ENCABEZADOS LIMPIOS */
-.projects-v6,
-.portfolio-v5__profile {
-  background: #F4F5F7 !important;
-  color: #0B0C0E !important;
-}
-
-.method-v6,
-.editorial-bridge {
-  border-top: 1.5px solid #D5D8E0 !important;
-  background: #E8EAEF !important;
-  color: #0B0C0E !important;
-}
-
-.portfolio-v5__profile {
-  border-top: 1.5px solid #D5D8E0 !important;
-}
-
-.projects-v6__head .eyebrow,
-.method-v6__head .eyebrow,
-.portfolio-v5__profile > .eyebrow,
-.editorial-bridge__head .eyebrow {
-  display: inline-flex;
-  justify-self: start;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  border: 1px solid #262932;
-  background: #1C1D21 !important;
+.motion-toggle {
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  padding: 6px 14px !important;
+  border-color: rgba(228, 229, 232, 0.28) !important;
+  background: linear-gradient(145deg, #252833 0%, #14161C 100%) !important;
   color: #FFFFFF !important;
 }
 
-.projects-v6__head .eyebrow::before,
-.method-v6__head .eyebrow::before,
-.portfolio-v5__profile > .eyebrow::before,
-.editorial-bridge__head .eyebrow::before {
+/* -------------------------------------------------------------------------
+   2. ENCABEZADOS DE SECCIÓN (METÁLICO ANODIZADO + DETALLE MOLTEN)
+   ------------------------------------------------------------------------- */
+.portfolio-v5__section-head .eyebrow,
+.portfolio-v5__profile > .eyebrow {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  padding: 6px 14px !important;
+  border: 1px solid rgba(255, 90, 31, 0.35) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #282C37 0%, #14161C 100%) !important;
+  color: #FFFFFF !important;
+  font: 700 12px/1.2 var(--utility) !important;
+  letter-spacing: 0.07em !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 6px 16px rgba(11, 12, 14, 0.1) !important;
+}
+
+.portfolio-v5__section-head .eyebrow::before,
+.portfolio-v5__profile > .eyebrow::before {
   content: "";
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--molten);
+  box-shadow: 0 0 8px rgba(255, 90, 31, 0.85);
 }
 
 .portfolio-v5__section-head h2,
@@ -1741,23 +1851,58 @@ main > .hero,
 }
 
 .portfolio-v5__section-head > p:last-child {
-  color: #1C1D21 !important;
+  color: #2B2E36 !important;
 }
 
-/* 3. PROYECTOS DESTACADOS: CADA CARD TIENE EL CONTRASTE 60-30-10 INTERNO */
+/* -------------------------------------------------------------------------
+   3. PROYECTOS: CADA CARD CON ACABADO METÁLICO 60-30-10 + REFLEJO DE LUZ
+   ------------------------------------------------------------------------- */
+.projects-v6,
+.method-v6,
+.portfolio-v5__profile,
+.editorial-bridge {
+  background: transparent !important;
+  border-top: 1px solid #D5D9E2 !important;
+}
+
 .projects-v6__card {
-  padding: clamp(24px, 2.6vw, 34px) clamp(24px, 2.6vw, 34px) clamp(24px, 2.6vw, 34px) clamp(30px, 3.4vw, 46px) !important;
-  border: 1.5px solid #282B34 !important;
-  border-radius: 24px !important;
-  background: #16171B !important;
+  position: relative;
+  height: auto !important;
+  min-height: min(calc(100svh - var(--header-h) - 96px), 620px);
+  padding: clamp(28px, 3.2vw, 42px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 26px !important;
+  background: var(--metal-gunmetal) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 24px 54px rgba(11, 12, 14, 0.16) !important;
-  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms, border-color 280ms !important;
+  box-shadow: var(--metal-bevel-dark) !important;
+  overflow: hidden;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms, border-color 320ms;
+}
+
+/* Línea especular metálica con sutil toque Molten Orange en el borde superior de cada card */
+.projects-v6__card::before,
+.method-v6.is-enhanced .method-v6__sticky::before,
+.ai-method-card::before,
+.editorial-card::before,
+.contact::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.45) 30%, rgba(255, 90, 31, 0.68) 65%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
 }
 
 .projects-v6__card:hover {
-  border-color: #3A3E4B !important;
-  box-shadow: 0 30px 68px rgba(11, 12, 14, 0.24) !important;
+  border-color: rgba(255, 90, 31, 0.45) !important;
+  background: var(--metal-gunmetal-hover) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(255, 90, 31, 0.38),
+    0 30px 64px rgba(8, 9, 12, 0.3) !important;
 }
 
 .projects-v6__meta {
@@ -1766,52 +1911,68 @@ main > .hero,
   gap: 12px !important;
 }
 
+/* 10% Molten Orange: Badge de número con degradado metálico naranja */
 .projects-v6__number {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
-  height: 30px;
-  padding: 0 11px;
+  min-width: 48px;
+  height: 36px;
+  padding: 0 12px;
   border-radius: 999px;
-  background: var(--molten) !important;
+  border: 1px solid rgba(255, 180, 148, 0.6);
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
-  font: 800 15px/1 var(--utility) !important;
-  letter-spacing: 0.04em !important;
+  font: 800 16px/1 var(--display) !important;
+  letter-spacing: -0.02em !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 6px 16px rgba(255, 90, 31, 0.32);
 }
 
 .projects-v6__meta > p {
-  color: #B4B9C4 !important;
+  color: #C4C9D4 !important;
   font: 700 12px/1.3 var(--utility) !important;
-  letter-spacing: 0.07em !important;
+  letter-spacing: 0.08em !important;
 }
 
 .projects-v6__copy h3 {
+  max-width: 18ch !important;
   color: #FFFFFF !important;
+  font-size: clamp(28px, 2.75vw, 38px) !important;
+  line-height: 1.04 !important;
 }
 
 .projects-v6__description {
-  color: #D8DBE2 !important;
+  color: #DCE0E8 !important;
+  font-size: clamp(15px, 1.1vw, 16.5px) !important;
+  line-height: 1.46 !important;
 }
 
-/* Píldoras de evidencia en 30% Fog Silver con texto Negro Puro dentro del 60% Gunmetal */
+/* 30% Fog Silver Cepillado: Píldoras de evidencia dentro de la card */
 .projects-v6__tags {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 8px !important;
+  width: 100%;
 }
 
 .projects-v6__tags li {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 13px !important;
-  border: 1px solid #CFD3DC !important;
-  border-radius: 10px !important;
-  background: #E4E5E8 !important;
-  color: #1C1D21 !important;
-  font: 600 12.5px/1.25 var(--body) !important;
-  letter-spacing: 0 !important;
+  gap: 8px;
+  padding: 8px 14px !important;
+  border: 1px solid #FFFFFF !important;
+  border-radius: 12px !important;
+  background: var(--metal-silver) !important;
+  color: #0B0C0E !important;
+  font: 600 13px/1.3 var(--sans) !important;
+  letter-spacing: 0.01em !important;
+  box-shadow: var(--metal-bevel-silver);
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.projects-v6__tags li:hover {
+  transform: translateX(4px);
 }
 
 .projects-v6__tags li::before {
@@ -1820,83 +1981,123 @@ main > .hero,
   height: 7px;
   border-radius: 50%;
   background: var(--molten);
+  box-shadow: 0 0 6px rgba(255, 90, 31, 0.65);
   flex: none;
 }
 
 .projects-v6__tags li strong {
   color: #0B0C0E !important;
-  font-weight: 800 !important;
+  font-weight: 800;
+}
+
+.projects-v6__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
 }
 
 .projects-v6__link {
-  border: 1.5px solid var(--molten) !important;
-  background: var(--molten) !important;
+  border-color: rgba(255, 175, 140, 0.6) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 8px 20px rgba(255, 90, 31, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 8px 20px rgba(255, 90, 31, 0.28) !important;
 }
 
 .projects-v6__link:hover {
   border-color: #FFFFFF !important;
-  background: #FFFFFF !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
+  transform: translateY(-2px);
 }
 
-.projects-v6__ext {
-  border: 1.5px solid rgba(228, 229, 232, 0.3) !important;
-  background: #23252C !important;
+.projects-v6__link--secondary {
+  border: 1px solid rgba(228, 229, 232, 0.3) !important;
+  background: linear-gradient(145deg, #2B2F3B 0%, #171A21 100%) !important;
   color: #E4E5E8 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
 }
 
-.projects-v6__ext:hover {
-  border-color: #E4E5E8 !important;
-  background: #E4E5E8 !important;
+.projects-v6__link--secondary:hover {
+  border-color: rgba(255, 90, 31, 0.65) !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
 }
 
-/* Escenario visual derecho en 30% Fog Silver dentro de la card Gunmetal */
+/* 30% Fog Silver Cepillado: Escenario de portada derecha con acabado metálico */
 .projects-v6__cover {
-  border: 2px solid #E4E5E8 !important;
-  border-radius: 16px !important;
-  background: #E4E5E8 !important;
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36) !important;
+  border-radius: 18px !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.72) !important;
+  background: var(--metal-silver) !important;
+  box-shadow:
+    inset 0 1px 0 #FFFFFF,
+    0 20px 46px rgba(0, 0, 0, 0.42) !important;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 380ms;
 }
 
-/* 4. FLYWHEEL DE 6 ETAPAS (#enfoque): CONSOLA 60% GUNMETAL + PANEL 30% FOG SILVER + 10% MOLTEN */
+.projects-v6__card:hover .projects-v6__cover {
+  transform: scale(1.015) translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 #FFFFFF,
+    0 26px 56px rgba(0, 0, 0, 0.52),
+    0 0 0 1px rgba(255, 90, 31, 0.35) !important;
+}
+
+/* -------------------------------------------------------------------------
+   4. FLYWHEEL DE 6 ETAPAS: DESAHOGADO, METÁLICO Y PERFECTAMENTE CENTRADO
+   ------------------------------------------------------------------------- */
 .method-v6.is-enhanced .method-v6__sticky {
-  border: 1.5px solid #282B34 !important;
-  outline: none !important;
+  position: relative;
+  grid-template-columns: minmax(320px, 1.05fr) minmax(64px, 88px) minmax(320px, 1.12fr) !important;
+  gap: clamp(16px, 2.2vw, 32px) !important;
+  padding: clamp(28px, 3.2vw, 44px) clamp(28px, 3.6vw, 50px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
   border-radius: 26px !important;
-  background: #16171B !important;
+  background: var(--metal-gunmetal) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 26px 60px rgba(11, 12, 14, 0.18) !important;
+  box-shadow: var(--metal-bevel-dark) !important;
+  overflow: hidden;
+}
+
+.method-v6.is-enhanced .method-ring {
+  width: min(calc(100% - 108px), calc(100svh - var(--header-h) - 118px), 400px) !important;
+  min-width: 260px !important;
+  margin: 18px auto !important;
 }
 
 .method-ring__track {
-  stroke: #2E323C !important;
+  stroke: rgba(228, 229, 232, 0.24) !important;
   stroke-width: 2.2 !important;
 }
 
 .method-ring__inner-grid {
-  fill: #1C1D21 !important;
-  stroke: rgba(228, 229, 232, 0.2) !important;
+  fill: #14161C !important;
+  stroke: rgba(228, 229, 232, 0.22) !important;
+  transform-origin: 200px 200px;
+  animation: heroOrbitCW 48s linear infinite;
 }
 
 .method-ring__arc {
   stroke: var(--molten) !important;
-  stroke-width: 5 !important;
-  filter: none !important;
+  stroke-width: 5.5 !important;
+  filter: drop-shadow(0 0 8px rgba(255, 90, 31, 0.55)) !important;
 }
 
 .method-ring__core {
-  border: 1.5px solid #323642 !important;
-  background: #0B0C0E !important;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.18) !important;
+  background:
+    radial-gradient(circle at 50% 24%, #252934 0%, #111318 62%, #07080A 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 0 rgba(255, 90, 31, 0.28),
+    0 16px 34px rgba(0, 0, 0, 0.5) !important;
 }
 
 .method-ring__visuals {
-  border-color: var(--molten) !important;
-  background: var(--molten) !important;
+  border-color: rgba(255, 175, 140, 0.65) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
+  box-shadow: 0 0 14px rgba(255, 90, 31, 0.45);
 }
 
 .method-ring__number {
@@ -1908,48 +2109,81 @@ main > .hero,
 }
 
 .method-ring__core small {
-  color: #9FA5B2 !important;
+  color: #AEB4C2 !important;
 }
 
+/* Nodos del Flywheel en Desktop: píldoras metálicas perfectamente centradas */
 .method-ring__node {
-  border: 1.5px solid rgba(228, 229, 232, 0.22) !important;
-  background: #23252C !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  min-height: 36px !important;
+  padding: 6px 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(145deg, #2D313D 0%, #191C23 100%) !important;
   color: #E4E5E8 !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.26) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 6px 16px rgba(0, 0, 0, 0.3) !important;
+  transform: translate(-50%, -50%) !important;
 }
 
 .method-ring__node:hover {
-  border-color: var(--molten) !important;
-  background: #2B2E37 !important;
+  border-color: rgba(255, 90, 31, 0.7) !important;
+  background: linear-gradient(145deg, #363B49 0%, #20242D 100%) !important;
   color: #FFFFFF !important;
+  transform: translate(-50%, -50%) scale(1.05) !important;
 }
 
 .method-ring__node[data-passed="true"] {
-  border-color: #E4E5E8 !important;
-  background: #E4E5E8 !important;
+  border-color: #FFFFFF !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
+  box-shadow: var(--metal-bevel-silver) !important;
 }
 
 .method-ring__node[aria-current="step"] {
-  border-color: var(--molten) !important;
-  background: var(--molten) !important;
+  border-color: rgba(255, 185, 152, 0.75) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 8px 22px rgba(255, 90, 31, 0.35) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 8px 22px rgba(255, 90, 31, 0.42) !important;
   text-shadow: none !important;
+  transform: translate(-50%, -50%) scale(1.06) !important;
 }
 
-/* Panel activo derecho en 30% Fog Silver + Blanco Puro dentro de la consola Gunmetal (sin border-left) */
+.method-v6__bridge-dot {
+  background: var(--molten) !important;
+  box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.22), 0 0 10px rgba(255, 90, 31, 0.6) !important;
+}
+
+.method-v6__bridge-line {
+  background: linear-gradient(90deg, rgba(228, 229, 232, 0.28) 0%, var(--molten) 100%) !important;
+}
+
+.method-v6__bridge-pill {
+  border-color: rgba(255, 175, 140, 0.6) !important;
+  background: var(--metal-molten) !important;
+  color: #FFFFFF !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 12px rgba(255, 90, 31, 0.3) !important;
+}
+
+/* Panel derecho del Flywheel: 30% Fog Silver Cepillado con alto contraste */
 .method-v6.is-enhanced .method-v6__panel.is-active {
-  border: 1.5px solid #CFD3DC !important;
-  border-radius: 20px !important;
-  background: linear-gradient(180deg, #E4E5E8 0%, #FFFFFF 46%) !important;
+  padding: clamp(24px, 2.8vw, 36px) !important;
+  border: 1.5px solid #FFFFFF !important;
+  border-radius: 22px !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
-  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.3) !important;
+  box-shadow:
+    inset 0 1.5px 0 #FFFFFF,
+    0 20px 44px rgba(0, 0, 0, 0.34) !important;
 }
 
 .method-v6.is-enhanced .method-v6__panel.is-active .method-v6__step-index {
-  border-color: var(--molten) !important;
-  background: var(--molten) !important;
+  border-color: rgba(255, 175, 140, 0.6) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
 }
 
@@ -1958,39 +2192,41 @@ main > .hero,
 }
 
 .method-v6.is-enhanced .method-v6__panel.is-active .method-v6__lead {
-  color: #1C1D21 !important;
+  color: #1A1D24 !important;
 }
 
-.method-v6.is-enhanced .method-v6__panel.is-active .method-v6__chips {
-  border-top: 1px solid #CFD3DC !important;
+.method-v6.is-enhanced .method-v6__panel.is-active .method-v6__details {
+  border-top: 1px solid rgba(22, 24, 30, 0.14) !important;
 }
 
-.method-v6.is-enhanced .method-v6__panel.is-active .method-v6__chips li {
-  border-color: #1C1D21 !important;
-  background: #1C1D21 !important;
+.method-v6__chips li {
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  background: linear-gradient(145deg, #262A34 0%, #14161C 100%) !important;
   color: #FFFFFF !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-.method-v6__principle {
-  border: 1.5px solid #282B34 !important;
-  border-radius: 18px !important;
-  background: #16171B !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 14px 34px rgba(11, 12, 14, 0.12) !important;
-}
-
-/* 5. PERFIL E IA APLICADA: CADA CARD TIENE EL CONTRASTE 60% GUNMETAL + 30% FOG SILVER + 10% MOLTEN */
+/* -------------------------------------------------------------------------
+   5. PERFIL E IA APLICADA: METÁLICO 60% GUNMETAL + 30% FOG SILVER + 10% MOLTEN
+   ------------------------------------------------------------------------- */
 .portfolio-v5__profile-copy p {
+  position: relative;
   display: flex !important;
   flex-direction: column !important;
   justify-content: space-between !important;
   padding: 24px !important;
-  border: 1.5px solid #282B34 !important;
-  border-radius: 20px !important;
-  background: #16171B !important;
-  color: #D8DBE2 !important;
-  box-shadow: 0 18px 40px rgba(11, 12, 14, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 22px !important;
+  background: var(--metal-gunmetal) !important;
+  color: #DCE0E8 !important;
+  box-shadow: var(--metal-bevel-dark) !important;
   overflow: hidden !important;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), border-color 280ms;
+}
+
+.portfolio-v5__profile-copy p:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 90, 31, 0.45) !important;
 }
 
 .portfolio-v5__profile-copy p strong {
@@ -2010,54 +2246,63 @@ main > .hero,
   height: 9px;
   border-radius: 50%;
   background: var(--molten);
+  box-shadow: 0 0 8px rgba(255, 90, 31, 0.8);
   flex: none;
 }
 
-/* Consola inferior 30% Fog Silver enmarcada dentro de cada card de Perfil */
+/* Consola inferior 30% Fog Silver Cepillado dentro de cada card de Perfil */
 .portfolio-v5__profile-copy p .profile-pills {
   display: block !important;
   margin: 18px 0 0 !important;
   padding: 12px 16px !important;
   border-radius: 12px !important;
-  border: 1px solid #CFD3DC !important;
-  background: #E4E5E8 !important;
+  border: 1px solid #FFFFFF !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
   font: 700 12.5px/1.4 var(--utility) !important;
   letter-spacing: 0.03em !important;
+  box-shadow: var(--metal-bevel-silver);
 }
 
-/* Consola de Metodología IA: 60% Gunmetal + 4 Cards en 30% Fog Silver + 10% Molten */
+/* Consola de Metodología IA */
 .ai-method-card {
-  border: 1.5px solid #282B34 !important;
-  border-radius: 24px !important;
-  background: #16171B !important;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 26px !important;
+  background: var(--metal-gunmetal) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 24px 54px rgba(11, 12, 14, 0.16) !important;
+  box-shadow: var(--metal-bevel-dark) !important;
+  overflow: hidden;
 }
 
 .ai-method-card__head .eyebrow {
-  border: 1px solid var(--molten) !important;
-  background: var(--molten) !important;
+  border: 1px solid rgba(255, 175, 140, 0.6) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 6px 16px rgba(255, 90, 31, 0.28);
 }
 
 .ai-method-card__head > p:last-child {
-  color: #D8DBE2 !important;
+  color: #DCE0E8 !important;
 }
 
 .ai-method-step {
   padding: 0 !important;
-  border: 1.5px solid #CFD3DC !important;
+  border: 1px solid #FFFFFF !important;
   border-radius: 18px !important;
-  background: linear-gradient(180deg, #FFFFFF 0%, #E4E5E8 100%) !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
+  box-shadow: var(--metal-bevel-silver);
   overflow: hidden !important;
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 240ms;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms;
 }
 
 .ai-method-step:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1.5px 0 #FFFFFF,
+    0 16px 32px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 90, 31, 0.38);
 }
 
 .ai-method-step__num {
@@ -2066,11 +2311,11 @@ main > .hero,
   justify-content: space-between;
   margin: 0 !important;
   padding: 10px 18px !important;
-  background: #1C1D21 !important;
+  background: linear-gradient(135deg, #272B36 0%, #14161C 100%) !important;
   border-bottom: 2px solid var(--molten) !important;
   color: #FFFFFF !important;
-  font: 700 12px/1.1 var(--utility) !important;
-  letter-spacing: 0.06em !important;
+  font: 800 11.5px/1.2 var(--utility) !important;
+  letter-spacing: 0.08em !important;
 }
 
 .ai-method-step__num::after {
@@ -2079,6 +2324,7 @@ main > .hero,
   height: 7px;
   border-radius: 50%;
   background: var(--molten);
+  box-shadow: 0 0 6px rgba(255, 90, 31, 0.8);
 }
 
 .ai-method-step h4 {
@@ -2087,111 +2333,146 @@ main > .hero,
 }
 
 .ai-method-step p {
-  margin: 0 18px 18px !important;
-  color: #1C1D21 !important;
+  margin: 0 18px 16px !important;
+  color: #1F2229 !important;
 }
 
-.ai-method-card__case {
-  border: 1px solid rgba(228, 229, 232, 0.2) !important;
+.ai-method-card__proof {
+  border: 1px solid rgba(228, 229, 232, 0.22) !important;
   border-radius: 14px !important;
-  background: #22252D !important;
-}
-
-.ai-method-card__case p {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(11, 12, 15, 0.72) 100%) !important;
   color: #E4E5E8 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
-.ai-method-card__case strong {
+.ai-method-card__proof strong {
   color: #FFFFFF !important;
 }
 
-.ai-method-card__case code {
+.ai-method-card__proof code {
+  border-color: rgba(255, 90, 31, 0.45) !important;
   background: #0B0C0E !important;
-  color: #E4E5E8 !important;
-  border: 1px solid rgba(228, 229, 232, 0.22);
-}
-
-.portfolio-v5__profile > .text-link {
-  border-color: #1C1D21 !important;
-  background: #1C1D21 !important;
   color: #FFFFFF !important;
 }
 
-.portfolio-v5__profile > .text-link:hover {
-  border-color: var(--molten) !important;
-  background: var(--molten) !important;
-  color: #FFFFFF !important;
+/* -------------------------------------------------------------------------
+   6. DETRÁS DEL CLIC (LINKEDIN): METÁLICO 60-30-10 DENTRO DE CADA CARD
+   ------------------------------------------------------------------------- */
+.editorial-bridge__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 }
 
-/* 6. PUENTE EDITORIAL LINKEDIN (#detras-del-clic): CADA CARD CON CONTRASTE 60-30-10 INTERNO */
 .editorial-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
   padding: 0 !important;
-  border: 1.5px solid #282B34 !important;
-  border-radius: 20px !important;
-  background: #16171B !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 22px !important;
+  background: var(--metal-gunmetal) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 18px 40px rgba(11, 12, 14, 0.12) !important;
+  box-shadow: var(--metal-bevel-dark) !important;
   overflow: hidden !important;
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), border-color 280ms, box-shadow 280ms;
 }
 
 .editorial-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 24px 52px rgba(11, 12, 14, 0.2) !important;
+  transform: translateY(-5px);
+  border-color: rgba(255, 90, 31, 0.48) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 28px 56px rgba(8, 9, 12, 0.28) !important;
 }
 
 .editorial-card__body {
-  padding: 26px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 26px 26px 22px !important;
+}
+
+.editorial-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .editorial-card__tag {
-  background: var(--molten) !important;
+  padding: 5px 11px !important;
+  border: 1px solid rgba(255, 175, 140, 0.6) !important;
+  border-radius: 999px !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
+  font: 700 11px/1.2 var(--utility) !important;
+  letter-spacing: 0.06em !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 .editorial-card__num {
-  color: #B4B9C4 !important;
+  color: #B2B8C6 !important;
+  font: 800 12px/1 var(--utility) !important;
+  letter-spacing: 0.08em !important;
 }
 
 .editorial-card h3 {
+  margin: 0 !important;
   color: #FFFFFF !important;
+  font: 800 clamp(22px, 2vw, 27px)/1.08 var(--display) !important;
+  letter-spacing: -0.03em !important;
 }
 
 .editorial-card p {
   margin: 0 !important;
-  color: #D8DBE2 !important;
+  color: #DCE0E8 !important;
+  font-size: 15px !important;
+  line-height: 1.48 !important;
 }
 
-/* Bandeja inferior 30% Fog Silver en cada card de Detrás del clic */
+/* Bandeja inferior 30% Fog Silver Cepillado en cada card de Detrás del clic */
 .editorial-card__links {
-  margin-top: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 !important;
   padding: 14px 26px !important;
   border-top: 2px solid var(--molten) !important;
-  background: #E4E5E8 !important;
+  background: var(--metal-silver) !important;
 }
 
-.editorial-card__case {
-  min-height: 38px !important;
-  padding: 6px 14px !important;
-  border: 1.5px solid #1C1D21 !important;
-  background: #1C1D21 !important;
+.editorial-card__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: linear-gradient(145deg, #272B36 0%, #12141A 100%) !important;
   color: #FFFFFF !important;
+  font: 700 12.5px/1.2 var(--utility) !important;
+  text-decoration: none !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: background 180ms, border-color 180ms, transform 180ms;
 }
 
-.editorial-card__case:hover {
+.editorial-card__links a:hover {
   border-color: var(--molten) !important;
-  background: var(--molten) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
+  transform: translateX(3px);
 }
 
 .editorial-bridge__cta {
-  border: 1.5px solid #282B34 !important;
-  border-radius: 18px !important;
-  background: #16171B !important;
+  margin-top: 22px !important;
+  padding: 20px 28px !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 20px !important;
+  background: var(--metal-gunmetal) !important;
   color: #FFFFFF !important;
+  box-shadow: var(--metal-bevel-dark) !important;
 }
 
 .editorial-bridge__cta p {
@@ -2202,56 +2483,94 @@ main > .hero,
   color: #FFFFFF !important;
 }
 
-/* 7. CONTACTO ARQUITECTÓNICO */
-.contact {
-  border: 1.5px solid #282B34 !important;
-  border-radius: 24px !important;
-  background: #16171B !important;
+.editorial-bridge__cta .button {
+  border-color: rgba(255, 175, 140, 0.65) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
 }
 
-.contact .eyebrow {
-  color: #B4B9C4 !important;
+.editorial-bridge__cta .button:hover {
+  border-color: #FFFFFF !important;
+  background: var(--metal-silver) !important;
+  color: #0B0C0E !important;
+}
+
+/* -------------------------------------------------------------------------
+   7. CONTACTO Y CIERRE: CONSOLA METÁLICA 60-30-10
+   ------------------------------------------------------------------------- */
+.contact {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 26px !important;
+  background: var(--metal-gunmetal) !important;
+  color: #FFFFFF !important;
+  box-shadow: var(--metal-bevel-dark) !important;
+  overflow: hidden;
+}
+
+.contact > .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 175, 140, 0.6);
+  background: var(--metal-molten) !important;
+  color: #FFFFFF !important;
 }
 
 .contact h2 {
   color: #FFFFFF !important;
-  font-size: clamp(38px, 5vw, 72px) !important;
-  line-height: 1.02 !important;
 }
 
 .contact > p:not(.eyebrow) {
-  color: #D8DBE2 !important;
+  color: #DCE0E8 !important;
+}
+
+.contact__links .button--ghost {
+  border-color: #FFFFFF !important;
+  background: var(--metal-silver) !important;
+  color: #0B0C0E !important;
+}
+
+.contact__links .button--ghost:hover {
+  border-color: var(--molten) !important;
+  background: var(--metal-molten) !important;
+  color: #FFFFFF !important;
 }
 
 .contact > small {
-  color: #9FA5B2 !important;
+  color: #A8B0C0 !important;
 }
 
-/* 8. PÁGINAS DE CASOS (ENSUTEX, SOL Y TIERRA, MODOFAN, MARLEY): CONTRASTE 60-30-10 EN CADA CARD */
+/* -------------------------------------------------------------------------
+   8. PÁGINAS DE CASOS (ENSUTEX, SOL Y TIERRA, MODOFAN, MARLEY): METÁLICO 60-30-10
+   ------------------------------------------------------------------------- */
 .case-page {
-  background: #F4F5F7 !important;
+  background: linear-gradient(180deg, #F6F7F9 0%, #ECEEF3 52%, #F4F5F8 100%) !important;
   color: #0B0C0E !important;
 }
 
 .case-page .kind {
   padding: 6px 14px !important;
   border-radius: 999px !important;
-  background: #1C1D21 !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: linear-gradient(135deg, #272B36 0%, #13151B 100%) !important;
   color: #FFFFFF !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .case-page .case-hero__meta {
   padding: 0 !important;
-  border: 1.5px solid #282B34 !important;
-  border-radius: 18px !important;
-  background: #16171B !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  border-radius: 20px !important;
+  background: var(--metal-gunmetal) !important;
+  box-shadow: var(--metal-bevel-dark) !important;
   overflow: hidden !important;
 }
 
 .case-page .case-hero__meta > div:first-child {
   padding: 18px 22px !important;
-  background: #16171B !important;
+  background: transparent !important;
   color: #FFFFFF !important;
 }
 
@@ -2265,7 +2584,7 @@ main > .hero,
 
 .case-page .case-hero__meta > div:last-child {
   padding: 18px 22px !important;
-  background: #E4E5E8 !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
   border-left: 2px solid var(--molten) !important;
 }
@@ -2280,106 +2599,118 @@ main > .hero,
 }
 
 .case-page .case-hero__btn--primary {
-  border-color: var(--molten) !important;
-  background: var(--molten) !important;
+  border-color: rgba(255, 175, 140, 0.6) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
 }
 
 .case-page .case-hero__btn--ghost {
   border-color: #1C1D21 !important;
-  background: #E4E5E8 !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
 }
 
 .case-page .case-hero__btn--ghost:hover {
   border-color: #1C1D21 !important;
-  background: #1C1D21 !important;
+  background: var(--metal-gunmetal) !important;
   color: #FFFFFF !important;
-}
-
-.case-page .case-hero__note-pill {
-  border-color: #CFD3DC !important;
-  background: #E4E5E8 !important;
-  color: #0B0C0E !important;
 }
 
 .case-journey {
-  border-top: 1.5px solid #D5D8E0 !important;
-  border-bottom: 1.5px solid #D5D8E0 !important;
-  background: #E8EAEF !important;
+  background: transparent !important;
+  border-top: 1px solid #D5D9E2 !important;
+  border-bottom: 1px solid #D5D9E2 !important;
 }
 
 .case-journey__steps {
-  border-left: 2px solid #1C1D21 !important;
+  border-left: 3px solid #C4C8D2 !important;
 }
 
-/* Cada .case-step tiene 60% Gunmetal arriba + 30% Fog Silver en su bandeja de KPIs/Flujo + 10% Molten */
 .case-step {
-  border: 1.5px solid #282B34 !important;
-  border-radius: 20px !important;
-  background: #16171B !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 18px 40px rgba(11, 12, 14, 0.12) !important;
+  border: 1px solid #FFFFFF !important;
+  border-radius: 18px !important;
+  background: var(--metal-silver) !important;
+  color: #0B0C0E !important;
+  box-shadow: var(--metal-bevel-silver) !important;
 }
 
 .case-step::before {
   border-color: #1C1D21 !important;
-  background: #E4E5E8 !important;
+  background: #FFFFFF !important;
 }
 
 .case-step.is-active {
-  border-color: var(--molten) !important;
-  background: #16171B !important;
-  box-shadow: 0 22px 48px rgba(11, 12, 14, 0.2) !important;
+  border-color: rgba(255, 90, 31, 0.55) !important;
+  background: var(--metal-gunmetal) !important;
+  color: #FFFFFF !important;
+  box-shadow: var(--metal-bevel-dark) !important;
 }
 
 .case-step.is-active::before {
   border-color: var(--molten) !important;
   background: var(--molten) !important;
+  box-shadow: 0 0 0 5px rgba(255, 90, 31, 0.22) !important;
 }
 
 .case-step__badge {
-  border-color: #2A2D36 !important;
-  background: #23252C !important;
+  border-color: #1C1D21 !important;
+  background: #1C1D21 !important;
   color: #FFFFFF !important;
 }
 
 .case-step.is-active .case-step__badge {
-  border-color: var(--molten) !important;
-  background: var(--molten) !important;
+  border-color: rgba(255, 175, 140, 0.6) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
 }
 
 .case-step__media-tag {
-  background: #E4E5E8 !important;
+  background: #1C1D21 !important;
+  color: #E4E5E8 !important;
+}
+
+.case-step.is-active .case-step__media-tag {
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
 }
 
 .case-step h2 {
+  color: #0B0C0E !important;
+}
+
+.case-step.is-active h2 {
   color: #FFFFFF !important;
 }
 
 .case-step p {
-  color: #D8DBE2 !important;
+  color: #22252C !important;
 }
 
-.case-step p strong {
-  color: #FFFFFF !important;
+.case-step.is-active p {
+  color: #DCE0E8 !important;
 }
 
 .case-step__kpis,
 .case-step__flow {
-  margin-top: 16px !important;
-  padding: 12px 14px !important;
-  border-top: 2px solid var(--molten) !important;
-  border-radius: 12px !important;
-  background: #E4E5E8 !important;
+  border-top: 1px solid rgba(28, 29, 33, 0.14) !important;
+}
+
+.case-step.is-active .case-step__kpis,
+.case-step.is-active .case-step__flow {
+  border-top: 1px solid rgba(228, 229, 232, 0.18) !important;
 }
 
 .case-step__kpis span,
 .case-step__flow span:not([aria-hidden]) {
-  border-color: #C4C8D2 !important;
-  background: #FFFFFF !important;
+  border-color: #1C1D21 !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+}
+
+.case-step.is-active .case-step__kpis span,
+.case-step.is-active .case-step__flow span:not([aria-hidden]) {
+  border-color: #FFFFFF !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
 }
 
@@ -2387,109 +2718,187 @@ main > .hero,
   color: var(--molten) !important;
 }
 
-.case-v5 .case-v5__note {
-  margin-top: 14px !important;
-  padding: 12px 14px !important;
-  border-left: 3px solid var(--molten) !important;
-  border-radius: 10px !important;
-  background: #E4E5E8 !important;
-  color: #0B0C0E !important;
-}
-
-.case-v5 .case-v5__note strong {
-  color: #0B0C0E !important;
-}
-
 .case-stage__console {
-  border: 1.5px solid #282B34 !important;
-  background: #16171B !important;
-  box-shadow: 0 26px 60px rgba(11, 12, 14, 0.22) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 22px !important;
+  background: var(--metal-gunmetal) !important;
+  color: #FFFFFF !important;
+  box-shadow: var(--metal-bevel-dark) !important;
 }
 
 .case-stage__tab {
-  border-color: rgba(228, 229, 232, 0.22) !important;
-  background: #23252C !important;
+  border-color: rgba(228, 229, 232, 0.24) !important;
+  background: linear-gradient(145deg, #272B36 0%, #15171E 100%) !important;
   color: #E4E5E8 !important;
 }
 
 .case-stage__tab.is-active {
-  border-color: var(--molten) !important;
-  background: var(--molten) !important;
+  border-color: rgba(255, 175, 140, 0.6) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
 }
 
 .case-stage__status {
-  border-color: #E4E5E8 !important;
-  background: #E4E5E8 !important;
+  border-color: #FFFFFF !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
 }
 
 .case-media-card,
 .case-media-duo figure {
+  border: 1px solid rgba(228, 229, 232, 0.22) !important;
   background: #0B0C0E !important;
-  border: 1.5px solid #2C303A !important;
 }
 
 .case-media-card__bar {
-  background: #1C1D21 !important;
+  background: linear-gradient(90deg, #1E212A 0%, #14161C 100%) !important;
   color: #E4E5E8 !important;
 }
 
 .case-media-card__bar span:last-child {
-  background: var(--molten) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
 }
 
 .case-media-card__caption,
 .case-media-duo figcaption {
-  background: #E4E5E8 !important;
+  border-top: 2px solid var(--molten) !important;
+  background: var(--metal-silver) !important;
   color: #0B0C0E !important;
   font-weight: 600 !important;
 }
 
-.case-page .next-link {
-  border: 1.5px solid #282B34 !important;
+.case-v5 .case-v5__method {
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
   border-radius: 18px !important;
-  background: #16171B !important;
+  background: var(--metal-gunmetal) !important;
   color: #FFFFFF !important;
+}
+
+.case-v5 .case-v5__note {
+  border: 1px solid #FFFFFF !important;
+  border-radius: 12px !important;
+  background: var(--metal-silver) !important;
+  color: #0B0C0E !important;
+}
+
+.case-page .next-link {
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 18px !important;
+  background: var(--metal-gunmetal) !important;
+  color: #FFFFFF !important;
+  box-shadow: var(--metal-bevel-dark) !important;
 }
 
 .case-page .next-link span {
-  color: #B4B9C4 !important;
+  color: var(--molten) !important;
 }
 
 .case-page .next-link:hover {
-  border-color: var(--molten) !important;
-  background: var(--molten) !important;
+  border-color: rgba(255, 175, 140, 0.65) !important;
+  background: var(--metal-molten) !important;
   color: #FFFFFF !important;
 }
 
-/* Responsivo del nuevo Hero Split-Plane y tarjetas en Tablet y Móvil */
-@media (max-width: 980px) {
-  .hero__grid {
+.case-page .next-link:hover span {
+  color: #FFFFFF !important;
+}
+
+/* -------------------------------------------------------------------------
+   9. RESPONSIVE: TABLET (768px - 1080px) Y MÓVIL (<760px)
+   ------------------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .editorial-bridge__grid {
     grid-template-columns: 1fr !important;
   }
 
-  .hero__wing {
-    border-left: 0 !important;
-    border-top: 3px solid var(--molten);
+  .hero__kinetic-bg {
+    width: 68%;
+    opacity: 0.52;
+  }
+}
+
+/* TABLET (761px - 1080px): Flywheel espacioso con nodos circulares y sin desbordes */
+@media (min-width: 761px) and (max-width: 1080px) {
+  .method-v6.is-enhanced .method-v6__sticky {
+    grid-template-columns: minmax(240px, 1fr) minmax(44px, 58px) minmax(260px, 1.2fr) !important;
+    gap: 14px !important;
+    padding: 24px 22px !important;
+  }
+
+  .method-v6.is-enhanced .method-ring {
+    width: min(calc(100% - 48px), 320px) !important;
+    min-width: 220px !important;
+  }
+
+  .method-ring__node {
+    width: 36px !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+  }
+
+  .method-ring__node-name {
+    display: none !important;
+  }
+
+  .method-ring__node-number {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    font: 800 12.5px/1 var(--utility) !important;
+    text-align: center !important;
+  }
+
+  .method-ring__node[aria-current="step"] {
+    transform: translate(-50%, -50%) scale(1.08) !important;
+  }
+
+  .method-v6.is-enhanced .method-v6__panel.is-active {
+    padding: 22px 20px !important;
+  }
+
+  .method-v6.is-enhanced .method-v6__panel h3 {
+    font-size: clamp(24px, 2.8vw, 32px) !important;
+  }
+
+  .method-v6__lead {
+    font-size: 14.5px !important;
+  }
+
+  .method-v6__chips li {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
   }
 }
 
 @media (max-width: 760px) {
   main > .hero,
   .hero {
+    min-height: 0 !important;
     margin: 0 8px !important;
     padding: 0 !important;
-    border-radius: 18px !important;
+    border-radius: 20px !important;
+  }
+
+  .hero__kinetic-bg {
+    width: 100%;
+    top: 0;
+    bottom: 44px;
+    opacity: 0.35;
+    -webkit-mask-image: radial-gradient(circle at 78% 34%, #000000 0%, rgba(0, 0, 0, 0.45) 55%, transparent 88%);
+    mask-image: radial-gradient(circle at 78% 34%, #000000 0%, rgba(0, 0, 0, 0.45) 55%, transparent 88%);
   }
 
   .hero__content {
     padding: 24px 18px 20px !important;
-  }
-
-  .hero__wing {
-    padding: 20px 18px !important;
   }
 
   .hero__bottom {
@@ -2498,6 +2907,109 @@ main > .hero,
 
   .projects-v6__card {
     padding: 16px !important;
+  }
+
+  /* Flywheel en móvil/compacto: anillo amplio (240-260px), desahogado y círculos 100% centrados */
+  .method-v6.is-enhanced .method-v6__sticky {
+    padding: 22px 16px 20px !important;
+    gap: 14px !important;
+  }
+
+  .method-v6.is-enhanced .method-ring {
+    width: min(68vw, 256px) !important;
+    min-width: 224px !important;
+    height: auto !important;
+    aspect-ratio: 1 !important;
+    margin: 18px auto 26px !important;
+  }
+
+  .method-ring__core {
+    inset: 21% !important;
+    gap: 3px !important;
+    padding: 8px !important;
+  }
+
+  .method-ring__visuals {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .method-ring__number {
+    font-size: 28px !important;
+    line-height: 1 !important;
+  }
+
+  .method-ring__name {
+    font-size: 11px !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  /* Cada nodo es UN SOLO círculo metálico de 40x40px con el número centrado exacto */
+  .method-ring__node,
+  .method-ring__node[aria-current="step"],
+  .method-ring__node[data-passed="true"] {
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .method-ring__node {
+    border: 1.5px solid rgba(255, 255, 255, 0.26) !important;
+    background: linear-gradient(145deg, #2D313D 0%, #171A21 100%) !important;
+    color: #E4E5E8 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 6px 14px rgba(0, 0, 0, 0.32) !important;
+  }
+
+  .method-ring__node[data-passed="true"] {
+    border: 1.5px solid #FFFFFF !important;
+    background: var(--metal-silver) !important;
+    color: #0B0C0E !important;
+    box-shadow: var(--metal-bevel-silver) !important;
+  }
+
+  .method-ring__node[aria-current="step"] {
+    border: 1.5px solid rgba(255, 190, 160, 0.85) !important;
+    background: var(--metal-molten) !important;
+    color: #FFFFFF !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 8px 20px rgba(255, 90, 31, 0.46) !important;
+    transform: translate(-50%, -50%) scale(1.08) !important;
+  }
+
+  .method-ring__node-name {
+    display: none !important;
+  }
+
+  /* Cero doble círculo interno: solo el texto centrado dentro del botón de 40x40 */
+  .method-ring__node-number,
+  .method-ring__node[data-passed="true"] .method-ring__node-number,
+  .method-ring__node[aria-current="step"] .method-ring__node-number {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    font: 800 13px/1 var(--utility) !important;
+    letter-spacing: -0.01em !important;
+    text-align: center !important;
+    text-shadow: none !important;
+    transform: none !important;
+  }
+
+  .method-v6.is-enhanced .method-v6__bridge {
+    margin: 0 auto 10px !important;
   }
 
   .portfolio-v5__profile-copy p {
@@ -2521,24 +3033,4 @@ main > .hero,
     border-left: 0 !important;
     border-top: 2px solid var(--molten) !important;
   }
-
-  .method-ring__node-number {
-    border-color: rgba(228, 229, 232, 0.35) !important;
-    background: #24262C !important;
-    color: #E4E5E8 !important;
-  }
-
-  .method-ring__node[data-passed="true"] .method-ring__node-number {
-    border-color: #E4E5E8 !important;
-    background: #E4E5E8 !important;
-    color: #0B0C0E !important;
-  }
-
-  .method-ring__node[aria-current="step"] .method-ring__node-number {
-    border-color: var(--molten) !important;
-    background: var(--molten) !important;
-    color: #FFFFFF !important;
-  }
 }
-
-
