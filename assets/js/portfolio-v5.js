@@ -130,34 +130,25 @@
   const initScrollTypewriter = () => {
     const heroTargets = [
       document.querySelector('.hero h1'),
-      document.querySelector('.hero__content > p:not(.eyebrow):not(.hero__cred)'),
-      document.querySelector('.case-hero h1'),
-      document.querySelector('.case-hero__lead')
+      document.querySelector('.case-hero h1')
     ].filter(Boolean);
 
     heroTargets.forEach(el => {
-      const isHeading = /^H[1-6]$/.test(el.tagName);
-      runTypewriter(el, isHeading ? 520 : 420, isHeading ? 80 : 100);
+      runTypewriter(el, 520, 80);
     });
 
     if (!('IntersectionObserver' in window)) return;
 
+    // Solo animar títulos principales para evitar parpadeos en párrafos de texto
     const scrollTargets = [
       ...document.querySelectorAll('.portfolio-v5__section-head h2'),
-      ...document.querySelectorAll('.portfolio-v5__section-head > p:last-child'),
       ...document.querySelectorAll('.projects-v6__copy h3'),
-      ...document.querySelectorAll('.projects-v6__description'),
       ...document.querySelectorAll('.portfolio-v5__profile h2'),
       ...document.querySelectorAll('.ai-method-card__head h3'),
-      ...document.querySelectorAll('.ai-method-card__head > p:last-child'),
       ...document.querySelectorAll('.editorial-card h3'),
-      ...document.querySelectorAll('.editorial-card p'),
-      ...document.querySelectorAll('.portfolio-v5__tool-groups h3'),
       ...document.querySelectorAll('.contact h2'),
-      ...document.querySelectorAll('.contact > p:not(.eyebrow)'),
       ...document.querySelectorAll('.case-step h2'),
       ...document.querySelectorAll('#aporte h2'),
-      ...document.querySelectorAll('#aporte p'),
       ...document.querySelectorAll('.case-end h2')
     ].filter(el => !heroTargets.includes(el));
 
@@ -168,8 +159,7 @@
           if (!entry.isIntersecting || seen.has(entry.target)) return;
           seen.add(entry.target);
           io.unobserve(entry.target);
-          const isHeading = /^H[1-6]$/.test(entry.target.tagName);
-          runTypewriter(entry.target, isHeading ? 480 : 380, isHeading ? 20 : 50);
+          runTypewriter(entry.target, 480, 20);
         });
       },
       { rootMargin: '0px 0px -8% 0px', threshold: 0.15 }
@@ -201,38 +191,19 @@
       const dirAttr = card.getAttribute('data-card-reveal');
       const dir = dirAttr === 'right' ? 1 : dirAttr === 'left' ? -1 : 1;
       const isMobile = window.innerWidth <= 760;
-      const offsetX = (isMobile ? 28 : 54) * dir;
+      const offsetX = (isMobile ? 18 : 36) * dir;
+      // Revelado unificado del bloque sin apagar hijos a cero para evitar parpadeos
       card.animate(
         [
-          { opacity: 0.14, transform: `translate3d(${offsetX}px, 16px, 0) scale(0.98)` },
-          { opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' }
+          { opacity: 0.35, transform: `translate3d(${offsetX}px, 12px, 0)` },
+          { opacity: 1, transform: 'translate3d(0, 0, 0)' }
         ],
         {
-          duration: 680,
+          duration: 520,
           delay: delayMs,
-          easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
         }
       );
-
-      // Cascada interna para píldoras, botones y portadas dentro de la card
-      const innerItems = card.querySelectorAll(
-        '.projects-v6__meta, .projects-v6__tags li, .projects-v6__actions a, .projects-v6__cover, .editorial-card__meta, .editorial-card__links a, .profile-pills'
-      );
-      innerItems.forEach((item, idx) => {
-        if (typeof item.animate !== 'function') return;
-        item.animate(
-          [
-            { opacity: 0, transform: 'translate3d(0, 14px, 0) scale(0.97)' },
-            { opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' }
-          ],
-          {
-            duration: 520,
-            delay: delayMs + 90 + idx * 65,
-            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-            fill: 'backwards'
-          }
-        );
-      });
     };
 
     const cardObserver = new IntersectionObserver(
@@ -440,15 +411,13 @@
 
       if (animateCopy && !isMotionOff()) {
         const titleEl = steps[index]?.querySelector('h2');
-        const copyEl = steps[index]?.querySelector('p[data-typewriter="copy"]');
-        if (titleEl) runTypewriter(titleEl, 540, 0);
-        if (copyEl) runTypewriter(copyEl, 420, 60);
+        if (titleEl && !titleEl.dataset.twDone) runTypewriter(titleEl, 480, 0);
         panes[index]?.animate?.(
           [
-            { opacity: 0.22, transform: 'translate3d(26px, 0, 0)' },
+            { opacity: 0.45, transform: 'translate3d(14px, 0, 0)' },
             { opacity: 1, transform: 'translate3d(0, 0, 0)' }
           ],
-          { duration: 420, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+          { duration: 340, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
         );
       }
     };
@@ -593,22 +562,20 @@
     if (changed && animateTransition && !isMotionOff()) {
       const activePanel = panels[index];
       const titleEl = activePanel?.querySelector('h3');
-      const leadEl = activePanel?.querySelector('.method-v6__lead');
-      if (titleEl) runTypewriter(titleEl, 500, 0);
-      if (leadEl) runTypewriter(leadEl, 420, 60);
+      if (titleEl && !titleEl.dataset.twDone) runTypewriter(titleEl, 440, 0);
       activePanel?.animate?.(
         [
-          { opacity: 0.24, transform: 'translate3d(28px, 0, 0)' },
+          { opacity: 0.55, transform: 'translate3d(10px, 0, 0)' },
           { opacity: 1, transform: 'translate3d(0, 0, 0)' }
         ],
-        { duration: 420, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        { duration: 320, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
       );
       diagrams[index]?.animate?.(
         [
-          { transform: 'scale(0.84)' },
+          { transform: 'scale(0.95)' },
           { transform: 'scale(1)' }
         ],
-        { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        { duration: 220, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
       );
     }
   };

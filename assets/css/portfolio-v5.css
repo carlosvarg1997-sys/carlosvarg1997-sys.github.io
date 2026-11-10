@@ -271,7 +271,7 @@ html{scroll-padding-top:calc(var(--header-h) + 18px)}
   .hero__art{height:104px!important}
   .hero h1{margin-bottom:10px!important;font-size:clamp(32px,8.5vw,40px)!important;line-height:1.06!important}
   .hero__content>.eyebrow{margin-bottom:8px!important;font-size:12px!important}
-  .hero__content>p.hero__cred{margin:0 0 10px!important;font-size:12px!important;line-height:1.35!important}
+  .hero__content>p.hero__cred{margin:0 0 12px!important;font-size:12px!important;line-height:1.35!important;padding:7px 14px!important;border-radius:999px!important;border:1.5px solid var(--molten)!important;box-shadow:0 0 10px rgba(255,90,31,.45),inset 0 0 8px rgba(255,90,31,.2)!important;white-space:normal!important}
   .hero__content>p:not(.eyebrow):not(.hero__cred){margin-bottom:14px!important;font-size:15px!important;line-height:1.42!important}
   .hero__actions{gap:8px!important}
   .hero__actions .button{min-height:44px!important;padding:10px 16px!important;flex:1 1 calc(50% - 6px)!important}
@@ -696,7 +696,6 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
   line-height: 1.5 !important;
   letter-spacing: 0.01em !important;
   text-transform: none !important;
-  opacity: 0.9 !important;
   margin: 0 0 14px !important;
 }
 
@@ -750,18 +749,23 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
   font-size: 13px !important;
 }
 
-/* Credencial compacta en Hero */
+/* Credencial compacta en Hero con delineado naranja neón */
 .hero__content > p.hero__cred {
   display: inline-flex;
   align-items: center;
-  padding: 7px 14px;
-  margin: 0 0 22px !important;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.92) !important;
-  font: 700 13.5px/1.3 var(--utility) !important;
-  letter-spacing: 0.01em !important;
+  padding: 8px 18px;
+  margin: 0 0 20px !important;
+  border: 1.5px solid var(--molten) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, rgba(255, 90, 31, 0.1) 0%, rgba(20, 22, 28, 0.9) 100%) !important;
+  color: #FFFFFF !important;
+  font: 700 13px/1.35 var(--utility) !important;
+  letter-spacing: 0.02em !important;
+  box-shadow:
+    0 0 14px rgba(255, 90, 31, 0.5),
+    inset 0 0 10px rgba(255, 90, 31, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  text-shadow: 0 0 10px rgba(255, 90, 31, 0.35);
 }
 
 /* Tarjetas de proyectos con alto natural (nunca cortadas), aire y píldoras de evidencia */
@@ -1021,9 +1025,11 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
   .hero__content > p.hero__cred {
     font-size: 13px !important;
     line-height: 1.35 !important;
-    padding: 7px 12px !important;
+    padding: 7px 16px !important;
     margin-bottom: 18px !important;
-    border-radius: 14px;
+    border-radius: 999px !important;
+    border: 1.5px solid var(--molten) !important;
+    box-shadow: 0 0 12px rgba(255, 90, 31, 0.5), inset 0 0 8px rgba(255, 90, 31, 0.2) !important;
   }
 
   .hero__content > p:not(.eyebrow):not(.hero__cred) {
@@ -1478,20 +1484,20 @@ body {
   color: #0B0C0E;
 }
 
-/* Transición fluida para las palabras del typewriter en todas las secciones y cards */
+/* Transición suave y serena para las palabras del typewriter: sin parpadeo ni apagones a cero */
 .tw-word {
   display: inline-block;
   opacity: 1;
   transform: translateY(0);
   transition:
-    opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 360ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
 .tw-word.is-pending {
-  opacity: 0 !important;
-  transform: translateY(12px) !important;
+  opacity: 0.25 !important;
+  transform: translateY(4px) !important;
 }
 
 .text-molten {
@@ -1649,16 +1655,16 @@ main > .hero,
 
 .hero__wave-active {
   stroke-dasharray: 150 420;
-  animation: heroWavePulse 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: heroWavePulse 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .hero__node-halo {
   transform-origin: 305px 196px;
-  animation: heroHaloPulse 2.4s ease-in-out infinite;
+  animation: heroHaloPulse 6.5s ease-in-out infinite;
 }
 
 .hero__core-dot {
-  animation: moltenDotPulse 2s ease-in-out infinite;
+  animation: moltenDotPulse 5s ease-in-out infinite;
 }
 
 @keyframes heroOrbitCW {
@@ -1672,19 +1678,19 @@ main > .hero,
 }
 
 @keyframes heroWavePulse {
-  0% { stroke-dashoffset: 540; opacity: 0.55; }
-  50% { opacity: 1; }
-  100% { stroke-dashoffset: 0; opacity: 0.55; }
+  0% { stroke-dashoffset: 540; opacity: 0.65; }
+  50% { opacity: 0.92; }
+  100% { stroke-dashoffset: 0; opacity: 0.65; }
 }
 
 @keyframes heroHaloPulse {
-  0%, 100% { transform: scale(0.88); opacity: 0.45; }
-  50% { transform: scale(1.38); opacity: 0.95; }
+  0%, 100% { transform: scale(0.95); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 0.85; }
 }
 
 @keyframes moltenDotPulse {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 90, 31, 0.5)); }
-  50% { filter: drop-shadow(0 0 14px rgba(255, 90, 31, 1)); }
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 90, 31, 0.6)); }
+  50% { filter: drop-shadow(0 0 12px rgba(255, 90, 31, 0.9)); }
 }
 
 .hero__grid {
@@ -1764,23 +1770,25 @@ main > .hero,
 
 .hero__cred {
   display: inline-flex !important;
-  flex-wrap: wrap !important;
   align-items: center !important;
   gap: 8px !important;
   align-self: flex-start;
   margin: 0 0 18px !important;
-  padding: 9px 15px !important;
-  border-radius: 12px;
-  border: 1px solid rgba(228, 229, 232, 0.22);
-  background: linear-gradient(135deg, rgba(228, 229, 232, 0.14) 0%, rgba(18, 20, 26, 0.82) 100%);
-  color: #E4E5E8 !important;
-  font: 500 13px/1.35 var(--sans) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
-}
-
-.hero__cred strong {
-  color: var(--molten) !important;
-  font-weight: 800;
+  padding: 8px 18px !important;
+  border-radius: 999px !important;
+  border: 1.5px solid var(--molten) !important;
+  background: linear-gradient(135deg, rgba(255, 90, 31, 0.1) 0%, rgba(20, 22, 28, 0.9) 100%) !important;
+  color: #FFFFFF !important;
+  font: 700 13px/1.35 var(--utility) !important;
+  letter-spacing: 0.02em !important;
+  white-space: nowrap !important;
+  max-width: 100% !important;
+  box-shadow:
+    0 0 14px rgba(255, 90, 31, 0.5),
+    inset 0 0 10px rgba(255, 90, 31, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  text-shadow: 0 0 10px rgba(255, 90, 31, 0.35);
+  transition: border-color 280ms ease, box-shadow 280ms ease;
 }
 
 .hero__bottom {
