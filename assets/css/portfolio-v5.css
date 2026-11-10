@@ -1439,22 +1439,27 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
 }
 
 /* =========================================================================
-   REDISEÑO EJECUTIVO V8 — SISTEMA 60-30-10 (10-nov-2026)
-   60% Gunmetal Night (#1C1D21 / #0B0C0E / #000000)
-   30% Fog Silver (#E4E5E8 / #F3F4F6 / #FFFFFF)
-   10% Molten Orange (#FF5A1F)
-   - Hero Split Arquitectónico con Bento 2x2 interactivo
-   - Tarjetas de proyectos alternadas (Gunmetal Night / Fog Silver)
-   - Flywheel de 6 etapas como Consola Industrial de Precisión
-   - Animación lateral de entrada y micro-interacción física en cards
+   SISTEMA ARQUITECTÓNICO V9 — 60-30-10 DENTRO DE CADA CARD (10-nov-2026)
+   - 60% Gunmetal Night (#16171B / #1C1D21)
+   - 30% Fog Silver (#E4E5E8 / #EFF1F5)
+   - 10% Molten Orange (#FF5A1F — sólido, 0% marrón translúcido)
+   - Negro Puro (#0B0C0E) y Blanco Puro (#FFFFFF) para contraste tipográfico AAA
+   - Cero efecto cebra/damero entre cards hermanas: CADA CARD tiene su propio
+     contraste interno 60-30-10 + Blanco/Negro.
+   - Cero bordes gruesos laterales/superiores repetitivos.
    ========================================================================= */
+
+body {
+  background: #F4F5F7;
+  color: #0B0C0E;
+}
 
 .text-molten {
   color: var(--molten) !important;
 }
 
 .wordmark {
-  color: #E4E5E8 !important;
+  color: #DCE0E6 !important;
   height: clamp(54px, 6.2vw, 88px) !important;
   min-height: 0 !important;
   font-size: clamp(48px, 6.8vw, 96px) !important;
@@ -1463,8 +1468,8 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
 }
 
 .site-header {
-  background: rgba(255, 255, 255, 0.94) !important;
-  border-bottom: 1px solid #DFE1E6;
+  background: rgba(244, 245, 247, 0.94) !important;
+  border-bottom: 1px solid #D5D8E0;
 }
 
 /* Botones del sistema 60-30-10 */
@@ -1473,7 +1478,7 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
   border-radius: 999px !important;
   background: var(--molten) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 10px 26px rgba(255, 90, 31, 0.28);
+  box-shadow: 0 10px 24px rgba(255, 90, 31, 0.25);
 }
 
 .button--molten:hover {
@@ -1484,34 +1489,31 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
 }
 
 .button--ghost-light {
-  border: 1.5px solid rgba(228, 229, 232, 0.36) !important;
+  border: 1.5px solid rgba(228, 229, 232, 0.34) !important;
   border-radius: 999px !important;
-  background: rgba(228, 229, 232, 0.08) !important;
+  background: #23252C !important;
   color: #F3F4F6 !important;
 }
 
 .button--ghost-light:hover {
-  border-color: var(--molten) !important;
-  background: rgba(255, 90, 31, 0.16) !important;
-  color: #FFFFFF !important;
+  border-color: #E4E5E8 !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
 }
 
-/* 1. NUEVO HERO SPLIT ARQUITECTÓNICO (GUNMETAL NIGHT + FOG SILVER + MOLTEN ORANGE) */
+/* 1. HERO SPLIT-PLANE (60% GUNMETAL NIGHT + 30% FOG SILVER + 10% MOLTEN ORANGE, SIN ÍNDICE) */
 main > .hero,
 .hero {
   display: block !important;
   position: relative !important;
   min-height: 0 !important;
   margin: 0 14px !important;
-  padding: clamp(28px, 3.2vw, 46px) clamp(26px, 4vw, 58px) clamp(18px, 2.2vw, 26px) !important;
-  border: 1.5px solid #2C2F37 !important;
+  padding: 0 !important;
+  border: 1.5px solid #262932 !important;
   border-radius: 24px !important;
-  background:
-    radial-gradient(circle at 84% 20%, rgba(255, 90, 31, 0.2) 0%, transparent 38%),
-    radial-gradient(circle at 14% 88%, rgba(228, 229, 232, 0.06) 0%, transparent 34%),
-    linear-gradient(135deg, #0B0C0E 0%, #1C1D21 56%, #24262C 100%) !important;
+  background: #16171B !important;
   color: #FFFFFF !important;
-  box-shadow: 0 28px 68px rgba(11, 12, 14, 0.22) !important;
+  box-shadow: 0 26px 60px rgba(11, 12, 14, 0.16) !important;
   overflow: hidden !important;
 }
 
@@ -1519,11 +1521,10 @@ main > .hero,
   position: absolute !important;
   inset: 0 !important;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) !important;
+    linear-gradient(90deg, rgba(228, 229, 232, 0.035) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(228, 229, 232, 0.035) 1px, transparent 1px) !important;
   background-size: 48px 48px !important;
-  mask-image: radial-gradient(circle at 72% 42%, #000 0%, transparent 78%);
-  opacity: 0.55 !important;
+  opacity: 0.65 !important;
   pointer-events: none !important;
 }
 
@@ -1535,12 +1536,12 @@ main > .hero,
   position: relative;
   z-index: 2;
   display: grid !important;
-  grid-template-columns: minmax(0, 1.12fr) minmax(380px, 0.88fr) !important;
-  align-items: center !important;
-  gap: clamp(24px, 3.4vw, 48px) !important;
+  grid-template-columns: minmax(0, 1.48fr) minmax(320px, 0.92fr) !important;
+  align-items: stretch !important;
+  gap: 0 !important;
   width: 100% !important;
-  max-width: 1450px !important;
-  margin: 0 auto !important;
+  max-width: none !important;
+  margin: 0 !important;
 }
 
 .hero__content {
@@ -1552,20 +1553,24 @@ main > .hero,
   width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
-  padding: 0 !important;
+  padding: clamp(32px, 3.8vw, 52px) clamp(28px, 4vw, 56px) clamp(24px, 3vw, 38px) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero__content > .eyebrow {
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
   gap: 8px;
   padding: 6px 14px;
-  margin: 0 0 14px !important;
-  border: 1px solid rgba(255, 90, 31, 0.45);
+  margin: 0 0 16px !important;
+  border: 1px solid rgba(228, 229, 232, 0.22);
   border-radius: 999px;
-  background: rgba(255, 90, 31, 0.14);
-  color: #FFFFFF !important;
-  font: 700 12.5px/1.2 var(--utility) !important;
+  background: #23252C;
+  color: #E4E5E8 !important;
+  font: 700 12px/1.2 var(--utility) !important;
   letter-spacing: 0.06em !important;
 }
 
@@ -1575,171 +1580,102 @@ main > .hero,
   height: 8px;
   border-radius: 50%;
   background: var(--molten);
-  box-shadow: 0 0 10px var(--molten);
 }
 
 .hero h1 {
   max-width: 22ch !important;
-  margin: 0 0 14px !important;
+  margin: 0 0 16px !important;
   color: #FFFFFF !important;
-  font-size: clamp(32px, 3.6vw, 50px) !important;
-  line-height: 1.04 !important;
+  font-size: clamp(34px, 3.8vw, 54px) !important;
+  line-height: 1.03 !important;
   letter-spacing: -0.04em !important;
+}
+
+.hero h1 .text-molten,
+.hero h1 .text-molten span {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: var(--molten) !important;
+  color: var(--molten) !important;
 }
 
 .hero__content > p:not(.eyebrow):not(.hero__cred) {
   max-width: 52ch !important;
-  margin: 0 0 14px !important;
-  color: #E4E5E8 !important;
-  font-size: clamp(15.5px, 1.15vw, 18px) !important;
-  line-height: 1.48 !important;
+  margin: 0 0 22px !important;
+  color: #D8DBE2 !important;
+  font-size: clamp(16px, 1.18vw, 18.5px) !important;
+  line-height: 1.5 !important;
 }
 
-.hero__content > p.hero__cred {
-  border-color: rgba(228, 229, 232, 0.22) !important;
-  background: rgba(228, 229, 232, 0.08) !important;
-  color: #E4E5E8 !important;
-  margin-bottom: 18px !important;
-}
-
-/* Consola derecha del Hero: Bento 2x2 estilo Vykor (Gunmetal Night + Fog Silver + Molten Orange) */
-.hero__showcase {
-  min-width: 0;
-}
-
-.hero__console {
-  padding: 16px;
-  border: 1.5px solid rgba(228, 229, 232, 0.18);
-  border-radius: 22px;
-  background: rgba(11, 12, 14, 0.72);
-  backdrop-filter: blur(12px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 20px 44px rgba(0, 0, 0, 0.38);
-}
-
-.hero__console-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding-bottom: 12px;
-  margin-bottom: 12px;
-  border-bottom: 1px solid rgba(228, 229, 232, 0.12);
-}
-
-.hero__console-dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--molten);
-  box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.2);
-  flex: none;
-}
-
-.hero__console-title {
-  color: #E4E5E8;
-  font: 700 12px/1.2 var(--utility);
-  letter-spacing: 0.06em;
-  margin-right: auto;
-}
-
-.hero__console-tag {
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: rgba(255, 90, 31, 0.18);
-  border: 1px solid rgba(255, 90, 31, 0.45);
-  color: #FFFFFF;
-  font: 700 11.5px/1.1 var(--utility);
-  letter-spacing: 0.05em;
-}
-
-.hero__signal {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  padding: 9px 12px;
-  margin-bottom: 12px;
-  border-radius: 12px;
-  background: #1C1D21;
-  border: 1px solid rgba(228, 229, 232, 0.1);
-  color: #9C9897;
-  font: 700 11.5px/1.1 var(--utility);
-  letter-spacing: 0.05em;
-}
-
-.hero__signal span {
-  color: #E4E5E8;
-}
-
-.hero__signal span.is-accent {
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: var(--molten);
-  color: #FFFFFF;
-}
-
-.hero__signal i {
-  font-style: normal;
-  color: var(--molten);
-}
-
-.hero__bento {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.hero__bento-card {
+/* Ala derecha 30% Fog Silver del Hero (contraste estructural 60-30-10 dentro del Hero) */
+.hero__wing {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 6px;
-  padding: 15px 16px;
-  border-radius: 15px;
-  text-decoration: none;
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms, box-shadow 240ms;
-}
-
-.hero__bento-card--dark {
-  background: linear-gradient(145deg, #1C1D21 0%, #24262C 100%);
-  border: 1.5px solid rgba(228, 229, 232, 0.14);
-  color: #FFFFFF;
-}
-
-.hero__bento-card--light {
-  background: linear-gradient(145deg, #E4E5E8 0%, #FFFFFF 100%);
-  border: 1.5px solid #CFD2D9;
+  gap: 14px;
+  padding: clamp(28px, 3.4vw, 44px) clamp(24px, 3vw, 40px);
+  background: linear-gradient(155deg, #E4E5E8 0%, #F3F4F6 100%);
+  border-left: 3px solid var(--molten);
   color: #0B0C0E;
 }
 
-.hero__bento-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--molten);
-  box-shadow: 0 12px 26px rgba(255, 90, 31, 0.2);
+.hero__wing-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.hero__bento-num {
+.hero__wing-kicker {
   font: 700 11.5px/1.1 var(--utility);
-  letter-spacing: 0.06em;
-  color: var(--molten);
-}
-
-.hero__bento-card strong {
-  font: 800 clamp(20px, 1.9vw, 26px)/1.02 var(--display);
-  letter-spacing: -0.03em;
-}
-
-.hero__bento-card--dark small {
-  color: #E4E5E8;
-  font: 600 12.5px/1.3 var(--body);
-}
-
-.hero__bento-card--light small {
+  letter-spacing: 0.08em;
   color: #1C1D21;
-  font: 600 12.5px/1.3 var(--body);
+}
+
+.hero__wing-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--molten);
+  color: #FFFFFF;
+  font: 700 11px/1.1 var(--utility);
+  letter-spacing: 0.06em;
+}
+
+.hero__wing-quote {
+  margin: 0 !important;
+  font: 800 clamp(24px, 2.3vw, 32px)/1.02 var(--display) !important;
+  letter-spacing: -0.035em;
+  color: #0B0C0E !important;
+}
+
+.hero__wing-diagram {
+  width: 100%;
+  height: auto;
+  max-height: 120px;
+  display: block;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid #CFD3DC;
+  box-shadow: 0 10px 24px rgba(11, 12, 14, 0.06);
+}
+
+.hero__wing .hero__cred {
+  margin: 0 !important;
+  padding: 10px 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid #C8CCD6 !important;
+  background: #1C1D21 !important;
+  color: #E4E5E8 !important;
+  font: 600 12.5px/1.38 var(--body) !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  opacity: 1 !important;
+}
+
+.hero__wing .hero__cred strong {
+  color: var(--molten);
 }
 
 .hero__bottom {
@@ -1747,16 +1683,30 @@ main > .hero,
   left: auto !important;
   right: auto !important;
   bottom: auto !important;
-  max-width: 1450px;
-  margin: 24px auto 0 !important;
-  padding-top: 14px;
-  border-top: 1px solid rgba(228, 229, 232, 0.14);
-  color: #9C9897 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 12px clamp(24px, 4vw, 56px) !important;
+  background: #0F1013 !important;
+  border-top: 1px solid rgba(228, 229, 232, 0.12);
+  color: #9FA5B2 !important;
 }
 
-/* 2. PROYECTOS DESTACADOS: ALTERNANCIA GUNMETAL NIGHT (60%) & FOG SILVER (30%) + MOLTEN ORANGE (10%) */
-.projects-v6 {
-  background: #FFFFFF !important;
+/* 2. SECCIONES Y ENCABEZADOS LIMPIOS */
+.projects-v6,
+.portfolio-v5__profile {
+  background: #F4F5F7 !important;
+  color: #0B0C0E !important;
+}
+
+.method-v6,
+.editorial-bridge {
+  border-top: 1.5px solid #D5D8E0 !important;
+  background: #E8EAEF !important;
+  color: #0B0C0E !important;
+}
+
+.portfolio-v5__profile {
+  border-top: 1.5px solid #D5D8E0 !important;
 }
 
 .projects-v6__head .eyebrow,
@@ -1766,129 +1716,187 @@ main > .hero,
   display: inline-flex;
   justify-self: start;
   align-items: center;
-  padding: 5px 13px;
+  gap: 8px;
+  padding: 6px 14px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 90, 31, 0.35);
-  background: rgba(255, 90, 31, 0.1);
-  color: #0B0C0E !important;
-}
-
-.projects-v6__card,
-.projects-v6__card--dark {
-  border: 1.5px solid #2C2F37 !important;
-  border-left: 6px solid var(--molten) !important;
-  border-radius: 22px !important;
-  background:
-    radial-gradient(circle at 82% 24%, rgba(255, 90, 31, 0.18) 0%, transparent 38%),
-    linear-gradient(135deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 22px 52px rgba(11, 12, 14, 0.16) !important;
-  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms, border-color 280ms !important;
-}
-
-.projects-v6__card--silver {
-  border: 1.5px solid #C8CBD2 !important;
-  border-left: 6px solid var(--molten) !important;
-  border-radius: 22px !important;
-  background:
-    radial-gradient(circle at 82% 24%, rgba(255, 90, 31, 0.1) 0%, transparent 40%),
-    linear-gradient(135deg, #E4E5E8 0%, #F3F4F6 62%, #FFFFFF 100%) !important;
-  color: #0B0C0E !important;
-  box-shadow: 0 20px 48px rgba(28, 29, 33, 0.09) !important;
-}
-
-.projects-v6__card:hover {
-  box-shadow: 0 28px 64px rgba(11, 12, 14, 0.24) !important;
-}
-
-.projects-v6__card--silver .projects-v6__meta > p {
-  color: #1C1D21 !important;
-}
-
-.projects-v6__card--silver .projects-v6__copy h3 {
-  color: #0B0C0E !important;
-}
-
-.projects-v6__card--silver .projects-v6__description {
-  color: #1C1D21 !important;
-}
-
-.projects-v6__card--silver .projects-v6__tags li {
-  border-color: #1C1D21 !important;
+  border: 1px solid #262932;
   background: #1C1D21 !important;
   color: #FFFFFF !important;
 }
 
-.projects-v6__card--silver .projects-v6__tags li strong {
-  color: #FF8559 !important;
+.projects-v6__head .eyebrow::before,
+.method-v6__head .eyebrow::before,
+.portfolio-v5__profile > .eyebrow::before,
+.editorial-bridge__head .eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--molten);
 }
 
-.projects-v6__card--silver .projects-v6__ext {
-  border-color: #1C1D21 !important;
-  background: rgba(28, 29, 33, 0.06) !important;
+.portfolio-v5__section-head h2,
+.portfolio-v5__profile h2 {
   color: #0B0C0E !important;
 }
 
-.projects-v6__card--silver .projects-v6__ext:hover {
-  border-color: #0B0C0E !important;
-  background: #0B0C0E !important;
+.portfolio-v5__section-head > p:last-child {
+  color: #1C1D21 !important;
+}
+
+/* 3. PROYECTOS DESTACADOS: CADA CARD TIENE EL CONTRASTE 60-30-10 INTERNO */
+.projects-v6__card {
+  padding: clamp(24px, 2.6vw, 34px) clamp(24px, 2.6vw, 34px) clamp(24px, 2.6vw, 34px) clamp(30px, 3.4vw, 46px) !important;
+  border: 1.5px solid #282B34 !important;
+  border-radius: 24px !important;
+  background: #16171B !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 24px 54px rgba(11, 12, 14, 0.16) !important;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms, border-color 280ms !important;
+}
+
+.projects-v6__card:hover {
+  border-color: #3A3E4B !important;
+  box-shadow: 0 30px 68px rgba(11, 12, 14, 0.24) !important;
+}
+
+.projects-v6__meta {
+  display: flex;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.projects-v6__number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 30px;
+  padding: 0 11px;
+  border-radius: 999px;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+  font: 800 15px/1 var(--utility) !important;
+  letter-spacing: 0.04em !important;
+}
+
+.projects-v6__meta > p {
+  color: #B4B9C4 !important;
+  font: 700 12px/1.3 var(--utility) !important;
+  letter-spacing: 0.07em !important;
+}
+
+.projects-v6__copy h3 {
   color: #FFFFFF !important;
 }
 
+.projects-v6__description {
+  color: #D8DBE2 !important;
+}
+
+/* Píldoras de evidencia en 30% Fog Silver con texto Negro Puro dentro del 60% Gunmetal */
+.projects-v6__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px !important;
+}
+
+.projects-v6__tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px !important;
+  border: 1px solid #CFD3DC !important;
+  border-radius: 10px !important;
+  background: #E4E5E8 !important;
+  color: #1C1D21 !important;
+  font: 600 12.5px/1.25 var(--body) !important;
+  letter-spacing: 0 !important;
+}
+
+.projects-v6__tags li::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--molten);
+  flex: none;
+}
+
+.projects-v6__tags li strong {
+  color: #0B0C0E !important;
+  font-weight: 800 !important;
+}
+
+.projects-v6__link {
+  border: 1.5px solid var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 20px rgba(255, 90, 31, 0.25);
+}
+
+.projects-v6__link:hover {
+  border-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  color: #0B0C0E !important;
+}
+
+.projects-v6__ext {
+  border: 1.5px solid rgba(228, 229, 232, 0.3) !important;
+  background: #23252C !important;
+  color: #E4E5E8 !important;
+}
+
+.projects-v6__ext:hover {
+  border-color: #E4E5E8 !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+}
+
+/* Escenario visual derecho en 30% Fog Silver dentro de la card Gunmetal */
 .projects-v6__cover {
-  border: 1.5px solid rgba(228, 229, 232, 0.16);
-  background: #0B0C0E !important;
+  border: 2px solid #E4E5E8 !important;
+  border-radius: 16px !important;
+  background: #E4E5E8 !important;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36) !important;
 }
 
-.projects-v6__card--silver .projects-v6__cover {
-  border-color: rgba(28, 29, 33, 0.16);
-}
-
-/* 3. FLYWHEEL DE 6 ETAPAS (#enfoque) COMO CONSOLA INDUSTRIAL PREMIUM */
-.method-v6 {
-  border-top: 2px solid #1C1D21 !important;
-  background: linear-gradient(180deg, #F3F4F6 0%, #E4E5E8 100%) !important;
-}
-
+/* 4. FLYWHEEL DE 6 ETAPAS (#enfoque): CONSOLA 60% GUNMETAL + PANEL 30% FOG SILVER + 10% MOLTEN */
 .method-v6.is-enhanced .method-v6__sticky {
-  border: 2px solid #2C2F37 !important;
-  outline: 6px solid rgba(255, 255, 255, 0.75);
+  border: 1.5px solid #282B34 !important;
+  outline: none !important;
   border-radius: 26px !important;
-  background:
-    radial-gradient(circle at 22% 50%, rgba(255, 90, 31, 0.16) 0%, transparent 44%),
-    linear-gradient(140deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+  background: #16171B !important;
   color: #FFFFFF !important;
-  box-shadow: 0 28px 68px rgba(11, 12, 14, 0.26) !important;
+  box-shadow: 0 26px 60px rgba(11, 12, 14, 0.18) !important;
 }
 
 .method-ring__track {
-  stroke: #343842 !important;
+  stroke: #2E323C !important;
   stroke-width: 2.2 !important;
 }
 
 .method-ring__inner-grid {
-  fill: rgba(28, 29, 33, 0.72) !important;
-  stroke: rgba(228, 229, 232, 0.22) !important;
+  fill: #1C1D21 !important;
+  stroke: rgba(228, 229, 232, 0.2) !important;
 }
 
 .method-ring__arc {
   stroke: var(--molten) !important;
   stroke-width: 5 !important;
-  filter: drop-shadow(0 0 8px rgba(255, 90, 31, 0.45));
+  filter: none !important;
 }
 
 .method-ring__core {
-  border: 1.5px solid rgba(255, 90, 31, 0.48) !important;
-  background: radial-gradient(circle at 50% 30%, #24262C 0%, #0B0C0E 100%) !important;
-  box-shadow:
-    0 16px 36px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+  border: 1.5px solid #323642 !important;
+  background: #0B0C0E !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45) !important;
 }
 
 .method-ring__visuals {
-  border-color: rgba(255, 90, 31, 0.45) !important;
-  background: rgba(255, 90, 31, 0.16) !important;
-  color: var(--molten) !important;
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
 }
 
 .method-ring__number {
@@ -1900,19 +1908,19 @@ main > .hero,
 }
 
 .method-ring__core small {
-  color: #9C9897 !important;
+  color: #9FA5B2 !important;
 }
 
 .method-ring__node {
-  border: 1.5px solid rgba(228, 229, 232, 0.24) !important;
-  background: #24262C !important;
+  border: 1.5px solid rgba(228, 229, 232, 0.22) !important;
+  background: #23252C !important;
   color: #E4E5E8 !important;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.26) !important;
 }
 
 .method-ring__node:hover {
   border-color: var(--molten) !important;
-  background: #2E313A !important;
+  background: #2B2E37 !important;
   color: #FFFFFF !important;
 }
 
@@ -1926,18 +1934,17 @@ main > .hero,
   border-color: var(--molten) !important;
   background: var(--molten) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 10px 26px rgba(255, 90, 31, 0.45) !important;
+  box-shadow: 0 8px 22px rgba(255, 90, 31, 0.35) !important;
   text-shadow: none !important;
 }
 
-/* Panel derecho del Flywheel en Fog Silver / Blanco Puro sobre consola Gunmetal */
+/* Panel activo derecho en 30% Fog Silver + Blanco Puro dentro de la consola Gunmetal (sin border-left) */
 .method-v6.is-enhanced .method-v6__panel.is-active {
-  border: 1.5px solid #CFD2D9 !important;
-  border-left: 6px solid var(--molten) !important;
+  border: 1.5px solid #CFD3DC !important;
   border-radius: 20px !important;
-  background: linear-gradient(145deg, #FFFFFF 0%, #E4E5E8 100%) !important;
+  background: linear-gradient(180deg, #E4E5E8 0%, #FFFFFF 46%) !important;
   color: #0B0C0E !important;
-  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.32) !important;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.3) !important;
 }
 
 .method-v6.is-enhanced .method-v6__panel.is-active .method-v6__step-index {
@@ -1955,7 +1962,7 @@ main > .hero,
 }
 
 .method-v6.is-enhanced .method-v6__panel.is-active .method-v6__chips {
-  border-top-color: rgba(28, 29, 33, 0.14) !important;
+  border-top: 1px solid #CFD3DC !important;
 }
 
 .method-v6.is-enhanced .method-v6__panel.is-active .method-v6__chips li {
@@ -1965,63 +1972,143 @@ main > .hero,
 }
 
 .method-v6__principle {
-  border: 1.5px solid #2C2F37 !important;
-  border-left: 6px solid var(--molten) !important;
-  background: #1C1D21 !important;
-  color: #FFFFFF !important;
-  box-shadow: 0 16px 38px rgba(11, 12, 14, 0.14) !important;
-}
-
-/* 4. PERFIL E IA APLICADA (BENTO 3 COLUMNAS + CONSOLA 4 PASOS) */
-.portfolio-v5__profile {
-  border-top: 2px solid #1C1D21 !important;
-  background: #FFFFFF !important;
-}
-
-.portfolio-v5__profile-copy p {
-  border: 1.5px solid #C8CBD2 !important;
-  border-top: 5px solid var(--molten) !important;
+  border: 1.5px solid #282B34 !important;
   border-radius: 18px !important;
-  background: linear-gradient(155deg, #F3F4F6 0%, #E4E5E8 100%) !important;
-  color: #0B0C0E !important;
-  box-shadow: 0 14px 32px rgba(28, 29, 33, 0.06) !important;
+  background: #16171B !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 14px 34px rgba(11, 12, 14, 0.12) !important;
 }
 
-.portfolio-v5__profile-copy p:nth-child(2) {
-  border-color: #2C2F37 !important;
-  border-top: 5px solid var(--molten) !important;
-  background: linear-gradient(145deg, #1C1D21 0%, #24262C 100%) !important;
-  color: #FFFFFF !important;
+/* 5. PERFIL E IA APLICADA: CADA CARD TIENE EL CONTRASTE 60% GUNMETAL + 30% FOG SILVER + 10% MOLTEN */
+.portfolio-v5__profile-copy p {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: 24px !important;
+  border: 1.5px solid #282B34 !important;
+  border-radius: 20px !important;
+  background: #16171B !important;
+  color: #D8DBE2 !important;
+  box-shadow: 0 18px 40px rgba(11, 12, 14, 0.1) !important;
+  overflow: hidden !important;
 }
 
 .portfolio-v5__profile-copy p strong {
-  color: var(--molten) !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px !important;
+  color: #FFFFFF !important;
+  font: 800 15px/1.25 var(--display) !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
 }
 
-.portfolio-v5__profile-copy p:nth-child(2) .profile-pills {
-  border-top-color: rgba(228, 229, 232, 0.18) !important;
-  color: #E4E5E8 !important;
+.portfolio-v5__profile-copy p strong::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--molten);
+  flex: none;
 }
 
+/* Consola inferior 30% Fog Silver enmarcada dentro de cada card de Perfil */
+.portfolio-v5__profile-copy p .profile-pills {
+  display: block !important;
+  margin: 18px 0 0 !important;
+  padding: 12px 16px !important;
+  border-radius: 12px !important;
+  border: 1px solid #CFD3DC !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+  font: 700 12.5px/1.4 var(--utility) !important;
+  letter-spacing: 0.03em !important;
+}
+
+/* Consola de Metodología IA: 60% Gunmetal + 4 Cards en 30% Fog Silver + 10% Molten */
 .ai-method-card {
-  border: 1.5px solid #2C2F37 !important;
-  border-left: 6px solid var(--molten) !important;
-  background:
-    radial-gradient(circle at 86% 16%, rgba(255, 90, 31, 0.18) 0%, transparent 40%),
-    linear-gradient(140deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
-  box-shadow: 0 24px 56px rgba(11, 12, 14, 0.2) !important;
+  border: 1.5px solid #282B34 !important;
+  border-radius: 24px !important;
+  background: #16171B !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 24px 54px rgba(11, 12, 14, 0.16) !important;
+}
+
+.ai-method-card__head .eyebrow {
+  border: 1px solid var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+}
+
+.ai-method-card__head > p:last-child {
+  color: #D8DBE2 !important;
 }
 
 .ai-method-step {
-  border: 1px solid rgba(228, 229, 232, 0.16) !important;
-  border-top: 3px solid var(--molten) !important;
-  background: rgba(228, 229, 232, 0.05) !important;
-  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms;
+  padding: 0 !important;
+  border: 1.5px solid #CFD3DC !important;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E4E5E8 100%) !important;
+  color: #0B0C0E !important;
+  overflow: hidden !important;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 240ms;
 }
 
 .ai-method-step:hover {
   transform: translateY(-3px);
-  border-color: var(--molten) !important;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
+}
+
+.ai-method-step__num {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 !important;
+  padding: 10px 18px !important;
+  background: #1C1D21 !important;
+  border-bottom: 2px solid var(--molten) !important;
+  color: #FFFFFF !important;
+  font: 700 12px/1.1 var(--utility) !important;
+  letter-spacing: 0.06em !important;
+}
+
+.ai-method-step__num::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--molten);
+}
+
+.ai-method-step h4 {
+  margin: 14px 18px 6px !important;
+  color: #0B0C0E !important;
+}
+
+.ai-method-step p {
+  margin: 0 18px 18px !important;
+  color: #1C1D21 !important;
+}
+
+.ai-method-card__case {
+  border: 1px solid rgba(228, 229, 232, 0.2) !important;
+  border-radius: 14px !important;
+  background: #22252D !important;
+}
+
+.ai-method-card__case p {
+  color: #E4E5E8 !important;
+}
+
+.ai-method-card__case strong {
+  color: #FFFFFF !important;
+}
+
+.ai-method-card__case code {
+  background: #0B0C0E !important;
+  color: #E4E5E8 !important;
+  border: 1px solid rgba(228, 229, 232, 0.22);
 }
 
 .portfolio-v5__profile > .text-link {
@@ -2036,69 +2123,74 @@ main > .hero,
   color: #FFFFFF !important;
 }
 
-/* 5. PUENTE EDITORIAL LINKEDIN (#detras-del-clic) */
-.editorial-bridge {
-  border-top: 2px solid #1C1D21 !important;
-  background: linear-gradient(180deg, #E4E5E8 0%, #F3F4F6 100%) !important;
-  color: #0B0C0E !important;
-}
-
+/* 6. PUENTE EDITORIAL LINKEDIN (#detras-del-clic): CADA CARD CON CONTRASTE 60-30-10 INTERNO */
 .editorial-card {
-  border: 1.5px solid #C8CBD2 !important;
-  border-top: 5px solid var(--molten) !important;
-  background: #FFFFFF !important;
-  color: #0B0C0E !important;
-  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms;
-}
-
-.editorial-card--dark {
-  border-color: #2C2F37 !important;
-  border-top: 5px solid var(--molten) !important;
-  background: linear-gradient(145deg, #1C1D21 0%, #24262C 100%) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 !important;
+  border: 1.5px solid #282B34 !important;
+  border-radius: 20px !important;
+  background: #16171B !important;
   color: #FFFFFF !important;
+  box-shadow: 0 18px 40px rgba(11, 12, 14, 0.12) !important;
+  overflow: hidden !important;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms;
 }
 
 .editorial-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 22px 46px rgba(11, 12, 14, 0.14);
+  box-shadow: 0 24px 52px rgba(11, 12, 14, 0.2) !important;
 }
 
-.editorial-card--dark h3 {
-  color: #FFFFFF !important;
+.editorial-card__body {
+  padding: 26px 26px 22px;
 }
 
-.editorial-card--dark p {
-  color: #E4E5E8 !important;
-}
-
-.editorial-card--dark .editorial-card__num {
-  color: #9C9897 !important;
-}
-
-.editorial-card--dark .editorial-card__tag {
-  background: rgba(255, 90, 31, 0.18) !important;
-  color: #FF8559 !important;
-}
-
-.editorial-card--dark .editorial-card__links {
-  border-top-color: rgba(228, 229, 232, 0.14) !important;
-}
-
-.editorial-card--dark .editorial-card__case {
-  border-color: rgba(255, 90, 31, 0.55) !important;
-  background: rgba(255, 90, 31, 0.16) !important;
-  color: #FFFFFF !important;
-}
-
-.editorial-card--dark .editorial-card__case:hover {
+.editorial-card__tag {
   background: var(--molten) !important;
+  color: #FFFFFF !important;
+}
+
+.editorial-card__num {
+  color: #B4B9C4 !important;
+}
+
+.editorial-card h3 {
+  color: #FFFFFF !important;
+}
+
+.editorial-card p {
+  margin: 0 !important;
+  color: #D8DBE2 !important;
+}
+
+/* Bandeja inferior 30% Fog Silver en cada card de Detrás del clic */
+.editorial-card__links {
+  margin-top: auto !important;
+  padding: 14px 26px !important;
+  border-top: 2px solid var(--molten) !important;
+  background: #E4E5E8 !important;
+}
+
+.editorial-card__case {
+  min-height: 38px !important;
+  padding: 6px 14px !important;
+  border: 1.5px solid #1C1D21 !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+}
+
+.editorial-card__case:hover {
   border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
 }
 
 .editorial-bridge__cta {
-  border: 1.5px solid #2C2F37 !important;
-  border-left: 6px solid var(--molten) !important;
-  background: #1C1D21 !important;
+  border: 1.5px solid #282B34 !important;
+  border-radius: 18px !important;
+  background: #16171B !important;
   color: #FFFFFF !important;
 }
 
@@ -2110,18 +2202,16 @@ main > .hero,
   color: #FFFFFF !important;
 }
 
-/* 6. CONTACTO ARQUITECTÓNICO GUNMETAL NIGHT */
+/* 7. CONTACTO ARQUITECTÓNICO */
 .contact {
-  border: 1.5px solid #2C2F37 !important;
+  border: 1.5px solid #282B34 !important;
   border-radius: 24px !important;
-  background:
-    radial-gradient(circle at 85% 22%, rgba(255, 90, 31, 0.22) 0%, transparent 40%),
-    linear-gradient(135deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+  background: #16171B !important;
   color: #FFFFFF !important;
 }
 
 .contact .eyebrow {
-  color: #9C9897 !important;
+  color: #B4B9C4 !important;
 }
 
 .contact h2 {
@@ -2131,17 +2221,68 @@ main > .hero,
 }
 
 .contact > p:not(.eyebrow) {
-  color: #E4E5E8 !important;
+  color: #D8DBE2 !important;
 }
 
 .contact > small {
-  color: #9C9897 !important;
+  color: #9FA5B2 !important;
 }
 
-/* 7. PÁGINAS DE PROYECTOS (ENSUTEX, SOL Y TIERRA, MODOFAN, MARLEY) EN GUNMETAL + FOG SILVER + MOLTEN */
+/* 8. PÁGINAS DE CASOS (ENSUTEX, SOL Y TIERRA, MODOFAN, MARLEY): CONTRASTE 60-30-10 EN CADA CARD */
+.case-page {
+  background: #F4F5F7 !important;
+  color: #0B0C0E !important;
+}
+
 .case-page .kind {
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+}
+
+.case-page .case-hero__meta {
+  padding: 0 !important;
+  border: 1.5px solid #282B34 !important;
+  border-radius: 18px !important;
+  background: #16171B !important;
+  overflow: hidden !important;
+}
+
+.case-page .case-hero__meta > div:first-child {
+  padding: 18px 22px !important;
+  background: #16171B !important;
+  color: #FFFFFF !important;
+}
+
+.case-page .case-hero__meta > div:first-child dt {
+  color: var(--molten) !important;
+}
+
+.case-page .case-hero__meta > div:first-child dd {
+  color: #E4E5E8 !important;
+}
+
+.case-page .case-hero__meta > div:last-child {
+  padding: 18px 22px !important;
   background: #E4E5E8 !important;
   color: #0B0C0E !important;
+  border-left: 2px solid var(--molten) !important;
+}
+
+.case-page .case-hero__meta > div:last-child dt {
+  color: #1C1D21 !important;
+}
+
+.case-page .case-hero__meta > div:last-child dd,
+.case-page .case-hero__meta > div:last-child strong {
+  color: #0B0C0E !important;
+}
+
+.case-page .case-hero__btn--primary {
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
 }
 
 .case-page .case-hero__btn--ghost {
@@ -2151,86 +2292,187 @@ main > .hero,
 }
 
 .case-page .case-hero__btn--ghost:hover {
+  border-color: #1C1D21 !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+}
+
+.case-page .case-hero__note-pill {
+  border-color: #CFD3DC !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+}
+
+.case-journey {
+  border-top: 1.5px solid #D5D8E0 !important;
+  border-bottom: 1.5px solid #D5D8E0 !important;
+  background: #E8EAEF !important;
+}
+
+.case-journey__steps {
+  border-left: 2px solid #1C1D21 !important;
+}
+
+/* Cada .case-step tiene 60% Gunmetal arriba + 30% Fog Silver en su bandeja de KPIs/Flujo + 10% Molten */
+.case-step {
+  border: 1.5px solid #282B34 !important;
+  border-radius: 20px !important;
+  background: #16171B !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 18px 40px rgba(11, 12, 14, 0.12) !important;
+}
+
+.case-step::before {
+  border-color: #1C1D21 !important;
+  background: #E4E5E8 !important;
+}
+
+.case-step.is-active {
+  border-color: var(--molten) !important;
+  background: #16171B !important;
+  box-shadow: 0 22px 48px rgba(11, 12, 14, 0.2) !important;
+}
+
+.case-step.is-active::before {
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+}
+
+.case-step__badge {
+  border-color: #2A2D36 !important;
+  background: #23252C !important;
+  color: #FFFFFF !important;
+}
+
+.case-step.is-active .case-step__badge {
   border-color: var(--molten) !important;
   background: var(--molten) !important;
   color: #FFFFFF !important;
 }
 
-.case-page .case-hero__note-pill {
-  border-color: #C8CBD2 !important;
-  background: #F3F4F6 !important;
-  color: #1C1D21 !important;
+.case-step__media-tag {
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
 }
 
-.case-journey {
-  border-top: 2px solid #1C1D21 !important;
-  border-bottom: 2px solid #1C1D21 !important;
-  background: #F3F4F6 !important;
+.case-step h2 {
+  color: #FFFFFF !important;
 }
 
-.case-step {
-  border: 1.5px solid #C8CBD2 !important;
-  border-left: 5px solid #1C1D21 !important;
-  background: #FFFFFF !important;
+.case-step p {
+  color: #D8DBE2 !important;
 }
 
-.case-step.is-active {
-  border-color: var(--molten) !important;
-  border-left: 6px solid var(--molten) !important;
-  background: #FFFFFF !important;
-  box-shadow: 0 20px 44px rgba(28, 29, 33, 0.1) !important;
+.case-step p strong {
+  color: #FFFFFF !important;
 }
 
-.case-step__badge {
-  border-color: #1C1D21 !important;
-  background: #1C1D21 !important;
+.case-step__kpis,
+.case-step__flow {
+  margin-top: 16px !important;
+  padding: 12px 14px !important;
+  border-top: 2px solid var(--molten) !important;
+  border-radius: 12px !important;
+  background: #E4E5E8 !important;
 }
 
 .case-step__kpis span,
 .case-step__flow span:not([aria-hidden]) {
-  border-color: #C8CBD2 !important;
+  border-color: #C4C8D2 !important;
+  background: #FFFFFF !important;
+  color: #0B0C0E !important;
+}
+
+.case-step__kpis strong {
+  color: var(--molten) !important;
+}
+
+.case-v5 .case-v5__note {
+  margin-top: 14px !important;
+  padding: 12px 14px !important;
+  border-left: 3px solid var(--molten) !important;
+  border-radius: 10px !important;
   background: #E4E5E8 !important;
   color: #0B0C0E !important;
 }
 
-.case-v5 .case-v5__note {
-  background: #E4E5E8 !important;
+.case-v5 .case-v5__note strong {
   color: #0B0C0E !important;
 }
 
 .case-stage__console {
-  border: 1.5px solid #2C2F37 !important;
-  background:
-    radial-gradient(circle at 80% 18%, rgba(255, 90, 31, 0.18) 0%, transparent 44%),
-    linear-gradient(145deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
-  box-shadow: 0 26px 64px rgba(11, 12, 14, 0.24) !important;
+  border: 1.5px solid #282B34 !important;
+  background: #16171B !important;
+  box-shadow: 0 26px 60px rgba(11, 12, 14, 0.22) !important;
+}
+
+.case-stage__tab {
+  border-color: rgba(228, 229, 232, 0.22) !important;
+  background: #23252C !important;
+  color: #E4E5E8 !important;
+}
+
+.case-stage__tab.is-active {
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+}
+
+.case-stage__status {
+  border-color: #E4E5E8 !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
 }
 
 .case-media-card,
 .case-media-duo figure {
   background: #0B0C0E !important;
-  border-color: rgba(228, 229, 232, 0.16) !important;
+  border: 1.5px solid #2C303A !important;
+}
+
+.case-media-card__bar {
+  background: #1C1D21 !important;
+  color: #E4E5E8 !important;
+}
+
+.case-media-card__bar span:last-child {
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
 }
 
 .case-media-card__caption,
 .case-media-duo figcaption {
-  background: #141519 !important;
-  color: #E4E5E8 !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+  font-weight: 600 !important;
 }
 
 .case-page .next-link {
-  border: 1.5px solid #2C2F37 !important;
-  border-left: 6px solid var(--molten) !important;
-  background:
-    radial-gradient(circle at 86% 22%, rgba(255, 90, 31, 0.2) 0%, transparent 42%),
-    linear-gradient(135deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+  border: 1.5px solid #282B34 !important;
+  border-radius: 18px !important;
+  background: #16171B !important;
+  color: #FFFFFF !important;
 }
 
-/* Responsivo del nuevo Hero Split y Flywheel en Tablet y Móvil */
+.case-page .next-link span {
+  color: #B4B9C4 !important;
+}
+
+.case-page .next-link:hover {
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+}
+
+/* Responsivo del nuevo Hero Split-Plane y tarjetas en Tablet y Móvil */
 @media (max-width: 980px) {
   .hero__grid {
     grid-template-columns: 1fr !important;
-    gap: 22px !important;
+  }
+
+  .hero__wing {
+    border-left: 0 !important;
+    border-top: 3px solid var(--molten);
   }
 }
 
@@ -2238,26 +2480,46 @@ main > .hero,
   main > .hero,
   .hero {
     margin: 0 8px !important;
-    padding: 24px 18px 20px !important;
+    padding: 0 !important;
     border-radius: 18px !important;
   }
 
-  .hero__bento {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+  .hero__content {
+    padding: 24px 18px 20px !important;
   }
 
-  .hero__bento-card {
-    padding: 12px;
+  .hero__wing {
+    padding: 20px 18px !important;
   }
 
-  .hero__bento-card strong {
-    font-size: 18px;
+  .hero__bottom {
+    padding: 12px 18px !important;
   }
 
-  .hero__signal {
-    font-size: 10.5px;
-    padding: 7px 10px;
+  .projects-v6__card {
+    padding: 16px !important;
+  }
+
+  .portfolio-v5__profile-copy p {
+    padding: 18px !important;
+  }
+
+  .portfolio-v5__profile-copy p .profile-pills {
+    margin: 14px 0 0 !important;
+    padding: 11px 14px !important;
+  }
+
+  .editorial-card__body {
+    padding: 20px 18px 16px !important;
+  }
+
+  .editorial-card__links {
+    padding: 12px 18px !important;
+  }
+
+  .case-page .case-hero__meta > div:last-child {
+    border-left: 0 !important;
+    border-top: 2px solid var(--molten) !important;
   }
 
   .method-ring__node-number {
@@ -2279,9 +2541,4 @@ main > .hero,
   }
 }
 
-@media (max-width: 390px) {
-  .hero__bento {
-    grid-template-columns: 1fr;
-  }
-}
 

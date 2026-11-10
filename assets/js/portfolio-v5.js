@@ -148,17 +148,8 @@
     const scrollTargets = [
       ...document.querySelectorAll('.portfolio-v5__section-head h2'),
       ...document.querySelectorAll('.portfolio-v5__section-head > p:last-child'),
-      ...document.querySelectorAll('.projects-v6__copy h3'),
-      ...document.querySelectorAll('.projects-v6__description'),
       ...document.querySelectorAll('.portfolio-v5__profile h2'),
-      ...document.querySelectorAll('.ai-method-card__head h3'),
-      ...document.querySelectorAll('.editorial-card h3'),
-      ...document.querySelectorAll('.portfolio-v5__tool-groups h3'),
-      ...document.querySelectorAll('.contact h2'),
-      ...document.querySelectorAll('.contact > p:not(.eyebrow)'),
-      ...document.querySelectorAll('.case-step h2'),
       ...document.querySelectorAll('#aporte h2'),
-      ...document.querySelectorAll('#aporte p'),
       ...document.querySelectorAll('.case-end h2')
     ].filter(el => !heroTargets.includes(el));
 
