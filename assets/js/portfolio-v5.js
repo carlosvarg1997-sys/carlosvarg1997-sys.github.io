@@ -67,12 +67,12 @@
     }
   };
 
-  const runTypewriter = (el, durationMs = 580, delayMs = 0) => {
-    if (!el || isMotionOff() || window.innerWidth <= 760) return;
+  const runTypewriter = (el, durationMs = 520, delayMs = 0) => {
+    if (!el || isMotionOff()) return;
+    if (el.dataset.twDone === 'true') return;
     if (typeof el.__origHTML !== 'string') {
       el.__origHTML = el.innerHTML;
     }
-    restoreTypewriter(el);
 
     if (/^H[1-6]$/.test(el.tagName) && !el.hasAttribute('aria-label')) {
       el.setAttribute('aria-label', el.textContent.replace(/\s+/g, ' ').trim());
@@ -106,12 +106,12 @@
       return;
     }
 
-    // Títulos a ~58 ms; textos largos a ~28 ms (ritmo ágil, vivo y directo).
+    // Títulos a ritmo ágil (~44 ms) y copys a ~22 ms, sutil y elegante sin exagerar
     const isHeading = /^H[1-6]$/.test(el.tagName);
     const stagger = isHeading
-      ? Math.min(58, 920 / words.length)
-      : Math.min(28, 680 / words.length);
-    const fade = isHeading ? 460 : 340;
+      ? Math.min(46, 800 / words.length)
+      : Math.min(22, 540 / words.length);
+    const fade = isHeading ? 420 : 320;
     words.forEach((w, i) => {
       w.style.transitionDuration = fade + 'ms';
       w.style.transitionDelay = Math.round(delayMs + i * stagger) + 'ms';
@@ -120,14 +120,11 @@
     const state = { timer: 0 };
     activeTypewriters.set(el, state);
 
-    // Dos frames para que el estado inicial se pinte y la transición sí ocurra.
     requestAnimationFrame(() => requestAnimationFrame(() => {
       if (activeTypewriters.get(el) !== state) return;
       words.forEach(w => w.classList.remove('is-pending'));
+      el.dataset.twDone = 'true';
     }));
-
-    state.timer = setTimeout(() => restoreTypewriter(el),
-      Math.round(delayMs + words.length * stagger + fade + 120));
   };
   // Observador de entrada para títulos y copys en las 5 pestañas
   const initScrollTypewriter = () => {
