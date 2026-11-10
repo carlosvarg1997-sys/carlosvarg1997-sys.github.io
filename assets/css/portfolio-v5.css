@@ -3109,9 +3109,9 @@ main > .hero,
   }
 
   .method-v6.is-enhanced .method-ring {
-    width: min(58vw, 216px) !important;
-    min-width: 200px !important;
-    max-width: 220px !important;
+    width: min(248px, calc(100vw - 112px)) !important;
+    min-width: 0 !important;
+    max-width: 248px !important;
     height: auto !important;
     aspect-ratio: 1 / 1 !important;
     margin: 16px auto 16px !important;
