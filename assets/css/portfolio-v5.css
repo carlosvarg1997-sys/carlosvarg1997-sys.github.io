@@ -684,8 +684,7 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
 }
 
 .method-ring__node {
-  min-height: 44px !important;
-  min-width: 44px !important;
+  min-height: 36px;
   padding: 0 14px;
   font-size: 12.5px !important;
 }
@@ -2897,10 +2896,16 @@ main > .hero,
   .method-ring__node {
     width: 36px !important;
     height: 36px !important;
+    min-width: 36px !important;
+    max-width: 36px !important;
     min-height: 36px !important;
+    max-height: 36px !important;
+    aspect-ratio: 1 / 1 !important;
+    box-sizing: border-box !important;
     padding: 0 !important;
-    display: grid !important;
-    place-items: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     border-radius: 50% !important;
   }
 
@@ -2909,9 +2914,11 @@ main > .hero,
   }
 
   .method-ring__node-number {
-    display: block !important;
-    width: auto !important;
-    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
     padding: 0 !important;
     border: 0 !important;
     background: transparent !important;
@@ -3094,54 +3101,94 @@ main > .hero,
     font-size: 13px !important;
   }
 
-  /* Flywheel en móvil/compacto: anillo amplio (240-260px), desahogado y círculos 100% centrados */
+  /* Flywheel en móvil/compacto: anillo amplio y equilibrado (216px), desahogado, sin puente estorbando y círculos 100% simétricos */
   .method-v6.is-enhanced .method-v6__sticky {
-    padding: 22px 16px 20px !important;
-    gap: 14px !important;
+    padding: 16px 14px 18px !important;
+    gap: 16px !important;
+    border-radius: 20px !important;
   }
 
   .method-v6.is-enhanced .method-ring {
-    width: min(68vw, 256px) !important;
-    min-width: 224px !important;
+    width: min(58vw, 216px) !important;
+    min-width: 200px !important;
+    max-width: 220px !important;
     height: auto !important;
-    aspect-ratio: 1 !important;
-    margin: 18px auto 26px !important;
+    aspect-ratio: 1 / 1 !important;
+    margin: 16px auto 16px !important;
+    justify-self: center !important;
   }
 
   .method-ring__core {
-    inset: 21% !important;
+    inset: 22% !important;
     gap: 3px !important;
-    padding: 8px !important;
+    padding: 6px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    line-height: 1 !important;
   }
 
   .method-ring__visuals {
-    width: 28px !important;
-    height: 28px !important;
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 50% !important;
+    display: grid !important;
+    place-items: center !important;
+    margin-bottom: 2px !important;
   }
 
   .method-ring__number {
-    font-size: 28px !important;
+    font-size: 26px !important;
     line-height: 1 !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.05em !important;
+    color: #FFFFFF !important;
+    margin: 0 !important;
   }
 
   .method-ring__name {
     font-size: 12px !important;
-    letter-spacing: 0.06em !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    color: var(--molten) !important;
+    margin: 0 !important;
   }
 
-  /* Cada nodo es UN SOLO círculo metálico de 40x40px con el número centrado exacto */
+  .method-ring__core small {
+    display: none !important;
+  }
+
+  /* Cada nodo es UN CÍRCULO EXACTO 1:1 de 38x38px, centrado al milímetro */
   .method-ring__node,
   .method-ring__node[aria-current="step"],
   .method-ring__node[data-passed="true"] {
-    width: 40px !important;
-    height: 40px !important;
-    min-height: 40px !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    aspect-ratio: 1 / 1 !important;
+    box-sizing: border-box !important;
     padding: 0 !important;
     margin: 0 !important;
-    display: grid !important;
-    place-items: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     border-radius: 50% !important;
     transform: translate(-50%, -50%) !important;
+  }
+
+  /* Área táctil accesible 46x46 sin deformar el círculo visual */
+  .method-ring__node::before {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
   }
 
   .method-ring__node {
@@ -3159,42 +3206,70 @@ main > .hero,
   }
 
   .method-ring__node[aria-current="step"] {
-    border: 1.5px solid rgba(255, 190, 160, 0.85) !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    border: 1.5px solid rgba(255, 190, 160, 0.95) !important;
     background: var(--metal-molten) !important;
     color: #FFFFFF !important;
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.4),
-      0 8px 20px rgba(255, 90, 31, 0.46) !important;
-    transform: translate(-50%, -50%) scale(1.08) !important;
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      0 0 0 3px rgba(255, 90, 31, 0.22),
+      0 8px 22px rgba(255, 90, 31, 0.48) !important;
+    transform: translate(-50%, -50%) !important;
   }
 
   .method-ring__node-name {
     display: none !important;
   }
 
-  /* Cero doble círculo interno: solo el texto centrado dentro del botón de 40x40 */
+  /* El número centrado con flexbox exacto dentro del círculo */
   .method-ring__node-number,
   .method-ring__node[data-passed="true"] .method-ring__node-number,
   .method-ring__node[aria-current="step"] .method-ring__node-number {
-    display: block !important;
-    width: auto !important;
-    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     border: 0 !important;
-    border-radius: 0 !important;
+    border-radius: 50% !important;
     background: transparent !important;
     box-shadow: none !important;
     color: inherit !important;
-    font: 800 13px/1 var(--utility) !important;
+    font: 800 12.5px / 1 var(--utility) !important;
     letter-spacing: -0.01em !important;
     text-align: center !important;
     text-shadow: none !important;
     transform: none !important;
   }
 
+  /* En móvil el puente horizontal entre dos columnas se oculta para eliminar colisiones y dar aire libre */
   .method-v6.is-enhanced .method-v6__bridge {
-    margin: 0 auto 10px !important;
+    display: none !important;
+  }
+
+  /* Tarjeta activa del método en móvil: espaciosa y legible */
+  .method-v6.is-enhanced .method-v6__panel.is-active {
+    padding: 20px 18px 18px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  .method-v6.is-enhanced .method-v6__panel.is-active h3 {
+    margin-bottom: 6px !important;
+    font-size: clamp(22px, 5.8vw, 26px) !important;
+  }
+
+  .method-v6.is-enhanced .method-v6__panel.is-active .method-v6__lead {
+    margin-bottom: 12px !important;
+    font-size: 14.5px !important;
+    line-height: 1.42 !important;
   }
 
   .portfolio-v5__profile-copy p {
