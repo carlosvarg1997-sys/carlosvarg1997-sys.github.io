@@ -1,4 +1,4 @@
-:root{--header-h:54px;--v5-line:#e6e1dc;--v5-warm:#ffffff;--v5-orange:#ff4c00;--card:#ffffff;--warm:#ffffff}
+:root{--header-h:54px;--v5-line:#CFD2D9;--v5-warm:#F3F4F6;--v5-orange:#FF5A1F;--orange:#FF5A1F;--signal:#FF5A1F;--dark:#1C1D21;--card:#E4E5E8;--warm:#F3F4F6;--gunmetal-deep:#0B0C0E;--gunmetal:#1C1D21;--gunmetal-elevated:#24262C;--fog-silver:#E4E5E8;--fog-silver-soft:#F3F4F6;--fog-border:#C8CBD2;--fog-muted:#9C9897;--molten:#FF5A1F;--pure-black:#000000;--pure-white:#FFFFFF}
 html{scroll-padding-top:calc(var(--header-h) + 18px)}
 .site-header{min-height:var(--header-h)}
 .portfolio-v5__anchor{display:block;position:relative;top:calc(-1 * var(--header-h) - 24px);height:0;visibility:hidden;pointer-events:none}
@@ -1437,3 +1437,851 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
     padding: 18px;
   }
 }
+
+/* =========================================================================
+   REDISEÑO EJECUTIVO V8 — SISTEMA 60-30-10 (10-nov-2026)
+   60% Gunmetal Night (#1C1D21 / #0B0C0E / #000000)
+   30% Fog Silver (#E4E5E8 / #F3F4F6 / #FFFFFF)
+   10% Molten Orange (#FF5A1F)
+   - Hero Split Arquitectónico con Bento 2x2 interactivo
+   - Tarjetas de proyectos alternadas (Gunmetal Night / Fog Silver)
+   - Flywheel de 6 etapas como Consola Industrial de Precisión
+   - Animación lateral de entrada y micro-interacción física en cards
+   ========================================================================= */
+
+.text-molten {
+  color: var(--molten) !important;
+}
+
+.wordmark {
+  color: #E4E5E8 !important;
+  height: clamp(54px, 6.2vw, 88px) !important;
+  min-height: 0 !important;
+  font-size: clamp(48px, 6.8vw, 96px) !important;
+  line-height: 0.92 !important;
+  padding: 6px 1.1% 2px !important;
+}
+
+.site-header {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1px solid #DFE1E6;
+}
+
+/* Botones del sistema 60-30-10 */
+.button--molten {
+  border: 1.5px solid var(--molten) !important;
+  border-radius: 999px !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 10px 26px rgba(255, 90, 31, 0.28);
+}
+
+.button--molten:hover {
+  border-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  color: #0B0C0E !important;
+  transform: translateY(-2px);
+}
+
+.button--ghost-light {
+  border: 1.5px solid rgba(228, 229, 232, 0.36) !important;
+  border-radius: 999px !important;
+  background: rgba(228, 229, 232, 0.08) !important;
+  color: #F3F4F6 !important;
+}
+
+.button--ghost-light:hover {
+  border-color: var(--molten) !important;
+  background: rgba(255, 90, 31, 0.16) !important;
+  color: #FFFFFF !important;
+}
+
+/* 1. NUEVO HERO SPLIT ARQUITECTÓNICO (GUNMETAL NIGHT + FOG SILVER + MOLTEN ORANGE) */
+main > .hero,
+.hero {
+  display: block !important;
+  position: relative !important;
+  min-height: 0 !important;
+  margin: 0 14px !important;
+  padding: clamp(28px, 3.2vw, 46px) clamp(26px, 4vw, 58px) clamp(18px, 2.2vw, 26px) !important;
+  border: 1.5px solid #2C2F37 !important;
+  border-radius: 24px !important;
+  background:
+    radial-gradient(circle at 84% 20%, rgba(255, 90, 31, 0.2) 0%, transparent 38%),
+    radial-gradient(circle at 14% 88%, rgba(228, 229, 232, 0.06) 0%, transparent 34%),
+    linear-gradient(135deg, #0B0C0E 0%, #1C1D21 56%, #24262C 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 28px 68px rgba(11, 12, 14, 0.22) !important;
+  overflow: hidden !important;
+}
+
+.hero__scene {
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) !important;
+  background-size: 48px 48px !important;
+  mask-image: radial-gradient(circle at 72% 42%, #000 0%, transparent 78%);
+  opacity: 0.55 !important;
+  pointer-events: none !important;
+}
+
+.hero__scene::after {
+  display: none !important;
+}
+
+.hero__grid {
+  position: relative;
+  z-index: 2;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.12fr) minmax(380px, 0.88fr) !important;
+  align-items: center !important;
+  gap: clamp(24px, 3.4vw, 48px) !important;
+  width: 100% !important;
+  max-width: 1450px !important;
+  margin: 0 auto !important;
+}
+
+.hero__content {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.hero__content > .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  margin: 0 0 14px !important;
+  border: 1px solid rgba(255, 90, 31, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 90, 31, 0.14);
+  color: #FFFFFF !important;
+  font: 700 12.5px/1.2 var(--utility) !important;
+  letter-spacing: 0.06em !important;
+}
+
+.hero__content > .eyebrow::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--molten);
+  box-shadow: 0 0 10px var(--molten);
+}
+
+.hero h1 {
+  max-width: 22ch !important;
+  margin: 0 0 14px !important;
+  color: #FFFFFF !important;
+  font-size: clamp(32px, 3.6vw, 50px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -0.04em !important;
+}
+
+.hero__content > p:not(.eyebrow):not(.hero__cred) {
+  max-width: 52ch !important;
+  margin: 0 0 14px !important;
+  color: #E4E5E8 !important;
+  font-size: clamp(15.5px, 1.15vw, 18px) !important;
+  line-height: 1.48 !important;
+}
+
+.hero__content > p.hero__cred {
+  border-color: rgba(228, 229, 232, 0.22) !important;
+  background: rgba(228, 229, 232, 0.08) !important;
+  color: #E4E5E8 !important;
+  margin-bottom: 18px !important;
+}
+
+/* Consola derecha del Hero: Bento 2x2 estilo Vykor (Gunmetal Night + Fog Silver + Molten Orange) */
+.hero__showcase {
+  min-width: 0;
+}
+
+.hero__console {
+  padding: 16px;
+  border: 1.5px solid rgba(228, 229, 232, 0.18);
+  border-radius: 22px;
+  background: rgba(11, 12, 14, 0.72);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 20px 44px rgba(0, 0, 0, 0.38);
+}
+
+.hero__console-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(228, 229, 232, 0.12);
+}
+
+.hero__console-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--molten);
+  box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.2);
+  flex: none;
+}
+
+.hero__console-title {
+  color: #E4E5E8;
+  font: 700 12px/1.2 var(--utility);
+  letter-spacing: 0.06em;
+  margin-right: auto;
+}
+
+.hero__console-tag {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 90, 31, 0.18);
+  border: 1px solid rgba(255, 90, 31, 0.45);
+  color: #FFFFFF;
+  font: 700 11.5px/1.1 var(--utility);
+  letter-spacing: 0.05em;
+}
+
+.hero__signal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 9px 12px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: #1C1D21;
+  border: 1px solid rgba(228, 229, 232, 0.1);
+  color: #9C9897;
+  font: 700 11.5px/1.1 var(--utility);
+  letter-spacing: 0.05em;
+}
+
+.hero__signal span {
+  color: #E4E5E8;
+}
+
+.hero__signal span.is-accent {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--molten);
+  color: #FFFFFF;
+}
+
+.hero__signal i {
+  font-style: normal;
+  color: var(--molten);
+}
+
+.hero__bento {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.hero__bento-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 15px 16px;
+  border-radius: 15px;
+  text-decoration: none;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms, box-shadow 240ms;
+}
+
+.hero__bento-card--dark {
+  background: linear-gradient(145deg, #1C1D21 0%, #24262C 100%);
+  border: 1.5px solid rgba(228, 229, 232, 0.14);
+  color: #FFFFFF;
+}
+
+.hero__bento-card--light {
+  background: linear-gradient(145deg, #E4E5E8 0%, #FFFFFF 100%);
+  border: 1.5px solid #CFD2D9;
+  color: #0B0C0E;
+}
+
+.hero__bento-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--molten);
+  box-shadow: 0 12px 26px rgba(255, 90, 31, 0.2);
+}
+
+.hero__bento-num {
+  font: 700 11.5px/1.1 var(--utility);
+  letter-spacing: 0.06em;
+  color: var(--molten);
+}
+
+.hero__bento-card strong {
+  font: 800 clamp(20px, 1.9vw, 26px)/1.02 var(--display);
+  letter-spacing: -0.03em;
+}
+
+.hero__bento-card--dark small {
+  color: #E4E5E8;
+  font: 600 12.5px/1.3 var(--body);
+}
+
+.hero__bento-card--light small {
+  color: #1C1D21;
+  font: 600 12.5px/1.3 var(--body);
+}
+
+.hero__bottom {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  max-width: 1450px;
+  margin: 24px auto 0 !important;
+  padding-top: 14px;
+  border-top: 1px solid rgba(228, 229, 232, 0.14);
+  color: #9C9897 !important;
+}
+
+/* 2. PROYECTOS DESTACADOS: ALTERNANCIA GUNMETAL NIGHT (60%) & FOG SILVER (30%) + MOLTEN ORANGE (10%) */
+.projects-v6 {
+  background: #FFFFFF !important;
+}
+
+.projects-v6__head .eyebrow,
+.method-v6__head .eyebrow,
+.portfolio-v5__profile > .eyebrow,
+.editorial-bridge__head .eyebrow {
+  display: inline-flex;
+  justify-self: start;
+  align-items: center;
+  padding: 5px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 90, 31, 0.35);
+  background: rgba(255, 90, 31, 0.1);
+  color: #0B0C0E !important;
+}
+
+.projects-v6__card,
+.projects-v6__card--dark {
+  border: 1.5px solid #2C2F37 !important;
+  border-left: 6px solid var(--molten) !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 82% 24%, rgba(255, 90, 31, 0.18) 0%, transparent 38%),
+    linear-gradient(135deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 22px 52px rgba(11, 12, 14, 0.16) !important;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms, border-color 280ms !important;
+}
+
+.projects-v6__card--silver {
+  border: 1.5px solid #C8CBD2 !important;
+  border-left: 6px solid var(--molten) !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 82% 24%, rgba(255, 90, 31, 0.1) 0%, transparent 40%),
+    linear-gradient(135deg, #E4E5E8 0%, #F3F4F6 62%, #FFFFFF 100%) !important;
+  color: #0B0C0E !important;
+  box-shadow: 0 20px 48px rgba(28, 29, 33, 0.09) !important;
+}
+
+.projects-v6__card:hover {
+  box-shadow: 0 28px 64px rgba(11, 12, 14, 0.24) !important;
+}
+
+.projects-v6__card--silver .projects-v6__meta > p {
+  color: #1C1D21 !important;
+}
+
+.projects-v6__card--silver .projects-v6__copy h3 {
+  color: #0B0C0E !important;
+}
+
+.projects-v6__card--silver .projects-v6__description {
+  color: #1C1D21 !important;
+}
+
+.projects-v6__card--silver .projects-v6__tags li {
+  border-color: #1C1D21 !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+}
+
+.projects-v6__card--silver .projects-v6__tags li strong {
+  color: #FF8559 !important;
+}
+
+.projects-v6__card--silver .projects-v6__ext {
+  border-color: #1C1D21 !important;
+  background: rgba(28, 29, 33, 0.06) !important;
+  color: #0B0C0E !important;
+}
+
+.projects-v6__card--silver .projects-v6__ext:hover {
+  border-color: #0B0C0E !important;
+  background: #0B0C0E !important;
+  color: #FFFFFF !important;
+}
+
+.projects-v6__cover {
+  border: 1.5px solid rgba(228, 229, 232, 0.16);
+  background: #0B0C0E !important;
+}
+
+.projects-v6__card--silver .projects-v6__cover {
+  border-color: rgba(28, 29, 33, 0.16);
+}
+
+/* 3. FLYWHEEL DE 6 ETAPAS (#enfoque) COMO CONSOLA INDUSTRIAL PREMIUM */
+.method-v6 {
+  border-top: 2px solid #1C1D21 !important;
+  background: linear-gradient(180deg, #F3F4F6 0%, #E4E5E8 100%) !important;
+}
+
+.method-v6.is-enhanced .method-v6__sticky {
+  border: 2px solid #2C2F37 !important;
+  outline: 6px solid rgba(255, 255, 255, 0.75);
+  border-radius: 26px !important;
+  background:
+    radial-gradient(circle at 22% 50%, rgba(255, 90, 31, 0.16) 0%, transparent 44%),
+    linear-gradient(140deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 28px 68px rgba(11, 12, 14, 0.26) !important;
+}
+
+.method-ring__track {
+  stroke: #343842 !important;
+  stroke-width: 2.2 !important;
+}
+
+.method-ring__inner-grid {
+  fill: rgba(28, 29, 33, 0.72) !important;
+  stroke: rgba(228, 229, 232, 0.22) !important;
+}
+
+.method-ring__arc {
+  stroke: var(--molten) !important;
+  stroke-width: 5 !important;
+  filter: drop-shadow(0 0 8px rgba(255, 90, 31, 0.45));
+}
+
+.method-ring__core {
+  border: 1.5px solid rgba(255, 90, 31, 0.48) !important;
+  background: radial-gradient(circle at 50% 30%, #24262C 0%, #0B0C0E 100%) !important;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+
+.method-ring__visuals {
+  border-color: rgba(255, 90, 31, 0.45) !important;
+  background: rgba(255, 90, 31, 0.16) !important;
+  color: var(--molten) !important;
+}
+
+.method-ring__number {
+  color: #FFFFFF !important;
+}
+
+.method-ring__name {
+  color: var(--molten) !important;
+}
+
+.method-ring__core small {
+  color: #9C9897 !important;
+}
+
+.method-ring__node {
+  border: 1.5px solid rgba(228, 229, 232, 0.24) !important;
+  background: #24262C !important;
+  color: #E4E5E8 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28) !important;
+}
+
+.method-ring__node:hover {
+  border-color: var(--molten) !important;
+  background: #2E313A !important;
+  color: #FFFFFF !important;
+}
+
+.method-ring__node[data-passed="true"] {
+  border-color: #E4E5E8 !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+}
+
+.method-ring__node[aria-current="step"] {
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 10px 26px rgba(255, 90, 31, 0.45) !important;
+  text-shadow: none !important;
+}
+
+/* Panel derecho del Flywheel en Fog Silver / Blanco Puro sobre consola Gunmetal */
+.method-v6.is-enhanced .method-v6__panel.is-active {
+  border: 1.5px solid #CFD2D9 !important;
+  border-left: 6px solid var(--molten) !important;
+  border-radius: 20px !important;
+  background: linear-gradient(145deg, #FFFFFF 0%, #E4E5E8 100%) !important;
+  color: #0B0C0E !important;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.32) !important;
+}
+
+.method-v6.is-enhanced .method-v6__panel.is-active .method-v6__step-index {
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+}
+
+.method-v6.is-enhanced .method-v6__panel.is-active h3 {
+  color: #0B0C0E !important;
+}
+
+.method-v6.is-enhanced .method-v6__panel.is-active .method-v6__lead {
+  color: #1C1D21 !important;
+}
+
+.method-v6.is-enhanced .method-v6__panel.is-active .method-v6__chips {
+  border-top-color: rgba(28, 29, 33, 0.14) !important;
+}
+
+.method-v6.is-enhanced .method-v6__panel.is-active .method-v6__chips li {
+  border-color: #1C1D21 !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+}
+
+.method-v6__principle {
+  border: 1.5px solid #2C2F37 !important;
+  border-left: 6px solid var(--molten) !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 16px 38px rgba(11, 12, 14, 0.14) !important;
+}
+
+/* 4. PERFIL E IA APLICADA (BENTO 3 COLUMNAS + CONSOLA 4 PASOS) */
+.portfolio-v5__profile {
+  border-top: 2px solid #1C1D21 !important;
+  background: #FFFFFF !important;
+}
+
+.portfolio-v5__profile-copy p {
+  border: 1.5px solid #C8CBD2 !important;
+  border-top: 5px solid var(--molten) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(155deg, #F3F4F6 0%, #E4E5E8 100%) !important;
+  color: #0B0C0E !important;
+  box-shadow: 0 14px 32px rgba(28, 29, 33, 0.06) !important;
+}
+
+.portfolio-v5__profile-copy p:nth-child(2) {
+  border-color: #2C2F37 !important;
+  border-top: 5px solid var(--molten) !important;
+  background: linear-gradient(145deg, #1C1D21 0%, #24262C 100%) !important;
+  color: #FFFFFF !important;
+}
+
+.portfolio-v5__profile-copy p strong {
+  color: var(--molten) !important;
+}
+
+.portfolio-v5__profile-copy p:nth-child(2) .profile-pills {
+  border-top-color: rgba(228, 229, 232, 0.18) !important;
+  color: #E4E5E8 !important;
+}
+
+.ai-method-card {
+  border: 1.5px solid #2C2F37 !important;
+  border-left: 6px solid var(--molten) !important;
+  background:
+    radial-gradient(circle at 86% 16%, rgba(255, 90, 31, 0.18) 0%, transparent 40%),
+    linear-gradient(140deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+  box-shadow: 0 24px 56px rgba(11, 12, 14, 0.2) !important;
+}
+
+.ai-method-step {
+  border: 1px solid rgba(228, 229, 232, 0.16) !important;
+  border-top: 3px solid var(--molten) !important;
+  background: rgba(228, 229, 232, 0.05) !important;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1), border-color 240ms;
+}
+
+.ai-method-step:hover {
+  transform: translateY(-3px);
+  border-color: var(--molten) !important;
+}
+
+.portfolio-v5__profile > .text-link {
+  border-color: #1C1D21 !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+}
+
+.portfolio-v5__profile > .text-link:hover {
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+}
+
+/* 5. PUENTE EDITORIAL LINKEDIN (#detras-del-clic) */
+.editorial-bridge {
+  border-top: 2px solid #1C1D21 !important;
+  background: linear-gradient(180deg, #E4E5E8 0%, #F3F4F6 100%) !important;
+  color: #0B0C0E !important;
+}
+
+.editorial-card {
+  border: 1.5px solid #C8CBD2 !important;
+  border-top: 5px solid var(--molten) !important;
+  background: #FFFFFF !important;
+  color: #0B0C0E !important;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 260ms;
+}
+
+.editorial-card--dark {
+  border-color: #2C2F37 !important;
+  border-top: 5px solid var(--molten) !important;
+  background: linear-gradient(145deg, #1C1D21 0%, #24262C 100%) !important;
+  color: #FFFFFF !important;
+}
+
+.editorial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 46px rgba(11, 12, 14, 0.14);
+}
+
+.editorial-card--dark h3 {
+  color: #FFFFFF !important;
+}
+
+.editorial-card--dark p {
+  color: #E4E5E8 !important;
+}
+
+.editorial-card--dark .editorial-card__num {
+  color: #9C9897 !important;
+}
+
+.editorial-card--dark .editorial-card__tag {
+  background: rgba(255, 90, 31, 0.18) !important;
+  color: #FF8559 !important;
+}
+
+.editorial-card--dark .editorial-card__links {
+  border-top-color: rgba(228, 229, 232, 0.14) !important;
+}
+
+.editorial-card--dark .editorial-card__case {
+  border-color: rgba(255, 90, 31, 0.55) !important;
+  background: rgba(255, 90, 31, 0.16) !important;
+  color: #FFFFFF !important;
+}
+
+.editorial-card--dark .editorial-card__case:hover {
+  background: var(--molten) !important;
+  border-color: var(--molten) !important;
+}
+
+.editorial-bridge__cta {
+  border: 1.5px solid #2C2F37 !important;
+  border-left: 6px solid var(--molten) !important;
+  background: #1C1D21 !important;
+  color: #FFFFFF !important;
+}
+
+.editorial-bridge__cta p {
+  color: #E4E5E8 !important;
+}
+
+.editorial-bridge__cta strong {
+  color: #FFFFFF !important;
+}
+
+/* 6. CONTACTO ARQUITECTÓNICO GUNMETAL NIGHT */
+.contact {
+  border: 1.5px solid #2C2F37 !important;
+  border-radius: 24px !important;
+  background:
+    radial-gradient(circle at 85% 22%, rgba(255, 90, 31, 0.22) 0%, transparent 40%),
+    linear-gradient(135deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+  color: #FFFFFF !important;
+}
+
+.contact .eyebrow {
+  color: #9C9897 !important;
+}
+
+.contact h2 {
+  color: #FFFFFF !important;
+  font-size: clamp(38px, 5vw, 72px) !important;
+  line-height: 1.02 !important;
+}
+
+.contact > p:not(.eyebrow) {
+  color: #E4E5E8 !important;
+}
+
+.contact > small {
+  color: #9C9897 !important;
+}
+
+/* 7. PÁGINAS DE PROYECTOS (ENSUTEX, SOL Y TIERRA, MODOFAN, MARLEY) EN GUNMETAL + FOG SILVER + MOLTEN */
+.case-page .kind {
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+}
+
+.case-page .case-hero__btn--ghost {
+  border-color: #1C1D21 !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+}
+
+.case-page .case-hero__btn--ghost:hover {
+  border-color: var(--molten) !important;
+  background: var(--molten) !important;
+  color: #FFFFFF !important;
+}
+
+.case-page .case-hero__note-pill {
+  border-color: #C8CBD2 !important;
+  background: #F3F4F6 !important;
+  color: #1C1D21 !important;
+}
+
+.case-journey {
+  border-top: 2px solid #1C1D21 !important;
+  border-bottom: 2px solid #1C1D21 !important;
+  background: #F3F4F6 !important;
+}
+
+.case-step {
+  border: 1.5px solid #C8CBD2 !important;
+  border-left: 5px solid #1C1D21 !important;
+  background: #FFFFFF !important;
+}
+
+.case-step.is-active {
+  border-color: var(--molten) !important;
+  border-left: 6px solid var(--molten) !important;
+  background: #FFFFFF !important;
+  box-shadow: 0 20px 44px rgba(28, 29, 33, 0.1) !important;
+}
+
+.case-step__badge {
+  border-color: #1C1D21 !important;
+  background: #1C1D21 !important;
+}
+
+.case-step__kpis span,
+.case-step__flow span:not([aria-hidden]) {
+  border-color: #C8CBD2 !important;
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+}
+
+.case-v5 .case-v5__note {
+  background: #E4E5E8 !important;
+  color: #0B0C0E !important;
+}
+
+.case-stage__console {
+  border: 1.5px solid #2C2F37 !important;
+  background:
+    radial-gradient(circle at 80% 18%, rgba(255, 90, 31, 0.18) 0%, transparent 44%),
+    linear-gradient(145deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+  box-shadow: 0 26px 64px rgba(11, 12, 14, 0.24) !important;
+}
+
+.case-media-card,
+.case-media-duo figure {
+  background: #0B0C0E !important;
+  border-color: rgba(228, 229, 232, 0.16) !important;
+}
+
+.case-media-card__caption,
+.case-media-duo figcaption {
+  background: #141519 !important;
+  color: #E4E5E8 !important;
+}
+
+.case-page .next-link {
+  border: 1.5px solid #2C2F37 !important;
+  border-left: 6px solid var(--molten) !important;
+  background:
+    radial-gradient(circle at 86% 22%, rgba(255, 90, 31, 0.2) 0%, transparent 42%),
+    linear-gradient(135deg, #0B0C0E 0%, #1C1D21 58%, #24262C 100%) !important;
+}
+
+/* Responsivo del nuevo Hero Split y Flywheel en Tablet y Móvil */
+@media (max-width: 980px) {
+  .hero__grid {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  main > .hero,
+  .hero {
+    margin: 0 8px !important;
+    padding: 24px 18px 20px !important;
+    border-radius: 18px !important;
+  }
+
+  .hero__bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .hero__bento-card {
+    padding: 12px;
+  }
+
+  .hero__bento-card strong {
+    font-size: 18px;
+  }
+
+  .hero__signal {
+    font-size: 10.5px;
+    padding: 7px 10px;
+  }
+
+  .method-ring__node-number {
+    border-color: rgba(228, 229, 232, 0.35) !important;
+    background: #24262C !important;
+    color: #E4E5E8 !important;
+  }
+
+  .method-ring__node[data-passed="true"] .method-ring__node-number {
+    border-color: #E4E5E8 !important;
+    background: #E4E5E8 !important;
+    color: #0B0C0E !important;
+  }
+
+  .method-ring__node[aria-current="step"] .method-ring__node-number {
+    border-color: var(--molten) !important;
+    background: var(--molten) !important;
+    color: #FFFFFF !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero__bento {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -182,6 +182,64 @@
   initScrollTypewriter();
 
   // ---------------------------------------------------------------------------
+  // 1B. Coreografía lateral de tarjetas (Lateral Card Reveal al hacer scroll)
+  // ---------------------------------------------------------------------------
+  const initLateralCardReveal = () => {
+    if (isMotionOff() || !('IntersectionObserver' in window)) return;
+    const cardsToReveal = [...document.querySelectorAll('[data-card-reveal]')];
+    if (!cardsToReveal.length) return;
+
+    const revealed = new WeakSet();
+    let userHasScrolled = window.scrollY > 8;
+    window.addEventListener('scroll', () => { userHasScrolled = true; }, { passive: true, once: true });
+
+    const animateCardIn = (card, delayMs = 0) => {
+      if (!card || isMotionOff() || typeof card.animate !== 'function') return;
+      const dir = card.getAttribute('data-card-reveal') === 'right' ? 1 : -1;
+      const isMobile = window.innerWidth <= 760;
+      const offsetX = (isMobile ? 26 : 48) * dir;
+      card.animate(
+        [
+          { opacity: 0.18, transform: `translate3d(${offsetX}px, 12px, 0) scale(0.985)` },
+          { opacity: 1, transform: 'translate3d(0, 0, 0) scale(1)' }
+        ],
+        {
+          duration: 660,
+          delay: delayMs,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)'
+        }
+      );
+    };
+
+    // Animar suavemente las minicards del Hero al cargar
+    const heroBentoCards = [...document.querySelectorAll('.hero__bento-card[data-card-reveal]')];
+    heroBentoCards.forEach((card, idx) => {
+      revealed.add(card);
+      animateCardIn(card, 120 + idx * 75);
+    });
+
+    const cardObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting || revealed.has(entry.target)) return;
+          revealed.add(entry.target);
+          cardObserver.unobserve(entry.target);
+          if (userHasScrolled || entry.boundingClientRect.top > 120) {
+            animateCardIn(entry.target, 0);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.14 }
+    );
+
+    cardsToReveal.forEach(card => {
+      if (!revealed.has(card)) cardObserver.observe(card);
+    });
+  };
+
+  initLateralCardReveal();
+
+  // ---------------------------------------------------------------------------
   // 2. Páginas de Proyectos: Camino Guiado + Consola de Flujo HD ([data-case-journey])
   // ---------------------------------------------------------------------------
   const journey = document.querySelector('[data-case-journey]');
@@ -244,6 +302,13 @@
         const copyEl = steps[index]?.querySelector('p[data-typewriter="copy"]');
         if (titleEl) runTypewriter(titleEl, 540, 0);
         if (copyEl) runTypewriter(copyEl, 420, 60);
+        panes[index]?.animate?.(
+          [
+            { opacity: 0.22, transform: 'translate3d(26px, 0, 0)' },
+            { opacity: 1, transform: 'translate3d(0, 0, 0)' }
+          ],
+          { duration: 420, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        );
       }
     };
 
@@ -390,6 +455,13 @@
       const leadEl = activePanel?.querySelector('.method-v6__lead');
       if (titleEl) runTypewriter(titleEl, 500, 0);
       if (leadEl) runTypewriter(leadEl, 420, 60);
+      activePanel?.animate?.(
+        [
+          { opacity: 0.24, transform: 'translate3d(28px, 0, 0)' },
+          { opacity: 1, transform: 'translate3d(0, 0, 0)' }
+        ],
+        { duration: 420, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+      );
       diagrams[index]?.animate?.(
         [
           { transform: 'scale(0.84)' },
