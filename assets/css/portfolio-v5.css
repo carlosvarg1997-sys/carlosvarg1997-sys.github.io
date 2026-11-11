@@ -708,6 +708,7 @@ html.motion-paused .method-v6__bridge-pulse,body.motion-paused .method-v6__bridg
 .eyebrow,
 .portfolio-v5__section-head .eyebrow,
 .portfolio-v5__profile > .eyebrow,
+.profile-split__main > .eyebrow,
 .portfolio-v5__tool-groups .eyebrow,
 .case-page .eyebrow,
 .case-page .case-hero__meta dt,
@@ -1813,7 +1814,8 @@ main > .hero,
    2. ENCABEZADOS DE SECCIÓN (METÁLICO ANODIZADO + DETALLE MOLTEN)
    ------------------------------------------------------------------------- */
 .portfolio-v5__section-head .eyebrow,
-.portfolio-v5__profile > .eyebrow {
+.portfolio-v5__profile > .eyebrow,
+.profile-split__main > .eyebrow {
   display: inline-flex !important;
   align-items: center;
   gap: 8px;
@@ -1829,7 +1831,8 @@ main > .hero,
 }
 
 .portfolio-v5__section-head .eyebrow::before,
-.portfolio-v5__profile > .eyebrow::before {
+.portfolio-v5__profile > .eyebrow::before,
+.profile-split__main > .eyebrow::before {
   content: "";
   width: 7px;
   height: 7px;
@@ -3293,50 +3296,79 @@ main > .hero,
 }
 
 /* -------------------------------------------------------------------------
-   28. PELÍCULA DE PERFIL — marco metálico 9:16 (desktop a dos columnas,
-   móvil apilado con el marco primero)
+   28. PELÍCULA DE PERFIL — integrada al lateral derecho del bloque #perfil
+   en escritorio (equilibrio con cards 2×2) y apilada bajo su título en móvil
    ------------------------------------------------------------------------- */
-.profile-film {
+.profile-split {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  grid-template-columns: minmax(0, 1fr) minmax(276px, 316px);
+  gap: clamp(28px, 3.6vw, 48px);
   align-items: start;
-  gap: clamp(24px, 4vw, 56px);
-  margin: 0 0 clamp(30px, 4vw, 46px);
+  margin: 0 0 clamp(28px, 3.5vw, 40px);
+}
+
+.profile-split__main {
+  min-width: 0;
+}
+
+.portfolio-v5__profile .profile-split__main h2 {
+  max-width: 18ch;
+  margin-bottom: clamp(16px, 2vw, 24px) !important;
+  font-size: clamp(38px, 4.4vw, 66px) !important;
+}
+
+.profile-split__main .portfolio-v5__profile-lead {
+  max-width: 64ch;
+  margin-bottom: clamp(22px, 2.5vw, 30px);
+}
+
+.profile-split__main .portfolio-v5__profile-copy {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  margin-bottom: 0 !important;
+}
+
+.profile-film {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  margin: 0;
 }
 
 .profile-film__intro {
-  max-width: 58ch;
+  max-width: none;
 }
 
 .profile-film__kicker {
   display: inline-flex;
   align-items: center;
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   padding: 5px 11px;
   border: 1px solid rgba(255, 90, 31, 0.35);
   border-radius: 999px;
   background: #FFF1EA;
   color: #B93600;
-  font: 800 11px/1 var(--utility);
-  letter-spacing: 0.14em;
+  font: 800 12px/1.2 var(--utility);
+  letter-spacing: 0.12em;
 }
 
 .profile-film__intro h3 {
-  margin: 0 0 10px;
-  font: 800 clamp(26px, 3vw, 40px)/1.02 var(--display);
-  letter-spacing: -0.03em;
+  margin: 0 0 6px;
+  font: 800 clamp(22px, 2vw, 28px)/1.08 var(--display);
+  letter-spacing: -0.025em;
   color: #101116;
 }
 
 .profile-film__lead {
-  margin: 0 0 18px;
-  font-size: clamp(15px, 1.1vw, 17px);
-  line-height: 1.5;
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.48;
   color: #2D313D;
 }
 
 .profile-film__transcript {
   margin: 0;
+  width: 100%;
   border: 1px solid rgba(255, 90, 31, 0.28);
   border-radius: 14px;
   background: #FFF8F4;
@@ -3384,6 +3416,7 @@ main > .hero,
 
 .profile-film__frame {
   position: relative;
+  width: 100%;
   margin: 0;
   padding: 12px;
   border: 1px solid rgba(255, 90, 31, 0.45);
@@ -3408,10 +3441,10 @@ main > .hero,
   align-items: center;
   justify-content: space-between;
   padding: 0 4px 9px;
-  font: 800 10.5px/1 var(--utility);
-  letter-spacing: 0.16em;
+  font: 800 12px/1.2 var(--utility);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(255, 255, 255, 0.68);
 }
 
 .profile-film__screen {
@@ -3433,34 +3466,45 @@ main > .hero,
 
 .profile-film__foot {
   padding: 9px 4px 0;
-  font: 600 11px/1.3 var(--utility);
+  font: 600 12px/1.3 var(--utility);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.56);
 }
 
-@media (max-width: 900px) {
-  .profile-film {
+@media (max-width: 1023px) {
+  .profile-split {
     grid-template-columns: minmax(0, 1fr);
-    gap: 26px;
+    gap: 28px;
+  }
+
+  .profile-film {
+    max-width: 440px;
+    width: 100%;
+    margin: 0 auto;
+    align-items: stretch;
   }
 
   .profile-film__frame {
-    order: -1;
-    width: min(78vw, 330px);
+    width: min(82vw, 330px);
     margin: 0 auto;
-  }
-
-  .profile-film__intro {
-    max-width: none;
   }
 }
 
 @media (max-width: 760px) {
+  .profile-split {
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .profile-split__main .portfolio-v5__profile-copy {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
   .profile-film {
-    gap: 22px;
-    margin-bottom: 28px;
+    max-width: none;
+    gap: 14px;
   }
 
   .profile-film__frame {
