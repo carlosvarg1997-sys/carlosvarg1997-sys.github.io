@@ -3534,3 +3534,156 @@ main > .hero,
     font-size: 14px;
   }
 }
+
+/* -------------------------------------------------------------------------
+   29. MODO PROTAGONISTA PARA VIDEO EN #PERFIL (al pulsar play pasa al centro)
+   ------------------------------------------------------------------------- */
+.portfolio-v5__profile.is-film-focus {
+  z-index: 1200;
+}
+
+.profile-film__slot {
+  width: 100%;
+}
+
+.profile-film__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(circle at 50% 48%, rgba(20, 22, 28, 0.72) 0%, rgba(7, 8, 11, 0.88) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.profile-film__backdrop[hidden] {
+  display: none !important;
+}
+
+.profile-film__close {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 4px 11px;
+  border: 1px solid rgba(255, 90, 31, 0.65);
+  border-radius: 999px;
+  background: rgba(255, 90, 31, 0.16);
+  color: #FFFFFF;
+  font: 800 12px/1.1 var(--utility);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease;
+}
+
+.profile-film__close::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+
+.profile-film__close[hidden] {
+  display: none !important;
+}
+
+.profile-film__close:hover,
+.profile-film__close:focus-visible {
+  background: #FF5A1F;
+  border-color: #FF5A1F;
+  color: #FFFFFF;
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+.profile-film__foot-focus {
+  display: none;
+}
+
+.profile-film__hit {
+  position: absolute;
+  inset: 0 0 54px 0;
+  z-index: 2;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.profile-film__hit::after {
+  content: "▶";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding-left: 3px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 90, 31, 0.72);
+  background: rgba(16, 17, 22, 0.74);
+  color: #FFFFFF;
+  font-size: 18px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255, 90, 31, 0.25);
+  opacity: 0;
+  transition: opacity 200ms ease, transform 200ms ease;
+  pointer-events: none;
+}
+
+.profile-film__hit:hover::after,
+.profile-film__hit:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.profile-film__hit:focus-visible {
+  outline: 2px solid #FF5A1F;
+  outline-offset: -3px;
+}
+
+.profile-film__hit[hidden] {
+  display: none !important;
+}
+
+.profile-film__frame.is-cinema {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  margin: auto;
+  width: min(90vw, clamp(196px, calc((88svh - 96px) * 9 / 16 + 28px), 438px));
+  height: fit-content;
+  max-height: 92svh;
+  padding: 14px;
+  border-color: rgba(255, 90, 31, 0.78);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 90, 31, 0.35), 0 0 42px rgba(255, 90, 31, 0.22);
+  transform-origin: center center;
+}
+
+.profile-film__frame.is-cinema .profile-film__year {
+  display: none;
+}
+
+.profile-film__frame.is-cinema .profile-film__slate {
+  padding: 0 2px 10px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.profile-film__frame.is-cinema .profile-film__foot-rest {
+  display: none;
+}
+
+.profile-film__frame.is-cinema .profile-film__foot-focus {
+  display: inline;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 760px) {
+  .profile-film__frame.is-cinema {
+    width: min(90vw, clamp(190px, calc((88svh - 88px) * 9 / 16 + 20px), 380px));
+    padding: 10px;
+    border-radius: 22px;
+  }
+}

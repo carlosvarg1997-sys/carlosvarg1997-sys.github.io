@@ -26,11 +26,11 @@
   <link rel="stylesheet" href="assets/css/coherencia-20261027.css?v=20261027-revision-4">
   <link rel="stylesheet" href="assets/css/tipografia-unificada.css?v=20261027-1">
   <link rel="stylesheet" href="assets/css/legibilidad-20261028.css?v=1">
-  <link rel="stylesheet" href="assets/css/portfolio-v5.css?v=20261111-video-pos-1">
+  <link rel="stylesheet" href="assets/css/portfolio-v5.css?v=20261111-video-focus-1">
   <script src="assets/js/v2-home.js?v=20261111-sinvelo-3" defer></script>
   <script src="assets/js/v4-motion.js?v=20261025-relato-1" defer></script>
   <script src="assets/js/coherencia-20261027.js?v=20261027-1" defer></script>
-  <script src="assets/js/portfolio-v5.js?v=20261111-sinvelo-2" defer></script>
+  <script src="assets/js/portfolio-v5.js?v=20261111-video-focus-1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
@@ -300,16 +300,27 @@
             <h3>Quién está detrás del método</h3>
             <p class="profile-film__lead">Qué hago, cómo trabajo y en qué proyectos lo he aplicado.</p>
           </div>
-          <figure class="profile-film__frame">
-            <div class="profile-film__slate" aria-hidden="true"><span>Carlos Vargas</span><span>2026</span></div>
-            <div class="profile-film__screen">
-              <video class="profile-film__video" controls preload="none" playsinline poster="assets/img/video/presentacion-carlos-2026-11-poster.jpg" width="720" height="1280" aria-label="Presentación de Carlos Vargas: 47 segundos">
-                <source src="assets/video/presentacion-carlos-2026-11-web.mp4" type="video/mp4">
-                Tu navegador no puede reproducir este video. <a href="assets/video/presentacion-carlos-2026-11-web.mp4">Descárgalo aquí</a>.
-              </video>
-            </div>
-            <figcaption class="profile-film__foot">47 segundos</figcaption>
-          </figure>
+          <div class="profile-film__slot" data-profile-film-slot>
+            <div class="profile-film__backdrop" data-profile-film-backdrop hidden aria-hidden="true"></div>
+            <figure class="profile-film__frame" data-profile-film-frame>
+              <div class="profile-film__slate">
+                <span>Carlos Vargas</span>
+                <span class="profile-film__year" aria-hidden="true">2026</span>
+                <button type="button" class="profile-film__close" data-profile-film-close hidden aria-label="Volver el video a su columna">Volver ×</button>
+              </div>
+              <div class="profile-film__screen">
+                <video class="profile-film__video" controls preload="none" playsinline poster="assets/img/video/presentacion-carlos-2026-11-poster.jpg" width="720" height="1280" aria-label="Presentación de Carlos Vargas: 47 segundos">
+                  <source src="assets/video/presentacion-carlos-2026-11-web.mp4" type="video/mp4">
+                  Tu navegador no puede reproducir este video. <a href="assets/video/presentacion-carlos-2026-11-web.mp4">Descárgalo aquí</a>.
+                </video>
+                <button type="button" class="profile-film__hit" data-profile-film-hit aria-label="Reproducir presentación en video al centro"></button>
+              </div>
+              <figcaption class="profile-film__foot">
+                <span class="profile-film__foot-rest">47 segundos</span>
+                <span class="profile-film__foot-focus">47 seg · Clic fuera o Esc para volver</span>
+              </figcaption>
+            </figure>
+          </div>
           <details class="profile-film__transcript">
             <summary>Leer la transcripción</summary>
             <p>«Para mí, el marketing va mucho más allá de hacer buenas campañas: se trata de comprender a las personas, identificar oportunidades y desarrollar estrategias que generan resultados reales.»</p>

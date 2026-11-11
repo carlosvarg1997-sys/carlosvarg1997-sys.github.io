@@ -354,6 +354,165 @@
   initHeroKineticCanvas();
 
   // ---------------------------------------------------------------------------
+  // 1D. Modo protagonista al reproducir el video de presentación (#perfil)
+  // ---------------------------------------------------------------------------
+  const initProfileFilmCinema = () => {
+    const profileSection = document.querySelector('.portfolio-v5__profile');
+    const slot = document.querySelector('[data-profile-film-slot]');
+    const frameEl = document.querySelector('[data-profile-film-frame]');
+    const backdrop = document.querySelector('[data-profile-film-backdrop]');
+    const closeBtn = document.querySelector('[data-profile-film-close]');
+    const hitBtn = document.querySelector('[data-profile-film-hit]');
+    const video = frameEl?.querySelector('.profile-film__video');
+    if (!profileSection || !slot || !frameEl || !backdrop || !video) return;
+
+    let isCinema = false;
+    let activeAnim = null;
+    let backdropAnim = null;
+    let finishTimer = 0;
+
+    const clearPending = () => {
+      if (finishTimer) {
+        clearTimeout(finishTimer);
+        finishTimer = 0;
+      }
+      if (activeAnim) {
+        activeAnim.cancel();
+        activeAnim = null;
+      }
+      if (backdropAnim) {
+        backdropAnim.cancel();
+        backdropAnim = null;
+      }
+    };
+
+    const finishCloseState = restoreFocus => {
+      clearPending();
+      backdrop.hidden = true;
+      profileSection.classList.remove('is-film-focus');
+      slot.style.removeProperty('min-height');
+      frameEl.removeAttribute('role');
+      frameEl.removeAttribute('aria-modal');
+      frameEl.removeAttribute('aria-label');
+      if (hitBtn) hitBtn.hidden = false;
+      if (restoreFocus) {
+        (hitBtn || video).focus({ preventScroll: true });
+      }
+    };
+
+    const openCinema = () => {
+      if (document.fullscreenElement === video) return;
+      clearPending();
+      if (hitBtn) hitBtn.hidden = true;
+      if (isCinema) {
+        backdrop.hidden = false;
+        return;
+      }
+
+      const first = frameEl.getBoundingClientRect();
+      slot.style.minHeight = `${Math.round(first.height)}px`;
+
+      isCinema = true;
+      profileSection.classList.add('is-film-focus');
+      backdrop.hidden = false;
+      if (closeBtn) closeBtn.hidden = false;
+      frameEl.classList.add('is-cinema');
+      frameEl.setAttribute('role', 'dialog');
+      frameEl.setAttribute('aria-modal', 'true');
+      frameEl.setAttribute('aria-label', 'Video de presentación de Carlos Vargas ampliado');
+      trackEvent('video_profile_play_focus', { source: 'profile_film' });
+
+      if (isMotionOff() || typeof frameEl.animate !== 'function') return;
+
+      const last = frameEl.getBoundingClientRect();
+      const dx = (first.left + first.width / 2) - (last.left + last.width / 2);
+      const dy = (first.top + first.height / 2) - (last.top + last.height / 2);
+      const scale = first.width / Math.max(1, last.width);
+
+      backdropAnim = backdrop.animate(
+        [{ opacity: 0 }, { opacity: 1 }],
+        { duration: 240, easing: 'ease-out' }
+      );
+      activeAnim = frameEl.animate(
+        [
+          { transform: `translate3d(${dx}px, ${dy}px, 0) scale(${scale})` },
+          { transform: 'translate3d(0, 0, 0) scale(1)' }
+        ],
+        { duration: 400, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+      );
+    };
+
+    const closeCinema = ({ pauseVideo = true, restoreFocus = false } = {}) => {
+      if (!isCinema) return;
+      clearPending();
+
+      const first = frameEl.getBoundingClientRect();
+      if (pauseVideo && !video.paused && !video.ended) {
+        video.pause();
+      }
+
+      isCinema = false;
+      frameEl.classList.remove('is-cinema');
+      if (closeBtn) closeBtn.hidden = true;
+
+      if (isMotionOff() || typeof frameEl.animate !== 'function') {
+        finishCloseState(restoreFocus);
+        return;
+      }
+
+      const last = frameEl.getBoundingClientRect();
+      const dx = (first.left + first.width / 2) - (last.left + last.width / 2);
+      const dy = (first.top + first.height / 2) - (last.top + last.height / 2);
+      const scale = first.width / Math.max(1, last.width);
+
+      backdropAnim = backdrop.animate(
+        [{ opacity: 1 }, { opacity: 0 }],
+        { duration: 240, easing: 'ease-in', fill: 'forwards' }
+      );
+      activeAnim = frameEl.animate(
+        [
+          { transform: `translate3d(${dx}px, ${dy}px, 0) scale(${scale})` },
+          { transform: 'translate3d(0, 0, 0) scale(1)' }
+        ],
+        { duration: 340, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
+      );
+
+      let settled = false;
+      const done = () => {
+        if (settled) return;
+        settled = true;
+        finishCloseState(restoreFocus);
+      };
+      activeAnim.addEventListener?.('finish', done, { once: true });
+      finishTimer = window.setTimeout(done, 380);
+    };
+
+    hitBtn?.addEventListener('click', () => {
+      if (hitBtn) hitBtn.hidden = true;
+      const p = video.play();
+      if (p && typeof p.catch === 'function') {
+        p.catch(() => { if (!isCinema && hitBtn) hitBtn.hidden = false; });
+      }
+    });
+    video.addEventListener('play', openCinema);
+    video.addEventListener('ended', () => closeCinema({ pauseVideo: false, restoreFocus: false }));
+    closeBtn?.addEventListener('click', () => closeCinema({ pauseVideo: true, restoreFocus: true }));
+    backdrop.addEventListener('click', () => closeCinema({ pauseVideo: true, restoreFocus: true }));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && isCinema) {
+        event.preventDefault();
+        closeCinema({ pauseVideo: true, restoreFocus: true });
+      }
+    });
+    document.addEventListener('fullscreenchange', () => {
+      if (!isCinema) return;
+      backdrop.hidden = document.fullscreenElement === video;
+    });
+  };
+
+  initProfileFilmCinema();
+
+  // ---------------------------------------------------------------------------
   // 2. Páginas de Proyectos: Camino Guiado + Consola de Flujo HD ([data-case-journey])
   // ---------------------------------------------------------------------------
   const journey = document.querySelector('[data-case-journey]');
