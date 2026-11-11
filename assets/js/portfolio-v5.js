@@ -478,7 +478,7 @@
         idea_id: editorialCard.getAttribute('data-editorial-card') || '',
         href
       });
-    } else if (href.includes('Carlos_Vargas_CV.pdf')) {
+    } else if (href.includes('Carlos_Vargas_CV')) {
       trackEvent('click_cv', { href });
     } else if (href.startsWith('mailto:')) {
       trackEvent('click_contact', { href });
