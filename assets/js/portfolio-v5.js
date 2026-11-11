@@ -676,9 +676,12 @@
   let frame = 0;
   let manualLockUntil = 0;
 
+  const totalSteps = Math.max(1, panels.length);
+  const stepAngle = 360 / totalSteps;
+
   const syncWheelGeometry = index => {
-    const angle = index * 60;
-    const arcFill = index === 0 ? 8 : (index / 6) * 100;
+    const angle = index * stepAngle;
+    const arcFill = index === 0 ? Math.round((100 / totalSteps) * 0.45) : (index / totalSteps) * 100;
     if (ring) ring.style.setProperty('--spoke-angle', `${angle}deg`);
     if (spoke) spoke.style.setProperty('--spoke-angle', `${angle}deg`);
     if (orbit) orbit.style.transform = `rotate(${angle}deg)`;
@@ -719,8 +722,8 @@
     const stepStr = String(index + 1).padStart(2, '0');
     if (number) number.textContent = stepStr;
     if (name) name.textContent = nodes[index]?.querySelector('.method-ring__node-name')?.textContent || panels[index]?.querySelector('h3')?.textContent.toLocaleUpperCase('es');
-    if (bridgeLabel) bridgeLabel.textContent = `ETAPA ${stepStr}`;
-    ring?.setAttribute('aria-label', 'Método en seis etapas: escuchar, analizar, priorizar, diseñar, comunicar, y medir y evaluar');
+    if (bridgeLabel) bridgeLabel.textContent = `MOMENTO ${stepStr}`;
+    ring?.setAttribute('aria-label', `Cómo trabajo en ${totalSteps} momentos: investigar, priorizar, diseñar y activar, y medir y aprender`);
     if (changed && animateTransition && !isMotionOff()) {
       const activePanel = panels[index];
       const titleEl = activePanel?.querySelector('h3');
@@ -759,7 +762,7 @@
     const trackTop = window.scrollY + rect.top;
     const currentY = window.scrollY - trackTop;
     const progress = clamp((currentY - entryOffset) / effectiveTravel, 0, 1);
-    const index = Math.min(5, Math.floor(progress * 6));
+    const index = Math.min(totalSteps - 1, Math.floor(progress * totalSteps));
     stageState(index, active >= 0);
   };
 
@@ -814,7 +817,7 @@
       const trackTop = window.scrollY + track.getBoundingClientRect().top;
       const travel = Math.max(1, track.offsetHeight - sticky.offsetHeight);
       const effectiveTravel = Math.max(1, travel - entryOffset);
-      const target = trackTop + entryOffset + effectiveTravel * ((i + 0.5) / 6);
+      const target = trackTop + entryOffset + effectiveTravel * ((i + 0.5) / totalSteps);
       manualLockUntil = performance.now() + 650;
       window.scrollTo({ top: target, behavior: isMotionOff() ? 'auto' : 'smooth' });
     });
