@@ -193,10 +193,12 @@
       const isMobile = window.innerWidth <= 760;
       const offsetX = (isMobile ? 18 : 36) * dir;
       // Revelado unificado del bloque sin apagar hijos a cero para evitar parpadeos
+      // Sin opacidad: sólo desplazamiento. Bajar la opacidad de un bloque
+      // grande sobre fondo claro se lee como un destello de luz al entrar.
       card.animate(
         [
-          { opacity: 0.35, transform: `translate3d(${offsetX}px, 12px, 0)` },
-          { opacity: 1, transform: 'translate3d(0, 0, 0)' }
+          { transform: `translate3d(${offsetX}px, 12px, 0)` },
+          { transform: 'translate3d(0, 0, 0)' }
         ],
         {
           duration: 520,
@@ -412,10 +414,11 @@
       if (animateCopy && !isMotionOff()) {
         const titleEl = steps[index]?.querySelector('h2');
         if (titleEl && !titleEl.dataset.twDone) runTypewriter(titleEl, 480, 0);
+        // Sin opacidad: el panel se desliza, no se apaga (evita el velo al cambiar de caso).
         panes[index]?.animate?.(
           [
-            { opacity: 0.45, transform: 'translate3d(14px, 0, 0)' },
-            { opacity: 1, transform: 'translate3d(0, 0, 0)' }
+            { transform: 'translate3d(14px, 0, 0)' },
+            { transform: 'translate3d(0, 0, 0)' }
           ],
           { duration: 340, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
         );
@@ -563,10 +566,11 @@
       const activePanel = panels[index];
       const titleEl = activePanel?.querySelector('h3');
       if (titleEl && !titleEl.dataset.twDone) runTypewriter(titleEl, 440, 0);
+      // Sin opacidad: igual que el resto, el panel entra deslizándose sin destello.
       activePanel?.animate?.(
         [
-          { opacity: 0.55, transform: 'translate3d(10px, 0, 0)' },
-          { opacity: 1, transform: 'translate3d(0, 0, 0)' }
+          { transform: 'translate3d(10px, 0, 0)' },
+          { transform: 'translate3d(0, 0, 0)' }
         ],
         { duration: 320, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' }
       );
