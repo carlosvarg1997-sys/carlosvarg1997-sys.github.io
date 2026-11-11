@@ -23,18 +23,7 @@
     window.matchMedia('(min-width:761px)').addEventListener('change', closeMenu);
   }
 
-  const motionButton = document.querySelector('[data-motion-toggle]');
-  if (motionButton) {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reduced.matches) {
-      document.body.classList.add('motion-paused');
-      motionButton.setAttribute('aria-pressed', 'true');
-      motionButton.textContent = 'REANUDAR MOVIMIENTO';
-    }
-    motionButton.addEventListener('click', () => {
-      const paused = document.body.classList.toggle('motion-paused');
-      motionButton.setAttribute('aria-pressed', String(paused));
-      motionButton.textContent = paused ? 'REANUDAR MOVIMIENTO' : 'PAUSAR MOVIMIENTO';
-    });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.body.classList.add('motion-paused');
   }
 })();
